@@ -136,7 +136,7 @@ main {
 
 /* Cuando el menú está activo, cambia el ícono */
 #menu:checked + label img {
-  content: url("Imagenes/xicono.jpg");
+  content: url("Xicono.jpg");
 }
 
 .footer-container {
@@ -327,7 +327,7 @@ footer p {
     position: fixed;
     top: 0;
     left: -100%;
-    width: 38%;
+    width: 30%;
     height: 100vh;
     background-color: #444544;
     display: flex;
@@ -402,4 +402,5 @@ footer p {
   /* si quieres que el espacio entre header y main sea otro valor, cámbialo aquí */
   --header-space: 120px;
 }
+
 
