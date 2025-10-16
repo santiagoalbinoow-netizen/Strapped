@@ -9,11 +9,11 @@
 }
 
 html, body {
-    font-family: "Archivo Black", sans-serif;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-
+  font-family: "Archivo Black", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* evita barras laterales */
+  width: 100%;
 }
 
 body {
@@ -64,7 +64,6 @@ body {
 }
 
 .logo{
-    
     color: black;
     font-size: 25px;
     font-weight: 1000;
@@ -77,7 +76,7 @@ body {
 
 main {
   padding: 50px; /* margen interno consistente */
-  max-width: 1400px;
+  max-width : 1400px;
   margin: 0 auto; /* centra el main en pantallas grandes */
   box-sizing: border-box;
   margin-bottom: 80px; /* 👈 Ajusta el valor según tu gusto (40-80px) */
@@ -101,6 +100,21 @@ main {
     padding: 20px 0;        /* da altura (arriba y abajo) */
 }
 
+.banner {
+  width: 100%;
+  height: 100vh; /* ocupa toda la altura visible */
+  margin-top: 70px;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* mantiene proporción */
+  display: block;
+}
 
 /* ----- LINKS DEL NAV ----- */
 
@@ -116,12 +130,22 @@ main {
     cursor: pointer;
 }
 
+.menu label img {
+  transition: all 0.3s ease;
+}
+
+/* Cuando el menú está activo, cambia el ícono */
+#menu:checked + label img {
+  content: url("Imagenes/xicono.jpg");
+}
+
 .footer-container {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    padding-left: 50px; /*Separa los iconos del borde*/
+    padding-top: 15px;
+    padding-left: 50px; /*Separa los iconos del borde izquierdo*/
 }
 
 footer {
@@ -191,7 +215,7 @@ footer p {
 }
 
 .main-container {
-  padding: 0 60px; /* 👈 margen igual al de la página */
+  padding: 0; /* 👈 margen igual al de la página */
 }
 
 .Letra{
@@ -211,11 +235,12 @@ footer p {
 
 .productos-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 60px;
+  grid-template-columns: repeat(3, 1fr); /* 👈 3 productos por fila */
+  gap: 40px; /* 👈 separa un poco más entre ellos */
   justify-items: center;
-  align-items: start;
+  align-items: stretch;
 }
+
 
 .producto {
   display: flex;
@@ -223,14 +248,12 @@ footer p {
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 15px;
-  padding: 25px;
+  background-color: #ebeaea;
+  border-radius: 12px;
+  padding: 20px;
   width: 100%;
-  max-width: 280px;
   height: 100%;
-  min-height: 350px; /* 👈 fuerza que todas midan igual */
+  min-height: 450px; /* 👈 más alto */
   transition: all 0.3s ease;
 }
 
@@ -242,10 +265,10 @@ footer p {
 
 .producto img {
   width: 100%;
-  max-width: 200px;
-  height: 200px; /* 👈 fija altura */
+  max-width: 300px; /* antes 200px */
+  height: 300px;    /* antes 200px */
   object-fit: contain;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 
@@ -268,18 +291,19 @@ footer p {
 }
 
 .producto h3 {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   color: black;
 }
 
 .producto p {
-  font-size: 13px;
+  font-size: 15px;
   color: #444;
 }
 
+
 /* 📱 Adaptable a pantallas pequeñas */
-@media (max-width: 1024px) {
+@media (max-width: 700px) {
   main {
     padding: 40px;
   }
@@ -289,40 +313,62 @@ footer p {
   }
 }
 
-@media (max-width: 768px) {
-  .menu {
-    padding: 20px;
-  }
+@media (max-width: 700px) {
 
+  /* Mostrar s hamburguesa */
   .menu label {
-    display: initial;
+    display: block;
+    cursor: pointer;
+    z-index: 2001; /* encima del overlay */
   }
 
+  /* Ocultar menú normal en desktop */
   .menu .botones {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: #2a2c2a;;
-    display: none;
-
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 38%;
+    height: 100vh;
+    background-color: #444544;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 30px;
+    padding-left: 40px;
+    transition: left 0.4s ease;
+    z-index: 999;
   }
 
-  .menu .botones ul li {
-    width: 100%;
-  }
-
+  /* Cuando se activa el checkbox */
   #menu:checked ~ .botones {
-    display: initial;
+    left: 0;
   }
 
-  .header {
-    justify-content: space-between;
-    padding: 20px 30px;
+
+  #menu:checked ~ .overlay {
+    display: block;
+  }
+
+  /* Ajustes del logo y los iconos para no estorbar */
+  .menu {
+    padding: 15px 25px;
+  }
+
+  .menu .iconos {
+    z-index: 2003;
+  }
+
+  /* Estilo de los links del menú */
+  .botones li a {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
   }
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 700px) {
   main {
     padding: 30px;
   }
@@ -333,7 +379,7 @@ footer p {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   .productos-section {
     padding: 0 30px;
   }
