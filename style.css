@@ -335,7 +335,7 @@ footer p {
     justify-content: center;
     align-items: start;
     gap: 30px;
-    padding-left: 30px;
+    padding-left: 20px;
     transition: left 0.4s ease;
     z-index: 999;
   }
@@ -402,6 +402,7 @@ footer p {
   /* si quieres que el espacio entre header y main sea otro valor, cámbialo aquí */
   --header-space: 120px;
 }
+
 
 
 
