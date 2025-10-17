@@ -8,12 +8,21 @@
     list-style: none;
 }
 
+section {
+  scroll-margin-top: 120px; /* ajusta según la altura del header */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 html, body {
   font-family: "Archivo Black", sans-serif;
-  margin: 0;
-  padding: 0;
   overflow-x: hidden; /* evita barras laterales */
   width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
@@ -22,24 +31,66 @@ body {
     min-height: 100vh;
 }
 
+/* ==============================
+   CONTENEDORES GENERALES
+============================== */
+
 .container {
     width: 100%;
     margin: 0 auto;
     padding: 0 50px; /* agrega un poco de espacio interno */    
 }
 
-.menu {
-    display: flex; /* pone los hijos (logo y lista) en fila */
-    justify-content: space-between; /* separa logo a la izq, lista a la der */
-    align-items: center; /* centra verticalmente */
+main {
+  padding: 50px; /* margen interno consistente */
+  max-width : 1400px;
+  margin: 0 auto 80px auto; /* centra el main en pantallas grandes */
+  box-sizing: border-box;
 }
 
+.main-container {
+  padding: 0; /* 👈 margen igual al de la página */
+}
+
+/* ==============================
+   HEADER Y MENÚ
+============================== */
+
+
+.header {
+  background-color: #444544;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 20px 0;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 0 25px;
+}
+
+.logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 25px;
+  font-weight: 1000;
+  color: black;
+  white-space: nowrap;
+}
+
+/* ===== BOTONES DEL MENÚ ===== */ 
+
 .botones {
-    list-style: none; /* quita las viñetas */
-    display: flex; /* coloca los <li> en una fila horizontal */
-    gap: 40px; /* separa los elementos entre sí */
-    padding: 0;
-    margin: 0;
+  display: flex;
+  gap: 40px;
+  padding-left: 20px;
 }
 
 .botones a {
@@ -63,66 +114,19 @@ body {
     width: 100%;
 }
 
-.logo{
-    color: black;
-    font-size: 25px;
-    font-weight: 1000;
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+/* =======================================================
+    HAMBURGUESA 
+======================================================= */
 
-}
-
-main {
-  padding: 50px; /* margen interno consistente */
-  max-width : 1400px;
-  margin: 0 auto; /* centra el main en pantallas grandes */
-  box-sizing: border-box;
-  margin-bottom: 80px; /* 👈 Ajusta el valor según tu gusto (40-80px) */
-}
-
-
-.header  {
-    background-color: #444544;
-    background-position: top center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000; /* para que quede por encima del contenido */
-    padding: 20px 0;        /* da altura (arriba y abajo) */
-}
-
-.banner {
-  width: 100%;
-  height: 100vh; /* ocupa toda la altura visible */
-  margin-top: 70px;
-  padding: 0;
-  overflow: hidden;
-  position: relative;
-}
-
-.banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* mantiene proporción */
-  display: block;
-}
-
-/* ----- LINKS DEL NAV ----- */
 
 #menu{
     display: none;
 }
-.menu-icono{
-    width: 40px;
+.menu-icono {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  filter: invert(1);
 }
 
 .menu label{
@@ -136,96 +140,37 @@ main {
 
 /* Cuando el menú está activo, cambia el ícono */
 #menu:checked + label img {
-  content: url("Xicono.jpg");
+  content: url("Imagenes/xicono.jpg");
 }
 
-.footer-container {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-top: 15px;
-    padding-left: 50px; /*Separa los iconos del borde izquierdo*/
+/* =======================================================
+   ✅ BANNER
+======================================================= */
+
+.banner {
+  width: 100%;
+  height: 100vh; /* ocupa toda la altura visible */
+  margin-top: 70px;
+  overflow: hidden;
+  position: relative;
 }
 
-footer {
-    background-color: #444544;     
-    color: black;
-    text-align: center;
-    padding: 20px 0;
-    width: 100%;
-    position: relative;
-    bottom: 0;
-    border-top: 1px solid #444544;
-    font-family: "Archivo Black", sans-serif;
-    margin-top: auto; /* empuja el footer hacia abajo */
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* mantiene proporción */
+  display: block;
 }
 
-/* === ÍCONOS GENERALES (bolsa + redes) === */
-.iconos {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    gap: 40px;
-    padding: 0;
-    margin: 0;
-}
+/* =======================================================
+   ✅ SECCIÓN PRODUCTOS
+======================================================= */
 
-.iconos li a {
-    display: inline-block;
-    position: relative;
-}
-
-.iconos li a img {
-    width: 26px;
-    height: 26px;
-    object-fit: contain;
-    transition: all 0.3s ease;
-}
-
-/* Línea animada debajo del ícono */
-.iconos li a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 0%;
-    height: 2px;
-    background-color: black;
-    transition: width 0.3s ease;
-}
-
-.iconos li a:hover::after {
-    width: 100%;
-}
-
-/* Efecto hover: brillo + agrandar */
-.iconos li a:hover img {
-    filter: invert(1);
-    transform: scale(1);
-}
-
-/* Texto © */
-footer p {
-    flex: 1;
-    text-align: center;
-    font-size: 14px;
-    color: #999;
-    margin: 0;
-}
-
-.main-container {
-  padding: 0; /* 👈 margen igual al de la página */
-}
-
-.Letra{
-    color: black; 
-    text-align: left;
-    font-size: 20px ;
+.section-productos {
+  padding: 0 50px; /* coherente con el resto de la página */
 }
 
 .productos-titulo {
-  font-family: "Archivo Black", sans-serif;
   color: black;
   font-size: 24px;
   margin-bottom: 40px;
@@ -241,26 +186,22 @@ footer p {
   align-items: stretch;
 }
 
-
 .producto {
+  background-color: #ebeaea;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  text-align: center;
-  background-color: #ebeaea;
-  border-radius: 12px;
-  padding: 20px;
-  width: 100%;
-  height: 100%;
-  min-height: 450px; /* 👈 más alto */
+  min-height: 450px;
   transition: all 0.3s ease;
 }
 
-/* Animación al pasar el mouse */
 .producto:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 12px black;
 }
 
 .producto img {
@@ -269,25 +210,6 @@ footer p {
   height: 300px;    /* antes 200px */
   object-fit: contain;
   margin-bottom: 10px;
-}
-
-
-.section-productos {
-  padding: 0 50px; /* coherente con el resto de la página */
-  margin-top: 40px;
-}
-
-.section-productos h1 {
-  font-family: "Archivo Black", sans-serif;
-  margin-bottom: 30px;
-}
-
-/* Texto dentro de las cajitas */
-/* NOMBRE Y PRECIO */
-.producto h3,
-.producto p {
-  margin: 0;
-  line-height: 1.4;
 }
 
 .producto h3 {
@@ -299,109 +221,265 @@ footer p {
 .producto p {
   font-size: 15px;
   color: #444;
+  margin: 0;
 }
 
 
-/* 📱 Adaptable a pantallas pequeñas */
-@media (max-width: 700px) {
-  main {
-    padding: 40px;
-  }
+/* =======================================================
+   ✅ ÍCONOS GENERALES (bolsa + redes)
+======================================================= */
 
-  .producto p {
+.iconos {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.iconos li {
+  display: inline-block;
+}
+
+.iconos li a {
+    display: inline-block;
+    position: relative;
+}
+
+.iconos li a img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.iconos li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 0%;
+    height: 2px;
+    background-color: black;
+    transition: width 0.3s ease;
+}
+
+.iconos li a:hover::after {
+    width: 100%;
+}
+ 
+.iconos li a:hover img {
+    filter: invert(1);
+}
+
+/* =======================================================
+   ✅ SECCIONES DE SOPORTE Y PAGOS/ENVÍOS
+======================================================= */
+
+.section-horarios {
+  width: 100vw; /* ocupa toda la pantalla */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  
+  background-color: #5b5c5b; /* gris oscuro */
+  color: #f5f5f5;
+  padding: 80px 50px;
+  margin-top: 60px;
+}
+
+.section-horarios h2 {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.horarios-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.horarios-container p {
+  color: #d3d3d3;
+  font-size: 16px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.horarios-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.horario-item {
+  background-color: #3b3b3b;
+  border-radius: 12px;
+  padding: 25px 30px;
+  width: 300px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
+.horario-item:hover {
+  transform: translateY(-5px);
+  background-color: #505050;
+  box-shadow: 0 0 15px rgba(255,255,255,0.1);
+}
+
+.horario-item h3 {
+  font-size: 18px;
+  color: white;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.horario-item p {
+  font-size: 15px;
+  color: #cfcfcf;
+  margin: 0;
+}
+
+/* =======================================================
+   ✅ FOOTER
+======================================================= */
+
+footer {
+    background-color: #444544;     
+    color: black;
+    text-align: center;
+    padding: 20px 0 15px 0;
+    margin-top: auto; /* empuja el footer hacia abajo */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.footer-container .iconos {
+  gap: 25px;
+}
+
+footer p {
     font-size: 14px;
-  }
+    color: #999;
+    margin-top: 10px;
 }
 
-@media (max-width: 700px) {
+/* =======================================================
+   ✅ RESPONSIVE DESIGN
+======================================================= */
 
-  /* Mostrar s hamburguesa */
+/* === Pantallas pequeñas === */
+@media (max-width: 950px) {
+
+  /* Ícono hamburguesa visible */
   .menu label {
     display: block;
-    cursor: pointer;
-    z-index: 2001; /* encima del overlay */
+    z-index: 2001;
   }
 
-  /* Ocultar menú normal en desktop */
+  /* Menú lateral oculto por defecto */
   .menu .botones {
     position: fixed;
     top: 0;
     left: -100%;
-    width: 36%;
+    width: 60%;
     height: 100vh;
     background-color: #444544;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
     gap: 30px;
-    padding-left: 20px;
+    padding-left: 40px;
     transition: left 0.4s ease;
-    z-index: 999;
+    z-index: 1500;
   }
 
-  /* Cuando se activa el checkbox */
+  /* Menú visible cuando se activa el checkbox */
   #menu:checked ~ .botones {
     left: 0;
   }
 
-
-  #menu:checked ~ .overlay {
-    display: block;
-  }
-
-  /* Ajustes del logo y los iconos para no estorbar */
-  .menu {
-    padding: 15px 25px;
-  }
-
-  .menu .iconos {
-    z-index: 2003;
-  }
-
-  /* Estilo de los links del menú */
   .botones li a {
     color: white;
     font-size: 20px;
     font-weight: bold;
   }
-}
 
-
-@media (max-width: 700px) {
-  main {
-    padding: 30px;
+  /* Ajustar íconos (solo lupa y bolsa) */
+  .menu .iconos {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    gap: 20px;
   }
 
-  .productos-container {
-    gap: 25px;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  .logo {
+    font-size: 22px;
   }
-}
 
-@media (max-width: 700px) {
-  .productos-section {
-    padding: 0 30px;
+  .botones li a {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
   }
+
 
   .productos-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-  }
-
-  .producto {
-    padding: 15px;
+    gap: 25px;
   }
 
   .producto img {
     max-width: 150px;
   }
+
+  .iconos li:nth-child(2) {
+    display: none; /* Oculta el ícono de usuario */
+  }
+
+    .horarios-lista {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .horario-item {
+    width: 90%;
+  }
 }
 
-:root {
-  /* si quieres que el espacio entre header y main sea otro valor, cámbialo aquí */
-  --header-space: 120px;
+@media (max-width: 500px) {
+  .logo {
+    font-size: 18px;
+  }
+
+  .menu .iconos {
+    gap: 15px;
+  }
+
+  .menu-icono {
+    width: 26px;
+  }
+
+  .botones li a {
+    font-size: 18px;
+  }
 }
+
 
 
 
