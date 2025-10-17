@@ -89,8 +89,9 @@ main {
 
 .botones {
   display: flex;
-  gap: 40px;
+  gap: 35px;
   padding-left: 20px;
+  font-size: 16px;
 }
 
 .botones a {
@@ -172,10 +173,12 @@ main {
 
 .productos-titulo {
   color: black;
-  font-size: 24px;
-  margin-bottom: 40px;
-  text-align: left;
-  margin-left: 30px;
+  font-size: 32px; /* mismo tamaño que Atención en línea */
+  font-weight: 900;
+  text-align: center;
+  margin: 40px 0 50px 0; /* espacio arriba y abajo equilibrado */
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .productos-container {
@@ -479,6 +482,7 @@ footer p {
     font-size: 18px;
   }
 }
+
 
 
 
