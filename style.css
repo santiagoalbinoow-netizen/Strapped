@@ -140,7 +140,7 @@ main {
 
 /* Cuando el menú está activo, cambia el ícono */
 #menu:checked + label img {
-  content: url("Imagenes/xicono.jpg");
+  content: url("Xicono.jpg");
 }
 
 /* =======================================================
@@ -479,6 +479,7 @@ footer p {
     font-size: 18px;
   }
 }
+
 
 
 
