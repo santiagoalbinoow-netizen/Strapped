@@ -567,7 +567,6 @@ footer p {
   .login-mobile a {
     color: #fff;
     font-weight: 700;
-    text-transform: uppercase;
     letter-spacing: .4px;
     font-size: 1rem;
   }
@@ -606,4 +605,5 @@ footer p {
   .menu-icono { width: 26px; }
   .botones > li > a { font-size: 18px; }
 }
+
 
