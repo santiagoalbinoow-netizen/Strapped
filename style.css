@@ -141,7 +141,30 @@ main {
 
 /* Cuando el menú está activo, cambia el ícono */
 #menu:checked + label img {
-  content: url("Xicono.jpg");
+  content: url("Imagenes/xicono.jpg");
+}
+
+/* === BOTÓN LOGIN EN MENÚ MÓVIL === */
+.login-mobile {
+  display: none;
+  margin-top: auto;
+  width: 100%;
+  padding: 25px 40px;
+  border-top: 1px solid rgba(255,255,255,0.3);
+}
+
+.login-mobile a {
+  display: block;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: uppercase;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.login-mobile a:hover {
+  color: #ccc;
 }
 
 /* ===== MODAL LOGIN / REGISTER ===== */
@@ -527,6 +550,34 @@ footer p {
     font-weight: bold;
   }
 
+    .botones {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: flex-start;
+  }
+
+  .login-mobile {
+    display: block;
+    text-align: center;
+    margin-top: auto; /* empuja hacia el fondo */
+    padding: 15px 0;
+    border-top: 1px solid #ccc;
+  }
+
+  .login-mobile a {
+    color: #000;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+
+  .login-mobile a:hover {
+    color: #555;
+  }
+
   /* Ajustar íconos (solo lupa y bolsa) */
   .menu .iconos {
     position: absolute;
@@ -536,8 +587,14 @@ footer p {
     gap: 20px;
   }
 
+  .menu .botones {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
   .logo {
-    font-size: 26px;
+    font-size: 30px;
   }
 
   .botones li a {
@@ -587,14 +644,3 @@ footer p {
     font-size: 18px;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
