@@ -158,7 +158,6 @@ main {
   color: #fff;
   font-weight: bold;
   font-size: 18px;
-  text-transform: uppercase;
   text-align: left;
   transition: all 0.3s ease;
 }
@@ -607,3 +606,4 @@ footer p {
   .menu-icono { width: 26px; }
   .botones > li > a { font-size: 18px; }
 }
+
