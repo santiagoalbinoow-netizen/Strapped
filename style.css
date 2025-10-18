@@ -576,11 +576,13 @@ footer p {
   /* Íconos en header (lupa/bolsa) mantienen su posición */
   .menu .iconos {
     position: absolute;
-    right: 18px;
-    top: 18px;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* centra verticalmente */
     display: flex;
-    gap: 14px;
-    z-index: 2200;
+    align-items: center;
+    gap: 20px;
+    z-index: 2100;
   }
 
   /* Si ocultaste el ícono de usuario en móvil, lo mantenemos */
