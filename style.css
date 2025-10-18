@@ -509,139 +509,99 @@ footer p {
 }
 
 /* =======================================================
-   ✅ RESPONSIVE DESIGN
+   ✅ RESPONSIVE DESIGN (CENTRADO CORREGIDO)
 ======================================================= */
 
-/* === Pantallas pequeñas === */
 @media (max-width: 950px) {
 
-  /* Ícono hamburguesa visible */
-  .menu label {
-    display: block;
-    z-index: 2001;
-  }
+  /* Asegura que el label del checkbox (hamburguesa) sea visible */
+  .menu label { display: block; z-index: 2100; }
 
-  /* Menú lateral oculto por defecto */
+  /* Panel lateral - ocupa toda la pantalla en altura y se desliza desde la izquierda */
   .menu .botones {
     position: fixed;
     top: 0;
     left: -100%;
-    width: 60%;
+    width: 75%;
     height: 100vh;
-    background-color: #444544;
+    background-color: #3f403f; /* color del panel */
+    box-sizing: border-box;
+    padding: 100px 30px 30px; /* espacio superior para que los enlaces no queden pegados */
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 30px;
-    padding-left: 40px;
-    transition: left 0.4s ease;
-    z-index: 1500;
+    gap: 24px;
+    overflow-y: auto;           /* permite scroll si hay más items */
+    -webkit-overflow-scrolling: touch;
+    transition: left 0.28s ease;
+    z-index: 2000;
   }
 
-  /* Menú visible cuando se activa el checkbox */
+  /* Al activar el checkbox, muestra el panel */
   #menu:checked ~ .botones {
     left: 0;
   }
 
-  .botones li a {
-    color: white;
+  /* Estilo de los enlaces (separados y con buena legibilidad) */
+  .botones > li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .botones > li > a {
+    color: #fff;
     font-size: 20px;
-    font-weight: bold;
-  }
-
-    .botones {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: flex-start;
-  }
-
-  .login-mobile {
-    display: block;
-    text-align: center;
-    margin-top: auto; /* empuja hacia el fondo */
-    padding: 15px 0;
-    border-top: 1px solid #ccc;
-  }
-
-  .login-mobile a {
-    color: #000;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 1px;
+    font-weight: 700;
     text-decoration: none;
+    display: inline-block;
+    padding: 6px 0;
   }
 
-  .login-mobile a:hover {
-    color: #555;
+  /* Empuja el botón de login al final del panel */
+  .login-mobile {
+    display: block;        /* visible solo en móvil */
+    margin-top: auto;      /* empuja hasta abajo */
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    text-align: center;
+  }
+  .login-mobile a {
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    font-size: 1rem;
   }
 
-  /* Ajustar íconos (solo lupa y bolsa) */
+  /* Íconos en header (lupa/bolsa) mantienen su posición */
   .menu .iconos {
     position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    gap: 20px;
+    right: 18px;
+    top: 18px;
+    display: flex;
+    gap: 14px;
+    z-index: 2200;
   }
 
-  .menu .botones {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  /* Si ocultaste el ícono de usuario en móvil, lo mantenemos */
+  .iconos li:nth-child(2) { display: none; }
+
+  /* Ajustes visuales */
+  .logo { font-size: 30px; }
+
+  /* Productos: 2 por fila en móvil */
+  .productos-container { grid-template-columns: repeat(2, 1fr); gap: 25px; }
+  .producto img { max-width: 150px; }
+
+  /* Secciones de horarios: apilan verticalmente */
+  .horarios-lista { flex-direction: column; align-items: center; }
+  .horario-item { width: 90%; }
 }
 
-  .logo {
-    font-size: 30px;
-  }
-
-  .botones li a {
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-
-  .productos-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-  }
-
-  .producto img {
-    max-width: 150px;
-  }
-
-  .iconos li:nth-child(2) {
-    display: none; /* Oculta el ícono de usuario */
-  }
-
-    .horarios-lista {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .horario-item {
-    width: 90%;
-  }
-}
-
+/* Muy pequeños (teléfonos compactos) */
 @media (max-width: 500px) {
-  .logo {
-    font-size: 18px;
-  }
-
-  .menu .iconos {
-    gap: 15px;
-  }
-
-  .menu-icono {
-    width: 26px;
-  }
-
-  .botones li a {
-    font-size: 18px;
-  }
+  .logo { font-size: 18px; }
+  .menu .iconos { gap: 12px; }
+  .menu-icono { width: 26px; }
+  .botones > li > a { font-size: 18px; }
 }
-
