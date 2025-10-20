@@ -1,67 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=BBH+Sans+Bogle&family=BBH+Sans+Hegarty&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    list-style: none;
-}
+/* =======================================================
+   🔹 RESETEO Y CONFIGURACIÓN GENERAL
+======================================================= */
 
-section {
-  scroll-margin-top: 120px; /* ajusta según la altura del header */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-html, body {
+body, html {
   font-family: "Archivo Black", sans-serif;
-  overflow-x: hidden; /* evita barras laterales */
+  overflow-x: hidden;
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+section {
+  scroll-margin-top: 120px;
 }
 
-/* ==============================
-   CONTENEDORES GENERALES
-============================== */
+/* =======================================================
+   🔹 CONTENEDORES GENERALES
+======================================================= */
 
 .container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 50px; /* agrega un poco de espacio interno */    
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 50px;
 }
 
 main {
-  padding: 50px; /* margen interno consistente */
-  max-width : 1400px;
-  margin: 0 auto 80px auto; /* centra el main en pantallas grandes */
+  padding: 50px;
+  max-width: 1400px;
+  margin: 0 auto 80px;
   box-sizing: border-box;
 }
 
-.main-container {
-  padding: 0; /* 👈 margen igual al de la página */
-}
+.main-container { padding: 0; }
 
-/* ==============================
-   HEADER Y MENÚ
-============================== */
-
+/* =======================================================
+   🔹 HEADER Y MENÚ
+======================================================= */
 
 .header {
   background-color: #444544;
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100%;
   z-index: 1000;
   padding: 20px 0;
@@ -85,7 +79,7 @@ main {
   white-space: nowrap;
 }
 
-/* ===== BOTONES DEL MENÚ ===== */ 
+/* ===== BOTONES DEL MENÚ ===== */
 
 .botones {
   display: flex;
@@ -100,29 +94,28 @@ main {
 }
 
 .botones a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0%;
-    height: 2px;
-    background-color: black;
-    transition: width 0.3s ease;
+  content: "";
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0;
+  height: 2px;
+  background-color: black;
+  transition: width 0.3s ease;
 }
 
-/* Efecto al pasar el mouse */
-.botones a:hover::after {
-    width: 100%;
-}
+.botones a:hover::after { width: 100%; }
 
 /* =======================================================
-    HAMBURGUESA 
+   🔹 HAMBURGUESA Y LOGIN MÓVIL
 ======================================================= */
 
+#menu { display: none; }
 
-#menu{
-    display: none;
+.menu label {
+  display: none;
+  cursor: pointer;
 }
+
 .menu-icono {
   width: 30px;
   height: 30px;
@@ -130,21 +123,9 @@ main {
   filter: invert(1);
 }
 
-.menu label{
-    display: none;
-    cursor: pointer;
-}
+.menu label img { transition: all 0.3s ease; }
+#menu:checked + label img { content: url("Xicono.jpg"); }
 
-.menu label img {
-  transition: all 0.3s ease;
-}
-
-/* Cuando el menú está activo, cambia el ícono */
-#menu:checked + label img {
-  content: url("Xicono.jpg");
-}
-
-/* === BOTÓN LOGIN EN MENÚ MÓVIL === */
 .login-mobile {
   display: none;
   margin-top: auto;
@@ -159,134 +140,126 @@ main {
   font-weight: bold;
   font-size: 18px;
   text-align: left;
-  transition: all 0.3s ease;
+  transition: 0.3s;
 }
 
-.login-mobile a:hover {
-  color: #ccc;
-}
+.login-mobile a:hover { color: #ccc; }
 
-/* ===== MODAL LOGIN / REGISTER ===== */
+/* =======================================================
+   🔹 MODAL LOGIN / REGISTER
+======================================================= */
+
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(3px);
+  display: none;
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(3px);
 }
 
 .modal-content {
-    background: linear-gradient(180deg, #ffffff, #f5f5f5, #ffffff);
-    padding: 2rem 3rem;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.25);
-    position: relative;
-    animation: showModal 0.3s ease;
+  background: linear-gradient(180deg, #ffffff, #f5f5f5, #ffffff);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.25);
+  position: relative;
+  animation: showModal 0.3s ease;
 }
 
 @keyframes showModal {
-    from {transform: scale(0.8); opacity: 0;}
-    to {transform: scale(1); opacity: 1;}
+  from {transform: scale(0.8); opacity: 0;}
+  to {transform: scale(1); opacity: 1;}
 }
 
 .close-btn {
-    position: absolute;
-    top: 12px;
-    right: 15px;
-    font-size: 1.8rem;
-    color: #444;
-    cursor: pointer;
-    transition: 0.3s;
-}
-.close-btn:hover {
-    color: #000;
+  position: absolute;
+  top: 12px; right: 15px;
+  font-size: 1.8rem;
+  color: #444;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* Toggle buttons */
+.close-btn:hover { color: #000; }
+
 .form-toggle {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 1rem;
-}
-.form-toggle button {
-    background: none;
-    border: none;
-    padding: 0.6rem 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    color: #666;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s ease;
-}
-.form-toggle button.active {
-    color: #000;
-    border-bottom: 2px solid #000;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
 }
 
-/* Forms */
+.form-toggle button {
+  background: none;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #666;
+  border-bottom: 2px solid transparent;
+  transition: 0.3s;
+}
+
+.form-toggle button.active {
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+
 .form {
-    display: none;
-    flex-direction: column;
+  display: none;
+  flex-direction: column;
 }
-.form.active {
-    display: flex;
-}
+
+.form.active { display: flex; }
 
 .form h2 {
-    margin-bottom: 1rem;
-    color: #333;
+  margin-bottom: 1rem;
+  color: #333;
 }
 
 .form input {
-    margin-bottom: 1rem;
-    padding: 0.8rem;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    outline: none;
-    transition: 0.3s;
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: 0.3s;
 }
-.form input:focus {
-    border-color: #000;
-}
+
+.form input:focus { border-color: #000; }
 
 .btn {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
 }
-.btn:hover {
-    background-color: #333;
-}
+
+.btn:hover { background-color: #333; }
 
 /* =======================================================
-   ✅ BANNER
+   🔹 BANNER
 ======================================================= */
-
-.banner {
+.banner video {
   width: 100%;
-  height: 100vh; /* ocupa toda la altura visible */
-  margin-top: 70px;
-  overflow: hidden;
-  position: relative;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
 }
 
 .banner img {
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* mantiene proporción */
+  max-height: 100vh;  /* evita que una imagen sobrepase toda la pantalla vertical */
+  height: auto;
+  object-fit: cover;
   display: block;
 }
 
@@ -304,7 +277,6 @@ main {
   font-weight: 900;
   text-align: center;
   margin: 40px 0 50px 0; /* espacio arriba y abajo equilibrado */
-  text-transform: uppercase;
   letter-spacing: 1px;
 }
 
@@ -337,7 +309,7 @@ main {
 .producto img {
   width: 100%;
   max-width: 300px; /* antes 200px */
-  height: 300px;    /* antes 200px */
+  height: 100;    /* antes 200px */
   object-fit: contain;
   margin-bottom: 10px;
 }
@@ -356,7 +328,7 @@ main {
 
 
 /* =======================================================
-   ✅ ÍCONOS GENERALES (bolsa + redes)
+   🔹 ÍCONOS GENERALES
 ======================================================= */
 
 .iconos {
@@ -365,64 +337,52 @@ main {
   gap: 25px;
 }
 
-.iconos li {
-  display: inline-block;
-}
-
 .iconos li a {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
 }
 
 .iconos li a img {
-    width: 26px;
-    height: 26px;
-    object-fit: contain;
-    transition: all 0.3s ease;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  transition: 0.3s;
 }
 
 .iconos li a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -8px;
-    width: 0%;
-    height: 2px;
-    background-color: black;
-    transition: width 0.3s ease;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 0;
+  height: 2px;
+  background-color: black;
+  transition: width 0.3s ease;
 }
 
-.iconos li a:hover::after {
-    width: 100%;
-}
- 
-.iconos li a:hover img {
-    filter: invert(1);
-}
+.iconos li a:hover::after { width: 100%; }
+.iconos li a:hover img { filter: invert(1); }
 
 /* =======================================================
-   ✅ SECCIONES DE SOPORTE Y PAGOS/ENVÍOS
+   🔹 SECCIONES DE SOPORTE Y HORARIOS
 ======================================================= */
 
 .section-horarios {
-  width: 100vw; /* ocupa toda la pantalla */
+  width: 100vw;
   position: relative;
   left: 50%;
-  right: 50%;
   margin-left: -50vw;
-  margin-right: -50vw;
-  
-  background-color: #5b5c5b; /* gris oscuro */
+  background-color: #5b5c5b;
   color: #f5f5f5;
   padding: 80px 50px;
   margin-top: 60px;
+  text-align: center;
 }
 
 .section-horarios h2 {
   font-size: 28px;
-  text-align: center;
   margin-bottom: 40px;
-  color: #ffffff;
+  color: #fff;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
@@ -430,7 +390,6 @@ main {
 .horarios-container {
   max-width: 1100px;
   margin: 0 auto;
-  text-align: center;
 }
 
 .horarios-container p {
@@ -452,8 +411,7 @@ main {
   border-radius: 12px;
   padding: 25px 30px;
   width: 300px;
-  text-align: center;
-  transition: all 0.3s ease;
+  transition: 0.3s;
   box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
 
@@ -473,19 +431,18 @@ main {
 .horario-item p {
   font-size: 15px;
   color: #cfcfcf;
-  margin: 0;
 }
 
 /* =======================================================
-   ✅ FOOTER
+   🔹 FOOTER
 ======================================================= */
 
 footer {
-    background-color: #444544;     
-    color: black;
-    text-align: center;
-    padding: 20px 0 15px 0;
-    margin-top: auto; /* empuja el footer hacia abajo */
+  background-color: #444544;
+  color: black;
+  text-align: center;
+  padding: 20px 0 15px;
+  margin-top: auto;
 }
 
 .footer-container {
@@ -497,108 +454,82 @@ footer {
   margin-bottom: 15px;
 }
 
-.footer-container .iconos {
-  gap: 25px;
-}
-
 footer p {
-    font-size: 14px;
-    color: #999;
-    margin-top: 10px;
+  font-size: 14px;
+  color: #999;
+  margin-top: 10px;
 }
 
 /* =======================================================
-   ✅ RESPONSIVE DESIGN (CENTRADO CORREGIDO)
+   🔹 RESPONSIVE DESIGN
 ======================================================= */
 
 @media (max-width: 950px) {
-
-  /* Asegura que el label del checkbox (hamburguesa) sea visible */
   .menu label { display: block; z-index: 2100; }
 
-  /* Panel lateral - ocupa toda la pantalla en altura y se desliza desde la izquierda */
   .menu .botones {
     position: fixed;
-    top: 0;
-    left: -100%;
+    top: 0; left: -100%;
     width: 75%;
     height: 100vh;
-    background-color: #3f403f; /* color del panel */
-    box-sizing: border-box;
-    padding: 100px 30px 30px; /* espacio superior para que los enlaces no queden pegados */
+    background-color: #3f403f;
+    padding: 100px 30px 30px;
     display: flex;
     flex-direction: column;
     gap: 24px;
-    overflow-y: auto;           /* permite scroll si hay más items */
-    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
     transition: left 0.28s ease;
     z-index: 2000;
   }
 
-  /* Al activar el checkbox, muestra el panel */
-  #menu:checked ~ .botones {
-    left: 0;
-  }
-
-  /* Estilo de los enlaces (separados y con buena legibilidad) */
-  .botones > li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+  #menu:checked ~ .botones { left: 0; }
 
   .botones > li > a {
     color: #fff;
     font-size: 20px;
     font-weight: 700;
-    text-decoration: none;
-    display: inline-block;
     padding: 6px 0;
   }
 
-  /* Empuja el botón de login al final del panel */
   .login-mobile {
-    display: block;        /* visible solo en móvil */
-    margin-top: auto;      /* empuja hasta abajo */
+    display: block;
+    margin-top: auto;
     padding-top: 18px;
     border-top: 1px solid rgba(255,255,255,0.12);
     text-align: center;
   }
+
   .login-mobile a {
     color: #fff;
     font-weight: 700;
     letter-spacing: .4px;
-    font-size: 1rem;
   }
 
-  /* Íconos en header (lupa/bolsa) mantienen su posición */
   .menu .iconos {
     position: absolute;
     right: 20px;
     top: 50%;
-    transform: translateY(-50%); /* centra verticalmente */
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     gap: 20px;
     z-index: 2100;
   }
 
-  /* Si ocultaste el ícono de usuario en móvil, lo mantenemos */
   .iconos li:nth-child(2) { display: none; }
 
-  /* Ajustes visuales */
   .logo { font-size: 30px; }
 
-  /* Productos: 2 por fila en móvil */
-  .productos-container { grid-template-columns: repeat(2, 1fr); gap: 25px; }
-  .producto img { max-width: 150px; }
+  .productos-container { grid-template-columns: 1fr; gap: 30px; }
+  .producto img {
+    max-width: 250px;
+    height: auto; /* en móvil dejamos que la altura sea automática para mantener proporción */
+  }
 
-  /* Secciones de horarios: apilan verticalmente */
   .horarios-lista { flex-direction: column; align-items: center; }
   .horario-item { width: 90%; }
 }
 
-/* Muy pequeños (teléfonos compactos) */
 @media (max-width: 500px) {
   .logo { font-size: 18px; }
   .menu .iconos { gap: 12px; }
@@ -606,4 +537,77 @@ footer p {
   .botones > li > a { font-size: 18px; }
 }
 
+/* =======================================================
+   🔹 PRODUCTOS TECNOLÓGICOS
+======================================================= */
 
+.productos-container-tec {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); /* 👈 contenedores más anchos */
+  gap: 20px; /* espacio entre productos */
+  justify-content: center;
+  align-items: start;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 40px 70px; /* 👈 márgenes laterales mucho más pequeños */
+
+}
+
+.producto-tec {
+  background-color: #fff;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Ajuste del contenedor de imágenes de productos tecnología */
+.imagen-container-tec {
+  position: relative;
+  width: 100%;
+  padding-top: 115%; /* 🔹 antes estaba en 100%, ahora más alto */
+  overflow: hidden;
+  border-bottom: 2px solid #f2f2f2;
+  border-radius: 14px 14px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mantener proporción correcta de imágenes */
+.imagen-container-tec img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 🔹 Evita que se corte */
+  transition: opacity 0.4s ease;
+}
+
+.imagen-container-tec img.back { opacity: 0; }
+
+.imagen-container-tec:hover img.front { opacity: 0; }
+.imagen-container-tec:hover img.back { opacity: 1; }
+
+.producto-tec h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 15px 0 8px;
+}
+
+.producto-tec p {
+  font-size: 15px;
+  color: #222;
+  font-weight: 700;
+}
+
+@media (max-width: 992px) {
+  .productos-container-tec { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .productos-container-tec { grid-template-columns: 1fr; }
+}
