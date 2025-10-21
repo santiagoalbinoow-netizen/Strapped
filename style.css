@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=BBH+Sans+Bogle&family=BBH+Sans+Hegarty&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap');
 
+
 /* =======================================================
+
    🔹 RESETEO Y CONFIGURACIÓN GENERAL
+
 ======================================================= */
+
 
 * {
   margin: 0;
@@ -29,8 +33,11 @@ section {
   scroll-margin-top: 120px;
 }
 
+
 /* =======================================================
+
    🔹 CONTENEDORES GENERALES
+
 ======================================================= */
 
 .container {
@@ -46,10 +53,14 @@ main {
   box-sizing: border-box;
 }
 
-.main-container { padding: 0; }
+.main-container { 
+  padding: 0;
+}
 
 /* =======================================================
+
    🔹 HEADER Y MENÚ
+
 ======================================================= */
 
 .header {
@@ -79,7 +90,11 @@ main {
   white-space: nowrap;
 }
 
-/* ===== BOTONES DEL MENÚ ===== */
+/* =======================================================
+
+   🔹 BOTONES DEL MENÚ
+
+======================================================= */
 
 .botones {
   display: flex;
@@ -103,17 +118,24 @@ main {
   transition: width 0.3s ease;
 }
 
-.botones a:hover::after { width: 100%; }
+.botones a:hover::after {
+   width: 100%;
+}
 
 /* =======================================================
+
    🔹 HAMBURGUESA y LOGIN MÓVIL
+
 ======================================================= */
 
-#menu { display: none; }
+#menu {
+  display: none;
+}
 
 .menu label {
   display: none;
   cursor: pointer;
+
 }
 
 .menu-icono {
@@ -140,11 +162,14 @@ main {
   transition: 0.3s;
 }
 
-.login-mobile a:hover { color: #ccc; }
-
+.login-mobile a:hover { 
+  color: #ccc;
+}
 
 /* =========================================================
+
       CARRITO
+
 ==========================================================*/
 
 .carrito-panel {
@@ -161,10 +186,11 @@ main {
   display: flex;
   flex-direction: column;
   padding: 28px 20px;
-  font-family: "Archivo Black", sans-serif;
 }
 
-.carrito-panel.activo { right: 0; }
+.carrito-panel.activo { 
+  right: 0;
+}
 
 .carrito-header {
   display: flex;
@@ -197,7 +223,12 @@ main {
   letter-spacing: 1px;
 }
 
-/* overlay */
+/* =========================================================
+
+      OVERLAY
+
+==========================================================*/
+
 .overlay-carrito {
   position: fixed;
   inset: 0;
@@ -213,9 +244,94 @@ main {
   pointer-events: auto;
 }
 
+/* =========================================================
+
+      CARRITO: ORGANIZACIÓN DE PRODUCTOS
+
+==========================================================*/
+
+/* 1. Contenedor principal de los ítems */
+.carrito-body {
+    /* Sobrescribimos el centrado usado para el mensaje "VACÍO" */
+    display: block !important;
+    align-items: initial !important;
+    justify-content: initial !important;
+    padding: 0 5px;
+    overflow-y: auto; /* Permite scroll si hay muchos productos */
+}
+
+/* 2. Estilo para cada ítem individual (contenedor del producto) */
+.item-carrito {
+    display: flex; /* Habilita Flexbox */
+    align-items: flex-start; /* Alinea los elementos a la parte superior */
+    gap: 15px; /* Espacio entre la imagen y el texto */
+    padding: 15px 0;
+    border-bottom: 1px solid #eeeeee; /* Separador */
+}
+
+/* 3. Estilo para la imagen del producto */
+.item-carrito img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid #f0f0f0;
+}
+
+/* 4. Estilo para el contenedor del texto (título, cantidad, precio) */
+.item-carrito div {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Permite que ocupe el espacio restante */
+}
+
+/* 5. Estilo para los textos */
+.item-carrito h4 {
+    font-size: 14px;
+    margin: 0 0 5px 0;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.item-carrito p {
+    font-size: 12px;
+    margin: 3px 0;
+    color: #666;
+    font-weight: normal;
+}
+
+/* =========================================================
+
+      CARRITO: ESTILOS DE BOTÓN DE ELIMINAR
+
+==========================================================*/
+
+.btn-eliminar {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: auto; /* Empuja el botón a la derecha dentro del flex container */
+    padding: 0 5px;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.btn-eliminar:hover {
+    color: #c00; /* Color rojo para indicar peligro/eliminación */
+}
+
+/* Ajuste al contenedor del item para acomodar el botón */
+.item-carrito {
+    /* ... Tus estilos existentes ... */
+    justify-content: space-between; /* Asegura el espacio entre el producto y el botón */
+}
 
 /* =======================================================
+
    🔹 MODAL LOGIN / REGISTER
+
 ======================================================= */
 
 .modal {
@@ -254,7 +370,9 @@ main {
   transition: 0.3s;
 }
 
-.close-btn:hover { color: #000; }
+.close-btn:hover {
+   color: #000;
+}
 
 .form-toggle {
   display: flex;
@@ -283,7 +401,9 @@ main {
   flex-direction: column;
 }
 
-.form.active { display: flex; }
+.form.active { 
+  display: flex; 
+}
 
 .form h2 {
   margin-bottom: 1rem;
@@ -299,35 +419,16 @@ main {
   transition: 0.3s;
 }
 
-.form input:focus { border-color: #000; }
-
-.btn {
-  background-color: #000;
-  color: #fff;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-weight: 600;
-}
-
-.btn-secundario{
-  background-color: #000;
-  color: #fff;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.3s;
-  font-weight: 600;
-}
-
-.btn:hover { background-color: #333; }
+.form input:focus {
+   border-color: #000; 
+  }
 
 /* =======================================================
+
    🔹 BANNER
+
 ======================================================= */
+
 .banner video {
   width: 100%;
   height: 100vh;
@@ -344,7 +445,9 @@ main {
 }
 
 /* =======================================================
+
    ✅ SECCIÓN PRODUCTOS
+
 ======================================================= */
 
 .section-productos {
@@ -406,9 +509,10 @@ main {
   margin: 0;
 }
 
-
 /* =======================================================
+
    🔹 ÍCONOS GENERALES
+
 ======================================================= */
 
 .iconos {
@@ -420,6 +524,10 @@ main {
 .iconos li a {
   display: inline-block;
   position: relative;
+}
+
+.iconos span{
+  color: #a5a5a5;
 }
 
 .iconos li a img {
@@ -440,11 +548,18 @@ main {
   transition: width 0.3s ease;
 }
 
-.iconos li a:hover::after { width: 100%; }
-.iconos li a:hover img { filter: invert(1); }
+.iconos li a:hover::after {
+   width: 100%; 
+}
+
+.iconos li a:hover img { 
+  filter: invert(1); 
+}
 
 /* =======================================================
+
    🔹 SECCIONES DE SOPORTE Y HORARIOS
+
 ======================================================= */
 
 .section-horarios {
@@ -514,7 +629,9 @@ main {
 }
 
 /* =======================================================
+
    🔹 FOOTER
+
 ======================================================= */
 
 footer {
@@ -541,11 +658,325 @@ footer p {
 }
 
 /* =======================================================
-   🔹 RESPONSIVE DESIGN
+
+   🔹 PRODUCTOS TECNOLÓGICOS
+
 ======================================================= */
 
-@media (max-width: 950px) {
-  .menu label { display: block; z-index: 2100; }
+.catalogo-tecnologia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.productos-container-tec {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* fuerza 4 por fila */
+  gap: 30px;
+  justify-content: center;
+  align-items: start;
+  width: 95%; /* ocupa casi todo el ancho de la pantalla */
+  margin: 0 auto;
+}
+
+.producto-tec {
+  background-color: #fff;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.producto-tec:hover {
+  transform: scale(1.01);
+}
+
+/* Ajuste del contenedor de imágenes de productos tecnología */
+.imagen-container-tec {
+  position: relative;
+  width: 100%;
+  padding-top: 120%; /* 🔹 antes estaba en 100%, ahora más alto */
+  overflow: hidden;
+  border-bottom: 2px solid #000000;
+  border-radius: 14px 14px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mantener proporción correcta de imágenes */
+.imagen-container-tec img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 🔹 Evita que se corte */
+  transition: opacity 0.4s ease;
+}
+
+.imagen-container-tec img.back {
+   opacity: 0; 
+}
+
+.imagen-container-tec:hover img.front {
+   opacity: 0;
+}
+
+.imagen-container-tec:hover img.back {
+   opacity: 1; 
+}
+
+.producto-tec h3 {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 15px 0 8px;
+  text-align: left;
+}
+
+.producto-tec p {
+  font-size: 15px;
+  color: #413a3ac4;
+  font-weight: 700;
+  text-align: left;
+}
+
+
+/* =======================================================
+
+   PRODUCT PAGE (Detalles de producto individual)
+
+======================================================= */
+
+.producto-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 5%;
+  gap: 60px;
+  background-color: #fff;
+  margin-top: 100px;
+}
+
+.producto-imagen {
+  flex: 1 1 400px;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor del carrusel (vista móvil) */
+.galeria-carrusel {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+/* La pista donde se deslizan las imágenes */
+.carrusel-pista {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+}
+
+/* Imágenes dentro del carrusel */
+.carrusel-img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* CONTROLES DE NAVEGACIÓN (Flechas) */
+.carrusel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 26px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.3s;
+  z-index: 5;
+}
+
+.carrusel-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.carrusel-btn.prev {
+    left: 10px;
+}
+
+.carrusel-btn.next {
+    right: 10px;
+}
+
+.producto-imagen {
+  flex: 1 1 400px;
+  max-width: 450px;/* Quita el text-align: center para usar Flexbox/Grid para la galería */
+  text-align: left;
+}
+
+.producto-imagen img {
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.producto-imagen img:hover {
+  transform: scale(1.01);
+}
+
+.producto-info {
+  flex: 1 1 400px;
+  max-width: 500px;
+}
+
+.producto-info h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 800;
+  color: #000;
+}
+
+.precio {
+  font-size: 1.3rem;
+  margin: 15px 0;
+  color: #000;
+}
+
+.precio span {
+  text-decoration: line-through;
+  color: gray;
+  margin-right: 10px;
+}
+
+.cantidad {
+  margin: 25px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/*Quitar las flechas del contador*/
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cantidad input {
+  width: 50px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.btn-cantidad {
+  background: #000;
+  font-size: 18px;
+  color: #fff;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-cantidad:hover {
+  background: #333;
+}
+
+.btn {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #333;
+}
+
+.btn-secundario {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.btn-secundario:hover {
+  background: #000;
+  color: #fff;
+}
+
+ul.detalles {
+  margin-top: 25px;
+  list-style: disc;
+  padding-left: 20px;
+}
+
+ul.detalles li {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* =======================================================
+
+   🔹 RESPONSIVE DESIGN
+
+======================================================= */
+
+@media (max-width: 900px) {
+
+  .producto-main {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .producto-info {
+    max-width: 100%;
+  }
+
+  .cantidad {
+    justify-content: center;
+  }
+
+  .menu label {
+    display: block;
+    z-index: 2100;
+  }
 
   .menu .botones {
     position: fixed;
@@ -627,108 +1058,33 @@ footer p {
     z-index: 2100;
   }
 
-  .iconos li:nth-child(2) { display: none; }
+  .iconos li:nth-child(2) {
+     display: none; 
+  }
 
-  .logo { font-size: 30px; }
+  .logo {
+     font-size: 30px;
+  }
 
-  .productos-container { grid-template-columns: 1fr; gap: 30px; }
+  .productos-container {
+     grid-template-columns: 1fr;
+      gap: 30px; 
+  }
+
   .producto img {
     max-width: 250px;
     height: auto; /* en móvil dejamos que la altura sea automática para mantener proporción */
   }
 
-  .horarios-lista { flex-direction: column; align-items: center; }
-  .horario-item { width: 90%; }
-}
+  .horarios-lista {
+    flex-direction: column;
+    align-items: center;
+  }
 
-@media (max-width: 500px) {
-  .logo { font-size: 18px; }
-  .menu .iconos { gap: 12px; }
-  .menu-icono { width: 26px; }
-  .botones > li > a { font-size: 18px; }
-}
+  .horario-item {
+     width: 90%; 
+  }
 
-/* =======================================================
-   🔹 PRODUCTOS TECNOLÓGICOS
-======================================================= */
-
-.catalogo-tecnologia {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.productos-container-tec {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* fuerza 4 por fila */
-  gap: 30px;
-  justify-content: center;
-  align-items: start;
-  width: 95%; /* ocupa casi todo el ancho de la pantalla */
-  margin: 0 auto;
-}
-
-.producto-tec {
-  background-color: #fff;
-  overflow: hidden;
-  width: 100%;
-  max-width: 300px;
-  text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-decoration: none;
-  color: inherit;
-}
-
-.producto-tec:hover {
-  transform: scale(1.01);
-}
-
-/* Ajuste del contenedor de imágenes de productos tecnología */
-.imagen-container-tec {
-  position: relative;
-  width: 100%;
-  padding-top: 120%; /* 🔹 antes estaba en 100%, ahora más alto */
-  overflow: hidden;
-  border-bottom: 2px solid #000000;
-  border-radius: 14px 14px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Mantener proporción correcta de imágenes */
-.imagen-container-tec img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* 🔹 Evita que se corte */
-  transition: opacity 0.4s ease;
-}
-
-.imagen-container-tec img.back { opacity: 0; }
-
-.imagen-container-tec:hover img.front { opacity: 0; }
-.imagen-container-tec:hover img.back { opacity: 1; }
-
-.producto-tec h3 {
-  font-size: 16px;
-  font-weight: 800;
-  margin: 15px 0 8px;
-  text-align: left;
-}
-
-.producto-tec p {
-  font-size: 15px;
-  color: #413a3ac4;
-  font-weight: 700;
-    text-align: left;
-}
-
-@media (max-width: 950px) {
   .productos-container-tec {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 🔹 2 productos por fila */
@@ -739,164 +1095,74 @@ footer p {
   .producto-tec {
     max-width: 100%;
   }
+
+  .producto-imagen {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* En escritorio, las imágenes se muestran estáticamente al lado */
+  .galeria-carrusel {
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+    height: auto;
+  }
+
+  .carrusel-pista {
+    display: flex;
+    width: 100%; /* ✅ Importante: evita que se colapse */
+  }
+
+  .carrusel-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  /* Ocultamos los botones en escritorio */
+  .carrusel-btn {
+    font-size: 22px;
+    padding: 8px 12px;
+  }
+
+  .producto-imagen {
+      display: block; /* Mantiene la columna original */
+      text-align: center;
+  }
+
+  .producto-imagen img {
+    margin-bottom: 20px;
+    width: 80%; /* Usa tu estilo original */
+  }
 }
 
-/* Para pantallas aún más pequeñas (celulares) */
-@media (max-width: 600px) {
+
+
+@media (max-width: 500px) {
+
+  .logo {
+     font-size: 18px;
+  }
+
+  .menu .iconos {
+     gap: 12px; 
+  }
+
+  .menu-icono {
+     width: 26px; 
+  }
+
+  .botones > li > a {
+     font-size: 18px; 
+  }
+
   .productos-container-tec {
     grid-template-columns: 2fr; /* 🔹 2 producto por fila */
   }
+
+
 }
 
-/* =======================================================
-   PRODUCT PAGE (Detalles de producto individual)
-======================================================= */
-
-
-
-.producto-main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 60px 5%;
-  gap: 60px;
-  background-color: #fff;
-  margin-top: 100px;
-}
-
-.producto-imagen {
-  flex: 1 1 400px;
-  max-width: 450px;
-  text-align: center;
-}
-
-.producto-imagen img {
-  width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
-}
-
-.producto-imagen img:hover {
-  transform: scale(1.05);
-}
-
-.producto-info {
-  flex: 1 1 400px;
-  max-width: 500px;
-}
-
-.producto-info h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-  font-weight: 800;
-  color: #000;
-}
-
-.precio {
-  font-size: 1.3rem;
-  margin: 15px 0;
-  color: #000;
-}
-
-.precio span {
-  text-decoration: line-through;
-  color: gray;
-  margin-right: 10px;
-}
-
-.oferta {
-  display: inline-block;
-  background: #f7e600;
-  color: #000;
-  padding: 5px 12px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.cantidad {
-  margin: 25px 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.cantidad input {
-  width: 50px;
-  text-align: center;
-  padding: 5px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-}
-
-.btn-cantidad {
-  background: #000;
-  color: #fff;
-  border: none;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s;
-}
-
-.btn-cantidad:hover {
-  background: #333;
-}
-
-.btn {
-  display: inline-block;
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 10px;
-  width: 100%;
-  transition: background 0.3s;
-}
-
-.btn:hover {
-  background: #333;
-}
-
-.btn-secundario {
-  background: #fff;
-  border: 2px solid #000;
-  color: #000;
-}
-
-.btn-secundario:hover {
-  background: #000;
-  color: #fff;
-}
-
-ul.detalles {
-  margin-top: 25px;
-  list-style: disc;
-  padding-left: 20px;
-}
-
-ul.detalles li {
-  margin-bottom: 8px;
-  color: #333;
-}
-
-@media (max-width: 900px) {
-  .producto-main {
-    flex-direction: column;
-    text-align: center;
-  }
-  .producto-info {
-    max-width: 100%;
-  }
-  .cantidad {
-    justify-content: center;
-  }
-}
