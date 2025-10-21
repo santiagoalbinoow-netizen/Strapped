@@ -9,12 +9,15 @@
 </head>
 <body>
 
-    <header class="header">
+  <header class="header">
     <div class="menu container">
-      <a href="index.html" class="logo">STRAPPED</a>
+      <a href="#inicio" class="logo">STRAPPED</a>
 
       <input type="checkbox" id="menu">
-      <label for="menu"><img src="Icono.png" class="menu-icono" alt="Menú"></label>
+      <label for="menu" class="menu-btn">
+        <img src="Icono.png" class="menu-icono" alt="Menú">
+        <img src="Xicono.jpg" class="close-icono" alt="Cerrar Menú">
+      </label>
       <label for="menu" class="overlay"></label>
 
       <ul class="botones">
@@ -28,8 +31,76 @@
       <ul class="iconos">
         <li><a href="#"><img src="Lupa.png" alt="Buscar"></a></li>
         <li><a href="#" id="openLogin"><img src="User.png" alt="Usuario"></a></li>
-        <li><a href="#"><img src="Bolsa.png" alt="Bolsa"></a></li>
+        <li><a href="#" class="bolsa"><img src="Bolsa.png" alt="Carrito"><span id="contador-carrito">0</span></a></li>
       </ul>
+
+
+        <div id="carrito-panel" class="carrito-panel">
+          <div class="carrito-header">
+            <h2>TU CARRITO</h2>
+            <button id="cerrar-carrito" class="cerrar-carrito">×</button>
+          </div>
+          <div class="carrito-body">
+            <p>EL CARRITO ESTÁ VACÍO</p>
+          </div>
+        </div>
+
+        <!-- Fondo oscuro al abrir -->
+          <div id="overlay-carrito" class="overlay-carrito"></div>
+
+
+        <script>
+          // Espera a que cargue el DOM
+          document.addEventListener('DOMContentLoaded', function() {
+            // Buscamos el <a> que contiene la img del carrito (seguro existe)
+            const imgCarrito = document.querySelector('.iconos img[alt="Carrito"]');
+            const btnCarrito = imgCarrito ? imgCarrito.closest('a') : null;
+
+            const panelCarrito = document.getElementById('carrito-panel');
+            const cerrarCarrito = document.getElementById('cerrar-carrito');
+            const overlay = document.getElementById('overlay-carrito');
+
+            if (!btnCarrito) {
+              console.error('No se encontró el botón del carrito (a > img[alt="Carrito"])');
+              return;
+            }
+            if (!panelCarrito || !cerrarCarrito || !overlay) {
+              console.error('Faltan elementos del panel del carrito (panel, cerrar o overlay).');
+              return;
+            }
+
+            // Abrir
+            btnCarrito.addEventListener('click', function(e) {
+              e.preventDefault(); // evita navegación si es <a href="#">
+              panelCarrito.classList.add('activo');
+              overlay.classList.add('activo');
+              // opcional: cerrar menu responsive si está abierto
+              const menuCheckbox = document.getElementById('menu');
+              if (menuCheckbox) menuCheckbox.checked = false;
+            });
+
+            // Cerrar con botón
+            cerrarCarrito.addEventListener('click', function() {
+              panelCarrito.classList.remove('activo');
+              overlay.classList.remove('activo');
+            });
+
+            // Cerrar al clicar overlay
+            overlay.addEventListener('click', function() {
+              panelCarrito.classList.remove('activo');
+              overlay.classList.remove('activo');
+            });
+
+            // cerrar con ESC
+            document.addEventListener('keydown', function(e) {
+              if (e.key === 'Escape') {
+                panelCarrito.classList.remove('activo');
+                overlay.classList.remove('activo');
+              }
+            });
+          });
+        </script>
+
 
       <!-- MODAL LOGIN -->
       <div id="authModal" class="modal">
@@ -103,47 +174,85 @@
     <h1 class="productos-titulo">Tecnología</h1>
     <div class="productos-container-tec">
 
-    <div class="producto-tec">
-        <div class="imagen-container-tec">
-        <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
-        <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
-        </div>
-        <h3>Audífonos Bluetooth STRAPPED</h3>
-        <p>$120.000 COP</p>
-    </div>
+      <a href="Airpods3.html" class="producto-tec">
+          <div class="imagen-container-tec">
+          <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
+          <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
+          </div>
+          <h3>Audífonos Bluetooth STRAPPED</h3>
+          <p>$120.000 COP</p>
+      </a>
 
-    <div class="producto-tec">
-        <div class="imagen-container-tec">
-        <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
-        <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
-        </div>
-        <h3>Audífonos Bluetooth STRAPPED</h3>
-        <p>$120.000 COP</p>
-    </div>
+      <div class="producto-tec">
+          <div class="imagen-container-tec">
+          <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
+          <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
+          </div>
+          <h3>Audífonos Bluetooth STRAPPED</h3>
+          <p>$120.000 COP</p>
+      </div>
 
-    <div class="producto-tec">
-        <div class="imagen-container-tec">
-        <img src="imagenes/cargador-frente.jpg" class="front" alt="Cargador rápido frente">
-        <img src="imagenes/cargador-detras.jpg" class="back" alt="Cargador rápido detrás">
-        </div>
-        <h3>Cargador Rápido 25W</h3>
-        <p>$85.000 COP</p>
-    </div>
+      <div class="producto-tec">
+          <div class="imagen-container-tec">
+          <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
+          <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
+          </div>
+          <h3>Cargador Rápido 25W</h3>
+          <p>$85.000 COP</p>
+      </div>
 
-    <div class="producto-tec">
-        <div class="imagen-container-tec">
-        <img src="imagenes/parlante-frente.jpg" class="front" alt="Parlante STRAPPED frente">
-        <img src="imagenes/parlante-detras.jpg" class="back" alt="Parlante STRAPPED detrás">
-        </div>
-        <h3>Parlante Portátil STRAPPED</h3>
-        <p>$160.000 COP</p>
-    </div>
+      <div class="producto-tec">
+          <div class="imagen-container-tec">
+          <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
+          <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
+          </div>
+          <h3>Parlante Portátil STRAPPED</h3>
+          <p>$160.000 COP</p>
+      </div>
+
+      <div class="producto-tec">
+          <div class="imagen-container-tec">
+          <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
+          <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
+          </div>
+          <h3>Audífonos Bluetooth STRAPPED</h3>
+          <p>$120.000 COP</p>
+      </div>
+
+      <div class="producto-tec">
+          <div class="imagen-container-tec">
+          <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
+          <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
+          </div>
+          <h3>Audífonos Bluetooth STRAPPED</h3>
+          <p>$120.000 COP</p>
+      </div>
+
+      <div class="producto-tec">
+          <div class="imagen-container-tec">
+          <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
+          <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
+          </div>
+          <h3>Cargador Rápido 25W</h3>
+          <p>$85.000 COP</p>
+      </div>
+
+      <div class="producto-tec">
+          <div class="imagen-container-tec">
+          <img src="Air.png" class="front" alt="Audífono STRAPPED frente">
+          <img src="Air3.png" class="back" alt="Audífono STRAPPED detrás">
+          </div>
+          <h3>Parlante Portátil STRAPPED</h3>
+          <p>$160.000 COP</p>
+      </div>  
 
     </div>
     </section>
 
 
   </main>
+
+  <script src="carrito.js"></script>
 
 
   <footer id="contacto">
@@ -158,5 +267,4 @@
   </footer>
     
 </body>
-
 </html>
