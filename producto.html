@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STRAPPED</title>
+  <link rel="stylesheet" href="style.css">
+  <style>html { scroll-behavior: smooth; }</style>
+</head>
+<body>
+
+    <header class="header">
+    <div class="menu container">
+      <a href="index.html" class="logo">STRAPPED</a>
+
+      <input type="checkbox" id="menu">
+      <label for="menu" class="menu-btn">
+        <img src="imagenes/icono.png" class="menu-icono" alt="Menú">
+        <img src="imagenes/Xicono.jpg" class="close-icono" alt="Cerrar Menú">
+      </label>
+      <label for="menu" class="overlay"></label>
+
+      <ul class="botones">
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#soporte">Soporte</a></li>
+        <li><a href="#info">Pagos y Envíos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li class="login-mobile"><a href="#" id="loginBtn">Iniciar Sesión / Registrarse</a></li>
+      </ul>
+
+      <ul class="iconos">
+        <li><a href="#"><img src="imagenes/lupa.png" alt="Buscar"></a></li>
+        <li><a href="#" id="openLogin"><img src="imagenes/user.png" alt="Usuario"></a></li>
+        <li><a href="#" class="bolsa"><img src="imagenes/bolsa.png" alt="Carrito"><span id="contador-carrito">0</span></a></li>
+      </ul>
+
+
+        <div id="carrito-panel" class="carrito-panel">
+          <div class="carrito-header">
+            <h2>TU CARRITO</h2>
+            <button id="cerrar-carrito" class="cerrar-carrito">×</button>
+          </div>
+          <div class="carrito-body">
+            <p>EL CARRITO ESTÁ VACÍO</p>
+          </div>
+        </div>
+
+      <!-- Fondo oscuro al abrir -->
+      <div id="overlay-carrito" class="overlay-carrito"></div>
+
+
+      <!-- MODAL LOGIN -->
+      <div id="authModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" id="closeModal">&times;</span>
+
+          <div class="form-container">
+            <div class="form-toggle">
+              <button id="loginToggle" class="active">Iniciar Sesión</button>
+              <button id="registerToggle">Registrarse</button>
+            </div>
+
+            <form id="loginForm" class="form active">
+              <h2>Iniciar Sesión</h2>
+              <input type="email" placeholder="Correo electrónico" required>
+              <input type="password" placeholder="Contraseña" required>
+              <button type="submit" class="btn">Entrar</button>
+            </form>
+
+            <form id="registerForm" class="form">
+              <h2>Crear Cuenta</h2>
+              <input type="text" placeholder="Nombre completo" required>
+              <input type="email" placeholder="Correo electrónico" required>
+              <input type="password" placeholder="Contraseña" required>
+              <button type="submit" class="btn">Registrarse</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </header>
+
+    <div class="producto-main">
+        <div class="producto-imagen">
+            <div class="galeria-carrusel">  
+                <button class="carrusel-btn prev" aria-label="Anterior">‹</button>
+                <div class="carrusel-pista">
+                    <img src="imagenes/Air.png" alt="Audífonos STRAPPED" class="carrusel-img">
+                    <img src="imagenes/Air3.png" alt="Estuche de Audífonos STRAPPED" class="carrusel-img">
+                </div>
+                <button class="carrusel-btn next" aria-label="Siguiente">›</button>
+            </div>
+        </div>
+
+        <div class="producto-info">
+        <h1>Audífonos Bluetooth STRAPPED</h1>
+        <div class="precio">
+            <span>$150.000 COP</span> $120.000 COP
+        </div>
+
+        <p>Impuestos incluidos. Los <a href="index.html" style="text-decoration: underline;">gastos de envío</a> se calculan en la pantalla de pago.</p>
+
+        <div class="cantidad">
+            <label for="cantidad">Cantidad:</label>
+            <button class="btn-cantidad">-</button>
+            <input type="number" id="cantidad" value="1" min="1">
+            <button class="btn-cantidad">+</button>
+        </div>
+
+        <button class="btn-secundario">Agregar al carrito</button>
+        <button class="btn">Comprar ahora</button>
+
+        <ul class="detalles">
+            <li>Resistente al agua y salpicaduras.</li>
+            <li>Vincula iOS / Android.</li>
+            <li>Batería de hasta 7 horas continuas.</li>
+            <li>Estuche con carga rápida por USB-C.</li>
+        </ul>
+        </div>
+    </div>
+
+    <script src="carrito.js"></script>  
+
+
+    <footer id="contacto">
+    <div class="footer-container">
+      <ul class="iconos">
+        <li><a href="#"><img src="imagenes/instagram.png" alt="Instagram"></a></li>
+        <li><a href="#"><img src="imagenes/whatsapp.png" alt="WhatsApp"></a></li>
+        <li><a href="#"><img src="imagenes/tiktok.png" alt="TikTok"></a></li>
+      </ul>
+    </div>
+    <p>&copy; 2025 STRAPPED. Todos los derechos reservados.</p>
+    </footer>
+    
+</body>
+</html>
