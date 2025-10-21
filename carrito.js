@@ -225,8 +225,10 @@ if (botonAgregar) {
 /* =========================
    6) Inicialización al cargar la página
    ========================= */
-actualizarContador();
-renderizarCarrito();
+document.addEventListener("DOMContentLoaded", () => {
+  actualizarContador();
+  renderizarCarrito();
+});
 
 /* =========================
    7) Botones +/- cantidad (mantengo tu lógica)
@@ -382,4 +384,5 @@ document.addEventListener('DOMContentLoaded', () => {
           registerForm.classList.add("active");
           loginForm.classList.remove("active");
         });
+
 
