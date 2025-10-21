@@ -1072,7 +1072,7 @@ ul.detalles li {
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     z-index: 2100;
   }
 
@@ -1187,6 +1187,7 @@ ul.detalles li {
 
 
 }
+
 
 
 
