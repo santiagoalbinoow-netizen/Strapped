@@ -11,21 +11,21 @@ const productos = [
     id: 1,
     nombre: "Audífonos Bluetooth STRAPPED",
     precio: 120000,
-    imagenes: ["imagenes/Air.png", "imagenes/Air3.png"],
+    imagenes: ["Air.png", "Air3.png"],
     descripcion: "Audífonos Bluetooth resistentes al agua y de sonido envolvente."
   },
   {
     id: 2,
     nombre: "Cargador Rápido 25W",
     precio: 85000,
-    imagenes: ["imagenes/Cargador.png"],
+    imagenes: ["Cargador.png"],
     descripcion: "Cargador rápido con puerto USB-C y protección contra sobrecarga."
   },
   {
     id: 3,
     nombre: "Parlante Portátil STRAPPED",
     precio: 160000,
-    imagenes: ["imagenes/Parlante.png"],
+    imagenes: ["Parlante.png"],
     descripcion: "Sonido potente con conexión Bluetooth y batería de larga duración."
   }
 ];
@@ -382,3 +382,4 @@ document.addEventListener('DOMContentLoaded', () => {
           registerForm.classList.add("active");
           loginForm.classList.remove("active");
         });
+
