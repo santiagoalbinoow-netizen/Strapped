@@ -357,32 +357,37 @@ document.addEventListener('DOMContentLoaded', () => {
             });
           });
 
-        const modal = document.getElementById("authModal");
-        const openBtn = document.getElementById("openLogin");
-        const mobileLogin = document.getElementById("loginBtn");
-        const closeBtn = document.getElementById("closeModal");
-        const loginToggle = document.getElementById("loginToggle");
-        const registerToggle = document.getElementById("registerToggle");
-        const loginForm = document.getElementById("loginForm");
-        const registerForm = document.getElementById("registerForm");
-        const menuCheckbox = document.getElementById("menu");
+  try {
+  // usa let o var para evitar colisión global si se ejecuta dos veces
+  let modal = document.getElementById("authModal");
+  const openBtn = document.getElementById("openLogin");
+  const mobileLogin = document.getElementById("loginBtn");
+  const closeBtn = document.getElementById("closeModal");
+  const loginToggle = document.getElementById("loginToggle");
+  const registerToggle = document.getElementById("registerToggle");
+  const loginForm = document.getElementById("loginForm");
+  const registerForm = document.getElementById("registerForm");
+  const menuCheckbox = document.getElementById("menu");
 
-        openBtn.addEventListener("click", e => { e.preventDefault(); modal.style.display = "flex"; });
-        mobileLogin.addEventListener("click", e => { e.preventDefault(); modal.style.display = "flex"; menuCheckbox.checked = false; });
-        closeBtn.addEventListener("click", () => modal.style.display = "none");
-        window.addEventListener("click", e => { if (e.target === modal) modal.style.display = "none"; });
+  if (openBtn) openBtn.addEventListener("click", e => { e.preventDefault(); if (modal) modal.style.display = "flex"; });
+  if (mobileLogin) mobileLogin.addEventListener("click", e => { e.preventDefault(); if (modal) modal.style.display = "flex"; if (menuCheckbox) menuCheckbox.checked = false; });
+  if (closeBtn) closeBtn.addEventListener("click", () => { if (modal) modal.style.display = "none"; });
+  window.addEventListener("click", e => { if (e.target === modal) if (modal) modal.style.display = "none"; });
 
-        loginToggle.addEventListener("click", () => {
-          loginToggle.classList.add("active");
-          registerToggle.classList.remove("active");
-          loginForm.classList.add("active");
-          registerForm.classList.remove("active");
-        });
-        registerToggle.addEventListener("click", () => {
-          registerToggle.classList.add("active");
-          loginToggle.classList.remove("active");
-          registerForm.classList.add("active");
-          loginForm.classList.remove("active");
-        });
-
-
+  if (loginToggle && registerToggle && loginForm && registerForm) {
+    loginToggle.addEventListener("click", () => {
+      loginToggle.classList.add("active");
+      registerToggle.classList.remove("active");
+      loginForm.classList.add("active");
+      registerForm.classList.remove("active");
+    });
+    registerToggle.addEventListener("click", () => {
+      registerToggle.classList.add("active");
+      loginToggle.classList.remove("active");
+      registerForm.classList.add("active");
+      loginForm.classList.remove("active");
+    });
+  }
+} catch (err) {
+  console.warn('[carrito.js] modal error (ignorado):', err);
+}
