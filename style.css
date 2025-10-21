@@ -1076,10 +1076,6 @@ ul.detalles li {
     z-index: 2100;
   }
 
-  .iconos li:nth-child(2) {
-     display: none; 
-  }
-
   .logo {
      font-size: 30px;
   }
@@ -1183,4 +1179,5 @@ ul.detalles li {
 
 
 }
+
 
