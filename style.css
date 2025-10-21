@@ -1076,6 +1076,14 @@ ul.detalles li {
     z-index: 2100;
   }
 
+   .iconos img[alt="Usuario"] {
+    display: none !important;
+  }
+
+  footer .iconos img[alt="WhatsApp"] {
+    display: inline-block !important;
+  }
+
   .logo {
      font-size: 30px;
   }
@@ -1179,5 +1187,6 @@ ul.detalles li {
 
 
 }
+
 
 
