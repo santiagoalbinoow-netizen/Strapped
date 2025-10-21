@@ -106,7 +106,7 @@ main {
 .botones a:hover::after { width: 100%; }
 
 /* =======================================================
-   🔹 HAMBURGUESA Y LOGIN MÓVIL
+   🔹 HAMBURGUESA y LOGIN MÓVIL
 ======================================================= */
 
 #menu { display: none; }
@@ -122,9 +122,6 @@ main {
   cursor: pointer;
   filter: invert(1);
 }
-
-.menu label img { transition: all 0.3s ease; }
-#menu:checked + label img { content: url("Xicono.jpg"); }
 
 .login-mobile {
   display: none;
@@ -144,6 +141,78 @@ main {
 }
 
 .login-mobile a:hover { color: #ccc; }
+
+
+/* =========================================================
+      CARRITO
+==========================================================*/
+
+.carrito-panel {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 360px;
+  max-width: 90%;
+  height: 100vh;
+  background-color: #ffffff;
+  box-shadow: -6px 0 20px rgba(0,0,0,0.18);
+  transition: right 0.38s ease;
+  z-index: 12000; /* por encima del header */
+  display: flex;
+  flex-direction: column;
+  padding: 28px 20px;
+  font-family: "Archivo Black", sans-serif;
+}
+
+.carrito-panel.activo { right: 0; }
+
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.carrito-header h2 {
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.cerrar-carrito {
+  background: none;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.carrito-body {
+  margin-top: 20px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b8b8b;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* overlay */
+.overlay-carrito {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.38s ease;
+  z-index: 11000;
+}
+
+.overlay-carrito.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 
 /* =======================================================
    🔹 MODAL LOGIN / REGISTER
@@ -233,6 +302,17 @@ main {
 .form input:focus { border-color: #000; }
 
 .btn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.btn-secundario{
   background-color: #000;
   color: #fff;
   border: none;
@@ -484,6 +564,37 @@ footer p {
 
   #menu:checked ~ .botones { left: 0; }
 
+  .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2200;
+  }
+
+  .menu-btn img {
+    width: 28px;
+    height: auto;
+  }
+
+  /* Mostrar solo el icono de menú al inicio */
+  .menu-btn .menu-icono {
+    display: inline-block;
+  }
+
+  .menu-btn .close-icono {
+    display: none;
+  }
+
+  /* Cuando el menú está activo, cambia los íconos */
+  #menu:checked + .menu-btn .menu-icono {
+    display: none;
+  }
+
+  #menu:checked + .menu-btn .close-icono {
+    display: inline-block;
+  }
+
   .botones > li > a {
     color: #fff;
     font-size: 20px;
@@ -541,16 +652,21 @@ footer p {
    🔹 PRODUCTOS TECNOLÓGICOS
 ======================================================= */
 
+.catalogo-tecnologia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .productos-container-tec {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); /* 👈 contenedores más anchos */
-  gap: 20px; /* espacio entre productos */
+  grid-template-columns: repeat(4, 1fr); /* fuerza 4 por fila */
+  gap: 30px;
   justify-content: center;
   align-items: start;
-  max-width: 1600px;
+  width: 95%; /* ocupa casi todo el ancho de la pantalla */
   margin: 0 auto;
-  padding: 40px 70px; /* 👈 márgenes laterales mucho más pequeños */
-
 }
 
 .producto-tec {
@@ -560,15 +676,21 @@ footer p {
   max-width: 300px;
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.producto-tec:hover {
+  transform: scale(1.01);
 }
 
 /* Ajuste del contenedor de imágenes de productos tecnología */
 .imagen-container-tec {
   position: relative;
   width: 100%;
-  padding-top: 115%; /* 🔹 antes estaba en 100%, ahora más alto */
+  padding-top: 120%; /* 🔹 antes estaba en 100%, ahora más alto */
   overflow: hidden;
-  border-bottom: 2px solid #f2f2f2;
+  border-bottom: 2px solid #000000;
   border-radius: 14px 14px 0 0;
   display: flex;
   align-items: center;
@@ -596,18 +718,185 @@ footer p {
   font-size: 16px;
   font-weight: 800;
   margin: 15px 0 8px;
+  text-align: left;
 }
 
 .producto-tec p {
   font-size: 15px;
-  color: #222;
+  color: #413a3ac4;
   font-weight: 700;
+    text-align: left;
 }
 
-@media (max-width: 992px) {
-  .productos-container-tec { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 950px) {
+  .productos-container-tec {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 🔹 2 productos por fila */
+    gap: 2rem;
+    justify-items: center;
+  }
+
+  .producto-tec {
+    max-width: 100%;
+  }
 }
 
+/* Para pantallas aún más pequeñas (celulares) */
 @media (max-width: 600px) {
-  .productos-container-tec { grid-template-columns: 1fr; }
+  .productos-container-tec {
+    grid-template-columns: 2fr; /* 🔹 2 producto por fila */
+  }
+}
+
+/* =======================================================
+   PRODUCT PAGE (Detalles de producto individual)
+======================================================= */
+
+
+
+.producto-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 5%;
+  gap: 60px;
+  background-color: #fff;
+  margin-top: 100px;
+}
+
+.producto-imagen {
+  flex: 1 1 400px;
+  max-width: 450px;
+  text-align: center;
+}
+
+.producto-imagen img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.producto-imagen img:hover {
+  transform: scale(1.05);
+}
+
+.producto-info {
+  flex: 1 1 400px;
+  max-width: 500px;
+}
+
+.producto-info h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 800;
+  color: #000;
+}
+
+.precio {
+  font-size: 1.3rem;
+  margin: 15px 0;
+  color: #000;
+}
+
+.precio span {
+  text-decoration: line-through;
+  color: gray;
+  margin-right: 10px;
+}
+
+.oferta {
+  display: inline-block;
+  background: #f7e600;
+  color: #000;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.cantidad {
+  margin: 25px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cantidad input {
+  width: 50px;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.btn-cantidad {
+  background: #000;
+  color: #fff;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-cantidad:hover {
+  background: #333;
+}
+
+.btn {
+  display: inline-block;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  width: 100%;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: #333;
+}
+
+.btn-secundario {
+  background: #fff;
+  border: 2px solid #000;
+  color: #000;
+}
+
+.btn-secundario:hover {
+  background: #000;
+  color: #fff;
+}
+
+ul.detalles {
+  margin-top: 25px;
+  list-style: disc;
+  padding-left: 20px;
+}
+
+ul.detalles li {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+@media (max-width: 900px) {
+  .producto-main {
+    flex-direction: column;
+    text-align: center;
+  }
+  .producto-info {
+    max-width: 100%;
+  }
+  .cantidad {
+    justify-content: center;
+  }
 }
