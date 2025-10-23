@@ -11,14 +11,16 @@
 
   <header class="header">
     <div class="menu container">
-      <a href="#inicio" class="logo">STRAPPED</a>
 
-      <input type="checkbox" id="menu">
-      <label for="menu" class="menu-btn">
-        <img src="Icono.png" class="menu-icono" alt="Menú">
-        <img src="Xicono.jpg" class="close-icono" alt="Cerrar Menú">
-      </label>
-      <label for="menu" class="overlay"></label>
+      <ul>
+        <li><a href="#" class="icono"><img src="Imagenes/Icono.png" alt="icono"></a></li>
+      </ul>
+
+      <div id="botones-panel" class="botones-panel">
+        
+      </div>
+
+      <a href="index.html" class="logo">STRAPPED</a>
 
       <ul class="botones">
         <li><a href="#catalogo">Catálogo</a></li>
@@ -34,6 +36,8 @@
         <li><a href="#" class="bolsa"><img src="Bolsa.png" alt="Carrito"><span id="contador-carrito">0</span></a></li>
       </ul>
 
+      <div class="menu-overlay"></div>
+
 
         <div id="carrito-panel" class="carrito-panel">
           <div class="carrito-header">
@@ -46,7 +50,7 @@
         </div>
 
         <!-- Fondo oscuro al abrir -->
-          <div id="overlay-carrito" class="overlay-carrito"></div>
+        <div id="overlay-carrito" class="overlay-carrito"></div>
 
 
       <!-- MODAL LOGIN -->
@@ -77,8 +81,6 @@
           </div>
         </div>
       </div>
-
-
     </div>
   </header>
 
@@ -171,9 +173,6 @@
 
   </main>
 
-  <script src="carrito.js"></script>
-
-
   <footer id="contacto">
     <div class="footer-container">
       <ul class="iconos">
@@ -185,5 +184,7 @@
     <p>&copy; 2025 STRAPPED. Todos los derechos reservados.</p>
   </footer>
     
+  <script src="carrito.js"></script>  
+
 </body>
 </html>
