@@ -11,7 +11,7 @@ const productos = [
     id: 1,
     nombre: "Audífonos Bluetooth STRAPPED",
     precio: 120000,
-    imagenes: ["Air.png", "Air3.png"],
+    imagenes: ["imagenes/Air.png", "imagenes/Air3.png"],
     descripcion: "Audífonos Bluetooth resistentes al agua y de sonido envolvente."
   },
   {
@@ -333,7 +333,7 @@ document.addEventListener('DOMContentLoaded', () => {
               overlay.classList.add('activo');
               // opcional: cerrar menu responsive si está abierto
               const menuCheckbox = document.getElementById('menu');
-              if (menuCheckbox) menuCheckbox.checked = false;
+
             });
 
             // Cerrar con botón
@@ -367,7 +367,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const registerToggle = document.getElementById("registerToggle");
   const loginForm = document.getElementById("loginForm");
   const registerForm = document.getElementById("registerForm");
-  const menuCheckbox = document.getElementById("menu");
 
   if (openBtn) openBtn.addEventListener("click", e => { e.preventDefault(); if (modal) modal.style.display = "flex"; });
   if (mobileLogin) mobileLogin.addEventListener("click", e => { e.preventDefault(); if (modal) modal.style.display = "flex"; if (menuCheckbox) menuCheckbox.checked = false; });
@@ -391,3 +390,111 @@ document.addEventListener('DOMContentLoaded', () => {
 } catch (err) {
   console.warn('[carrito.js] modal error (ignorado):', err);
 }
+
+// =========================
+// 🔹 Cambio de color del header al hacer scroll (usa clase .scrolled)
+// =========================
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('.header');
+  if (!header) return;
+
+  function actualizarHeader() {
+    // detecta la altura del banner o hero (ajusta selector si es distinto)
+    const banner = document.querySelector('.banner') || document.querySelector('.hero');
+    const alturaBanner = banner ? banner.offsetHeight : 300;
+
+    if (window.scrollY > alturaBanner - 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }
+
+  actualizarHeader();
+  window.addEventListener('scroll', actualizarHeader);
+});
+
+// =========================
+// 🔹 Panel de botones responsive (versión corregida: mueve panel fuera del header)
+// =========================
+document.addEventListener('DOMContentLoaded', () => {
+  const iconoBtn = document.querySelector('.icono');
+  const panelBotonesOriginal = document.getElementById('botones-panel');
+  if (!iconoBtn || !panelBotonesOriginal) return;
+
+  // Si el panel está dentro del header, lo movemos al body para evitar problemas de stacking context
+  let panelBotones = panelBotonesOriginal;
+  if (panelBotones.parentNode !== document.body) {
+    document.body.appendChild(panelBotones);
+  }
+
+  // Crear el overlay si no existe (lo colocamos en body también)
+  let overlayMenu = document.querySelector('.overlay-menu');
+  if (!overlayMenu) {
+    overlayMenu = document.createElement('div');
+    overlayMenu.classList.add('overlay-menu');
+    document.body.appendChild(overlayMenu);
+  }
+
+  // Rellenar el panel si está vacío
+  if (panelBotones.innerHTML.trim() === '') {
+    panelBotones.innerHTML = `
+      <ul class="menu-lista">
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#soporte">Soporte</a></li>
+        <li><a href="#info">Pagos y Envíos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li class="login-mobile"><a href="#" id="loginBtnMenu">Iniciar Sesión / Registrarse</a></li>
+      </ul>
+    `;
+  }
+
+  // Funciones abrir / cerrar
+  function abrirPanel() {
+    panelBotones.classList.add('activo');
+    overlayMenu.classList.add('activo');
+    // activar bloqueo de scroll opcional
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function cerrarPanel() {
+    panelBotones.classList.remove('activo');
+    overlayMenu.classList.remove('activo');
+    document.documentElement.style.overflow = '';
+  }
+
+  // Abrir con el ícono
+  iconoBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    abrirPanel();
+  });
+
+  // Cerrar al clicar overlay
+  overlayMenu.addEventListener('click', () => cerrarPanel());
+
+  // Cerrar con ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarPanel();
+  });
+
+  // Cerrar al clicar en cualquier enlace del panel (y dejar que haga la navegación)
+  panelBotones.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    // si el enlace tiene href="#" y es el login, abrimos modal (si existe) en lugar de navegar
+    if (a.getAttribute('id') === 'loginBtnMenu') {
+      e.preventDefault();
+      const modal = document.getElementById('authModal');
+      if (modal) modal.style.display = 'flex';
+      cerrarPanel();
+      return;
+    }
+    // si es un ancla interna, dejamos que el navegador navegue, cerramos el panel
+    cerrarPanel();
+    // No hacemos e.preventDefault() para permitir navegación normal
+  });
+
+  // Si la ventana cambia de tamaño y es >900 px, aseguramos que el panel esté cerrado (opcional)
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) cerrarPanel();
+  });
+});
