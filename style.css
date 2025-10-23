@@ -1165,20 +1165,22 @@ ul.detalles li {
 
   .menu .iconos {
     position: absolute;
-    right: 20px;
+    right: 5px;                /* 🔹 más pegado al borde derecho */
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 5px;                  /* 🔹 menos espacio entre ellos */
     z-index: 2100;
   }
+
 
     /* Mostrar solo en móviles/tablets */
   .icono {
     display: block !important;
     cursor: pointer;
     z-index: 17000;
+    gap: 12px;
   }
 
   .icono img {
