@@ -68,15 +68,22 @@ main {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 40px;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.header .botones a {
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.menu.container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.15); /* translúcido elegante */
-  backdrop-filter: blur(6px);
-  color: #fff; /* blanco sobre el banner */
-  transition: background 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
-  z-index: 1000 !important;
+  justify-content: space-between;
+  padding: 15px 50px;
 }
 
 /* Cuando ya pasó el banner */
@@ -92,6 +99,32 @@ main {
   color: #fff !important; /* Fuerza blanco encima del banner */
   text-decoration: none;
   transition: color 0.4s ease;
+}
+
+/* === Cuando el cursor pasa sobre algún botón principal === */
+.header:hover {
+  background: #fff;
+}
+
+/* Texto negro al hacer hover */
+.header:hover .botones a,
+.header:hover .logo {
+  color: #000;
+}
+
+/* Íconos oscuros (si son PNG/SVG claros) */
+.header:hover .iconos img {
+  filter: brightness(0%);
+}
+
+/* Efecto solo mientras el cursor esté dentro del header */
+.header:not(:hover) {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+/* ===== Ajuste extra: el submenú mantiene coherencia ===== */
+.botones li:hover .botones-sub {
+  border-top: 1px solid rgba(0,0,0,0.1);
 }
 
 .header.scrolled a {
@@ -140,7 +173,8 @@ main {
   margin-right: auto;
   font-size: 25px;
   font-weight: 1000;
-  color: black;
+  color: #fff;
+  transition: color 0.3s ease, filter 0.3s ease;
 }
 
 .botones {
@@ -154,6 +188,34 @@ main {
   display: flex;
   gap: 25px;
   align-items: center;
+}
+
+/* Íconos */
+.iconos img {
+  filter: brightness(100%);
+  transition: filter 0.3s ease;
+}
+
+/* ================================
+   🔹 AJUSTE FINAL: TEXTO NEGRO EN HOVER HEADER BLANCO
+================================ */
+
+/* fuerza el cambio de color del texto */
+.header:hover .botones a,
+.header:hover .logo,
+.header:hover .login-mobile a {
+  color: #000 !important;
+  transition: color 0.3s ease;
+}
+
+/* si tienes otros enlaces en el header, también los incluimos */
+.header:hover .botones a:hover {
+  color: #000 !important;
+}
+
+/* opcional: mantiene color negro del texto mientras el submenú está abierto */
+.header:hover .botones li:hover > a {
+  color: #000 !important;
 }
 
 
@@ -187,7 +249,7 @@ body.producto-page .header .iconos img {
   display: flex;
   gap: 35px;
   padding-left: 20px;
-  font-size: 16px;
+  font-size: 12px;
   
 }
 
@@ -208,6 +270,134 @@ body.producto-page .header .iconos img {
 
 .botones a:hover::after {
    width: 100%;
+}
+
+/* ================================
+   🔹 MENÚ DESPLEGABLE UNDERGOLD + HEADER FIJO
+================================ */
+
+.botones li {
+  position: relative;
+}
+
+.botones-sub {
+  position: fixed;
+  top: 60px; /* ajusta al alto real de tu header */
+  left: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  transform: translateY(10px);
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 2500;
+  padding: 50px 0;
+}
+
+/* Contenido interno */
+.botones-sub .contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  padding: 0 40px;
+  color: #000;
+  box-sizing: border-box;
+}
+
+.botones-sub .col {
+  flex: 1;
+}
+
+.botones-sub .col h4 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #000;
+  font-weight: 800;
+}
+
+.botones-sub .col a {
+  display: block;
+  padding: 6px 0;
+  color: #333;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.botones-sub .col a:hover {
+  color: #000;
+}
+
+/* Efecto de aparición */
+.botones li:hover .botones-sub {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+/* FONDO OSCURO DETRÁS (overlay) */
+.menu::after {
+  content: "";
+  position: fixed;
+  top: 80px; /* igual que el header */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 80px);
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 2000;
+}
+
+/* Mostrar overlay cuando el submenú está activo */
+.botones li:hover ~ .menu::after,
+.botones li:hover .botones-sub ~ .menu::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .botones-sub {
+    display: none !important;
+  }
+}
+
+/* ================================
+   🔹 AJUSTES DE ALTURA Y ESPACIADO DEL MENÚ DESPLEGABLE
+================================ */
+
+/* Reduce la altura total del menú */
+.botones-sub {
+  padding: 25px 0 30px 0 !important; /* antes 50px */
+  top: 60px; /* sigue justo debajo del header, ajusta si tu header es más alto */
+}
+
+/* Contenedor interno más compacto */
+.botones-sub .contenedor {
+  gap: 40px !important;      /* menos separación entre columnas */
+  padding: 0 40px !important;
+}
+
+/* Espaciado más corto entre título y enlaces */
+.botones-sub .col h4 {
+  margin-bottom: 8px !important;  /* antes 15px */
+  font-size: 15px;
+}
+
+/* Enlaces más juntos */
+.botones-sub .col a {
+  padding: 4px 0 !important;   /* antes 6px */
+  font-size: 13.5px;
+}
+
+/* Ajuste visual para que se acerque más al header */
+.botones li:hover .botones-sub {
+  transform: translateY(3px); /* antes 10px */
 }
 
 /* =======================================================
