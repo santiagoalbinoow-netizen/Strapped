@@ -790,8 +790,7 @@ body.producto-page .header .iconos img {
 
 .banner img {
   width: 100%;
-  max-height: 100vh;  /* evita que una imagen sobrepase toda la pantalla vertical */
-  height: auto;
+  height: 100vh;  /* evita que una imagen sobrepase toda la pantalla vertical */
   object-fit: cover;
   display: block;
 }
@@ -1579,4 +1578,5 @@ ul.detalles li {
 
 
 }
+
 
