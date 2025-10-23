@@ -1146,7 +1146,7 @@ ul.detalles li {
   .login-mobile {
     display: block !important;
     margin-top: auto;
-    padding-top: 18px;
+    padding-top: 20px;
     border-top: 1px solid rgba(255,255,255,0.12);
     text-align: center;
   }
@@ -1157,6 +1157,12 @@ ul.detalles li {
     letter-spacing: .4px;
   }
 
+    /* Ocultar el ícono de usuario completamente en móviles/tablets */
+  .iconos img[alt="Usuario"],
+  .iconos li a img[alt="Usuario"] {
+    display: none !important;
+  }
+
   .menu .iconos {
     position: absolute;
     right: 20px;
@@ -1164,7 +1170,7 @@ ul.detalles li {
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 18px;
     z-index: 2100;
   }
 
@@ -1176,8 +1182,8 @@ ul.detalles li {
   }
 
   .icono img {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     object-fit: contain;
   }
 
@@ -1190,9 +1196,19 @@ ul.detalles li {
   }
 
   .logo {
-    position: relative;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
     text-align: center;
-    margin: 0 auto;
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
   }
 
   .productos-container {
