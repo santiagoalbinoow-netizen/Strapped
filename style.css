@@ -294,67 +294,89 @@ body.producto-page .header .iconos img {
 
 .botones-sub {
   position: fixed;
-  top: 60px; /* ajusta al alto real de tu header */
+  top: 60px;
   left: 0;
   width: 100%;
   background: #fff;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 15px 40px rgba(255, 0, 0, 0.15);
   opacity: 0;
   transform: translateY(10px);
   visibility: hidden;
   transition: all 0.3s ease;
   z-index: 2500;
-  padding: 50px 0;
+  padding: 30px 0;
 }
 
-/* Contenido interno */
+/* 🔹 CONTENEDOR DE COLUMNAS */
 .botones-sub .contenedor {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-  padding: 0 40px;
-  color: #000;
+  display: grid;
+  grid-template-columns: repeat(3, 200px); /* ✅ tres columnas iguales */
+  column-gap: 25px;                       /* 🔹 separación visual equilibrada */
+  margin-left: 10px;
   box-sizing: border-box;
 }
 
-.botones-sub .col {
-  flex: 1;
-}
-
+/* 🔹 TÍTULOS DE CATEGORÍA */
 .botones-sub .col h4 {
-  margin-bottom: 15px;
-  font-size: 16px;
-  color: #000;
-  font-weight: 800;
+  font-size: 12px !important;         /* 🔽 más pequeño y sutil */
+  font-weight: 700;        /* un poco más liviano */
+  margin-bottom: 6px;
+  color: #4b4545;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
 }
 
+/* 🔹 ENLACES DEL SUBMENÚ */
 .botones-sub .col a {
+  position: relative;
   display: block;
-  padding: 6px 0;
-  color: #333;
-  font-weight: 600;
+  width: 100%;
+  padding: 2px 0;
+  font-size: 12px !important;       /* ✅ tamaño más fino y elegante */
+  font-weight: 500;
+  color: #000000 !important;
   text-decoration: none;
+  line-height: 1.4;
   transition: color 0.2s ease;
+  white-space: nowrap;
+  opacity: 0.9;            /* 🔹 tono más suave */
+}
+
+/* 🔹 Hover con línea corta y delgada */
+.botones-sub .col a::after {
+  content: "";
+  position: absolute;
+  bottom: -1.5px;
+  left: 0;
+  width: 35%;
+  height: 1px;
+  background-color: #ffffff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
 }
 
 .botones-sub .col a:hover {
-  color: #000;
+  color: #948b8b;
+  opacity: 1;
 }
 
-/* Efecto de aparición */
+.botones-sub .col a:hover::after {
+  transform: scaleX(1);
+}
+
+/* 🔹 Aparición */
 .botones li:hover .botones-sub {
   opacity: 1;
   transform: translateY(0);
   visibility: visible;
 }
 
-/* FONDO OSCURO DETRÁS (overlay) */
+/* 🔹 FONDO OSCURO DETRÁS */
 .menu::after {
   content: "";
   position: fixed;
-  top: 80px; /* igual que el header */
+  top: 80px;
   left: 0;
   width: 100%;
   height: calc(100vh - 80px);
@@ -372,12 +394,14 @@ body.producto-page .header .iconos img {
   visibility: visible;
 }
 
-/* Responsivo */
+/* 🔹 Responsivo */
 @media (max-width: 900px) {
   .botones-sub {
     display: none !important;
   }
 }
+
+
 
 /* ================================
    🔹 AJUSTES DE ALTURA Y ESPACIADO DEL MENÚ DESPLEGABLE
@@ -1569,7 +1593,11 @@ ul.detalles li {
 
 }
 
+/* =======================================================
 
+   🔹 RESPONSIVE DESIGN 
+
+======================================================= */
 
 @media (max-width: 500px) {
 
@@ -1613,11 +1641,8 @@ ul.detalles li {
     word-break: break-word;    /* Rompe las palabras largas */
   }
 
-   
-
 
 }
-
 
 
 
