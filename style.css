@@ -134,7 +134,19 @@ main {
 .header .iconos img {
   filter: brightness(0) invert(1); /* blanco sobre el banner */
   transition: filter 0.4s ease;
-  
+}
+
+.header .icono img {
+  filter: invert(1) !important;
+  -webkit-filter: invert(1) !important;
+  transition: filter 0.25s ease, -webkit-filter 0.25s ease;
+}
+
+.header.scrolled .icono img,
+.header:hover .icono img,
+.menu:hover .icono img {
+  filter: none !important;
+  -webkit-filter: none !important;
 }
 
 .header .iconos .bolsa img {
@@ -149,7 +161,7 @@ main {
 
 /* Cuando pasa el banner, vuelve a su estilo normal */
 .header.scrolled .iconos img {
-  filter: none; /* vuelve al color original (negro) */
+ filter: brightness(0); /* negro */
 }
 
 .header.scrolled {
@@ -458,6 +470,7 @@ body.producto-page .header .iconos img {
 .icono {
   display: none !important;
 }
+
 
 /* En pantallas grandes, ocultar completamente el login móvil */
 .login-mobile {
@@ -1354,12 +1367,12 @@ ul.detalles li {
 
   .menu .iconos {
     position: absolute;
-    right: 5px;                /* 🔹 más pegado al borde derecho */
+    right: 40px;                /* 🔹 más pegado al borde derecho */
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-    gap: 5px;                  /* 🔹 menos espacio entre ellos */
+    gap: 10px;                  /* 🔹 menos espacio entre ellos */
     z-index: 2100;
   }
 
@@ -1376,12 +1389,16 @@ ul.detalles li {
     width: 32px;
     height: 32px;
     object-fit: contain;
+    filter: invert(1); /* blanco sobre fondo oscuro */
+    transition: filter 0.3s ease;
   }
 
-  .header.scrolled .icono img {
-  filter: invert(0);
-}
-
+  .header .icono img {
+    filter: invert(1) !important;
+    -webkit-filter: invert(1) !important;
+    transition: filter 0.25s ease, -webkit-filter 0.25s ease;
+  }
+  
   footer .iconos img[alt="WhatsApp"] {
     display: inline-block !important;
   }
@@ -1578,5 +1595,4 @@ ul.detalles li {
 
 
 }
-
 
