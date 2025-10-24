@@ -1594,8 +1594,30 @@ ul.detalles li {
     gap: 20px;
   }
 
+  .horario-item {
+    width: 100%;               /* Ocupa todo el ancho disponible */
+    max-width: 320px;          /* Evita que se estiren demasiado */
+    padding: 20px;             /* Reduce el padding interno */
+    word-wrap: break-word;     /* Permite que el texto haga salto de línea */
+    overflow-wrap: break-word; /* Compatibilidad adicional */
+    text-align: center;        /* Centra el texto */
+  }
+
+  .horario-item h3 {
+    font-size: 16px;           /* Reduce el tamaño del título */
+  }
+
+  .horario-item p {
+    font-size: 14px;           /* Reduce el tamaño del texto */
+    line-height: 1.4;          /* Mejora el espaciado */
+    word-break: break-word;    /* Rompe las palabras largas */
+  }
+
+   
+
 
 }
+
 
 
 
