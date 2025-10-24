@@ -1590,11 +1590,12 @@ ul.detalles li {
   }
 
   .productos-container-tec {
-    grid-template-columns: 2fr; /* 🔹 2 producto por fila */
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
 
 }
+
 
 
