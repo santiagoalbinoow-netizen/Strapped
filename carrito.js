@@ -149,7 +149,7 @@ function renderizarCarrito() {
   checkoutBtn.style.marginTop = '6px';
   checkoutBtn.textContent = 'FINALIZAR COMPRA';
   checkoutBtn.addEventListener('click', () => {
-    window.location.href = 'pagos.html';
+    window.location.href = 'Pagos.html';
   });
 
   wrapper.appendChild(totalDiv);
@@ -554,5 +554,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.innerWidth > 900) cerrarPanel();
   });
 });
+
 
 
