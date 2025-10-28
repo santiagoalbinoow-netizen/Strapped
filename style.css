@@ -1577,35 +1577,79 @@ ul.detalles li {
     width: 80%; /* Usa tu estilo original */
   }
 
-  .botones-panel {
+  #botones-panel {
     position: fixed;
     top: 0;
-    left: -260px;              /* empieza fuera de pantalla */
-    width: 240px;
+    left: -100%;
+    width: 80vw;
+    max-width: 350px;
     height: 100vh;
-    background: #111;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(8px);
     color: #fff;
-    padding: 64px 20px 20px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    transition: left 0.32s ease, transform 0.32s ease;
-    z-index: 16000;            /* mayor que overlay y header */
-    box-shadow: 6px 0 24px rgba(0,0,0,0.4);
-    will-change: left;
-    -webkit-overflow-scrolling: touch;
+    z-index: 9999;
+    overflow-y: auto;
+    transition: left 0.45s cubic-bezier(0.25, 1, 0.3, 1);
+    padding-top: 90px;
   }
 
-  .botones-panel.activo {
+  /* 🔹 Cuando está activo (al hacer clic en el icono) */
+  #botones-panel.activo {
     left: 0;
   }
 
-  .botones-panel a {
-    color: #fff !important;
+  #botones-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
-  .botones-panel a:hover {
-    color: #ccc !important;
+  #botones-panel li {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  #botones-panel a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    font-weight: 700;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 15px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  #botones-panel a:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* 🔹 Submenú oculto por defecto */
+  #botones-panel .submenu {
+    display: none;
+    background: #111;
+  }
+
+  #botones-panel .submenu a {
+    padding-left: 40px;
+    font-weight: 500;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  /* 🔹 Flecha para desplegar */
+  #botones-panel .flecha {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+  }
+
+  /* 🔹 Cuando el submenú está activo */
+  #botones-panel li.activo .submenu {
+    display: block;
+  }
+
+  #botones-panel li.activo .flecha {
+    transform: rotate(90deg);
   }
 
   /* fuerza color de enlaces dentro del panel (no serán afectados por header) */
@@ -1633,26 +1677,28 @@ ul.detalles li {
   /* OVERLAY */
   .overlay-menu {
     position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(2px);
+    z-index: 9998;
     opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.28s ease;
-    z-index: 15000;            /* debajo del panel */
-    pointer-events: none;      /* no recibe clicks cuando oculto */
+    pointer-events: none;
+    transition: opacity 0.4s ease;
   }
 
   .overlay-menu.activo {
     opacity: 1;
-    visibility: visible;
-    pointer-events: auto;      /* recibe clicks cuando visible */
+    pointer-events: all;      /* recibe clicks cuando visible */
   }
 
   /* Oculta el menú horizontal cuando entra el panel */
   .botones {
     display: none !important;
   }
-
+   
 }
 
 /* =======================================================
@@ -1705,4 +1751,5 @@ ul.detalles li {
 
 
 }
+
 
