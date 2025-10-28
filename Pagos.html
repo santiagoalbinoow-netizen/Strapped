@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STRAPPED | Finalizar compra</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="header-compra">
+      <a href="index.html" class="logo-compra">STRAPPED</a>
+  </header>
+
+  <section class="checkout-container">
+    <!-- FORMULARIO -->
+    <div class="checkout-form">
+      <h2>Información de contacto y envío</h2>
+      <form id="formPago">
+        <label>Correo electrónico</label>
+        <input type="email" name="correo" placeholder="ejemplo@gmail.com" required>
+
+        <label>Nombre completo</label>
+        <input type="text" name="nombre" placeholder="Nombre y apellido" required>
+
+        <label>Teléfono</label>
+        <input type="tel" name="telefono" placeholder="3001234567" required>
+
+        <label>Dirección</label>
+        <input type="text" name="direccion" placeholder="Calle, número, barrio" required>
+
+        <label>Ciudad</label>
+        <input type="text" name="ciudad" placeholder="Bogotá, Medellín..." required>
+
+        <button type="submit">Proceder al pago</button>
+      </form>
+    </div>
+
+    <!-- RESUMEN DEL CARRITO -->
+    <div class="checkout-summary">
+      <h3>Resumen del pedido</h3>
+      <div id="resumen-carrito"></div>
+      <div class="summary-total">
+        <span>Total</span>
+        <span id="total-compra">$0</span>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // === Cargar productos del carrito ===
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const resumen = document.getElementById("resumen-carrito");
+    const totalCompra = document.getElementById("total-compra");
+
+    if (carrito.length === 0) {
+      resumen.innerHTML = "<p>Tu carrito está vacío.</p>";
+      totalCompra.textContent = "$0";
+    } else {
+      let subtotal = 0;
+      resumen.innerHTML = carrito.map(item => {
+        const totalItem = item.precio * item.cantidad;
+        subtotal += totalItem;
+        return `
+          <div class="summary-item">
+            <div class="summary-product">
+              <img src="${item.imagen}" alt="${item.nombre}">
+              <div>
+                <p><strong>${item.nombre}</strong></p>
+                <p class="summary-details">${item.cantidad} x $${item.precio.toLocaleString()}</p>
+              </div>
+            </div>
+            <p>$${totalItem.toLocaleString()}</p>
+          </div>
+        `;
+      }).join('');
+
+      const envio = 10000;
+      const total = subtotal + envio;
+
+      resumen.innerHTML += `
+        <div class="summary-total">
+          <span>Subtotal</span>
+          <span>$${subtotal.toLocaleString()}</span>
+        </div>
+        <div class="summary-total">
+          <span>Envío</span>
+          <span>$${envio.toLocaleString()}</span>
+        </div>
+      `;
+      totalCompra.textContent = `$${total.toLocaleString()}`;
+    }
+
+    // === Simular envío de formulario ===
+    document.getElementById("formPago").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("Redirigiendo al pago seguro...");
+      window.location.href = "gracias.html"; // luego se reemplaza por integración con Wompi
+    });
+  </script>
+
+</body>
+</html>
