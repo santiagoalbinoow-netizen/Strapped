@@ -838,8 +838,16 @@ body.producto-page .header .iconos img {
 
 ======================================================= */
 
+/* Quita cualquier padding o margen que cause espacio lateral */
 .section-productos {
-  padding: 0 50px; /* coherente con el resto de la página */
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
 .productos-titulo {
@@ -852,49 +860,64 @@ body.producto-page .header .iconos img {
 }
 
 .productos-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 👈 3 productos por fila */
-  gap: 40px; /* 👈 separa un poco más entre ellos */
-  justify-items: center;
-  align-items: stretch;
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 100vh;
 }
 
 .producto {
+  position: relative;
+  flex: 1;
   background-color: #ebeaea;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 450px;
-  transition: all 0.3s ease;
-}
-
-.producto:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 12px black;
+  height: 100%;
+  padding: 0; 
+  margin: 0;
+  overflow: hidden;
 }
 
 .producto img {
   width: 100%;
-  max-width: 300px; /* antes 200px */
-  height: 100;    /* antes 200px */
-  object-fit: contain;
-  margin-bottom: 10px;
+  height: 100%;    /* antes 200px */
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
 }
 
+.producto:hover img {
+  transform: scale(1.05);
+}
+
+.producto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  transition: background 0.3s ease;
+  z-index: 1;
+}
+
+.producto:hover::after {
+  background: rgba(0,0,0,0.5);
+}
+
+/* 🔹 Texto encima de la imagen */
 .producto h3 {
-  font-size: 16px;
-  font-weight: 700;
-  color: black;
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  z-index: 2;
 }
 
 .producto p {
-  font-size: 15px;
-  color: #444;
-  margin: 0;
+  display: none;
 }
 
 /* =======================================================
@@ -958,7 +981,7 @@ body.producto-page .header .iconos img {
   background-color: #5b5c5b;
   color: #f5f5f5;
   padding: 80px 50px;
-  margin-top: 60px;
+  margin-top: 0px;
   text-align: center;
 }
 
@@ -1444,13 +1467,52 @@ ul.detalles li {
   }
 
   .productos-container {
-     grid-template-columns: 1fr;
-      gap: 30px; 
+    flex-direction: column;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+  }
+
+  .producto {
+    width: 100vw;
+    height: 100vh; /* cada sección ocupa su propia pantalla */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .producto h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    z-index: 2;
   }
 
   .producto img {
-    max-width: 250px;
-    height: auto; /* en móvil dejamos que la altura sea automática para mantener proporción */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .producto::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    transition: background 0.3s ease;
+    z-index: 1;
+  }
+
+  .producto:hover::after {
+    background: rgba(0,0,0,0.55);
   }
 
   .horarios-lista {
@@ -1643,7 +1705,4 @@ ul.detalles li {
 
 
 }
-
-
-
 
