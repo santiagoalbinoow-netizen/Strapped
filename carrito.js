@@ -11,7 +11,7 @@ const productos = [
     id: 1,
     nombre: "Audífonos Bluetooth STRAPPED",
     precio: 120000,
-    imagenes: ["imagenes/Air.png", "imagenes/Air3.png"],
+    imagenes: ["Air.png", "Air3.png"],
     descripcion: "Audífonos Bluetooth resistentes al agua y de sonido envolvente."
   },
   {
@@ -551,3 +551,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.innerWidth > 900) cerrarPanel();
   });
 });
+
