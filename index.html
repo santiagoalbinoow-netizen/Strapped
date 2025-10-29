@@ -253,19 +253,57 @@
 
   <footer id="contacto">
     <div class="footer-container">
-      <ul class="iconos">
-        <li><a href="https://www.instagram.com/strappedco.urban/"><img src="Instagram.png" alt="Instagram"></a></li>
-        <li><a href="#"><img src="Whatsapp.png" alt="WhatsApp"></a></li>
-        <li><a href="https://www.tiktok.com/@_strappedco_"><img src="Tiktok.png" alt="TikTok"></a></li>
-      </ul>
+      <div class="footer-col">
+        <h4>STRAPPED</h4>
+        <p>Tu marca de confianza en tecnología, accesorios y estilo urbano. Inspirada en el diseño moderno y la autenticidad.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>INFORMACIÓN</h4>
+        <ul>
+          <li><a href="about.html">Sobre Nosotros</a></li>
+          <li><a href="politica.html">Política de Privacidad</a></li>
+          <li><a href="envios.html">Envíos y Devoluciones</a></li>
+          <li><a href="soporte.html">Soporte</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>SÍGUENOS</h4>
+        <ul class="iconos-footer">
+          <li><a href="https://www.instagram.com/strappedco.urban/"><img src="Instagram.png" alt="Instagram"></a></li>
+          <li><a href="https://www.tiktok.com/@_strappedco_"><img src="Tiktok.png" alt="TikTok"></a></li>
+        </ul>
+      </div>
     </div>
-    <p>&copy; 2025 STRAPPED. Todos los derechos reservados.</p>
-  </footer>    
+    <p class="copyright">&copy; 2025 STRAPPED. Todos los derechos reservados.</p>
+  </footer> 
+
+  <!-- SDK de Wompi -->
+  <script src="https://checkout.wompi.co/widget.js"></script>
+
+  <script>
+    const botonPagar = document.getElementById("btn-finalizar-compra");
+
+    botonPagar.addEventListener("click", () => {
+      const checkout = new WidgetCheckout({
+        currency: "COP",
+        amountInCents: 120000, // 💰 valor en centavos (1200.00 = 120000)
+        reference: "pedido_" + Date.now(),
+        publicKey: "pub_test_XXXXXXXXXXXXXXX", // tu llave pública
+        redirectUrl: "https://strapped-six.vercel.app/gracias.html" // tu página de confirmación
+      });
+      checkout.open(function (result) {
+        console.log("Resultado del pago:", result);
+      });
+    });
+  </script>   
   
   <script src="carrito.js"></script>  
 
 </body>
 </html>
+
 
 
 
