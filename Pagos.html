@@ -7,10 +7,30 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="header">
+  <div class="menu container">
 
-  <header class="header-compra">
-      <a href="index.html" class="logo-compra">STRAPPED</a>
-  </header>
+    <a href="index.html" class="logo-compra">STRAPPED</a>
+
+    <ul class="iconos">
+      <li><a href="#" class="bolsa"><img src="Bolsa.png" alt="Carrito"><span id="contador-carrito">0</span></a></li>
+    </ul>
+
+    <!-- Panel del carrito -->
+    <div id="carrito-panel" class="carrito-panel">
+      <div class="carrito-header">
+        <h2>TU CARRITO</h2>
+        <button id="cerrar-carrito" class="cerrar-carrito">×</button>
+      </div>
+      <div class="carrito-body">
+        <p>EL CARRITO ESTÁ VACÍO</p>
+      </div>
+    </div>
+
+    <div id="overlay-carrito" class="overlay-carrito"></div>
+
+  </div>
+</header>
 
   <section class="checkout-container">
     <!-- FORMULARIO -->
@@ -23,8 +43,11 @@
         <label>Nombre completo</label>
         <input type="text" name="nombre" placeholder="Nombre y apellido" required>
 
+        <label>Cedula</label>
+        <input type="id" name="id" required>
+
         <label>Teléfono</label>
-        <input type="tel" name="telefono" placeholder="3001234567" required>
+        <input type="tel" name="telefono" required>
 
         <label>Dirección</label>
         <input type="text" name="direccion" placeholder="Calle, número, barrio" required>
@@ -32,7 +55,7 @@
         <label>Ciudad</label>
         <input type="text" name="ciudad" placeholder="Bogotá, Medellín..." required>
 
-        <button type="submit">Proceder al pago</button>
+        <button type="btn">Proceder al pago</button>
       </form>
     </div>
 
@@ -98,6 +121,20 @@
       window.location.href = "gracias.html"; // luego se reemplaza por integración con Wompi
     });
   </script>
+
+  <script>
+  // === Mostrar contador del carrito ===
+  document.addEventListener("DOMContentLoaded", () => {
+    const contador = document.getElementById("contador-carrito");
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    // Sumar las cantidades totales de los productos
+    const cantidadTotal = carrito.reduce((acc, item) => acc + (item.cantidad || 0), 0);
+    contador.textContent = cantidadTotal;
+  });
+  </script>
+
+  <script src="carrito.js"></script>
 
 </body>
 </html>
