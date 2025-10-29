@@ -108,7 +108,7 @@ main {
 
 /* Texto negro al hacer hover */
 .header:hover .botones a,
-.header:hover .logo {
+.header:hover .logo{
   color: #000;
 }
 
@@ -929,7 +929,7 @@ body.producto-page .header .iconos img {
 .iconos {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 15px;
 }
 
 .iconos li a {
@@ -1041,47 +1041,124 @@ body.producto-page .header .iconos img {
 
 /* =======================================================
 
-   🔹 FOOTER
+   🔹 FOOTER #444544
 
 ======================================================= */
 
 footer {
-  background-color: #444544;
-  color: black;
-  text-align: center;
-  padding: 20px 0 15px;
+  background: #444544;
+  color: #eee;
+  padding: 60px 10% 30px;
   margin-top: auto;
+  font-family: "Archivo Black", sans-serif;
 }
 
 .footer-container {
-  display: flex;
-  justify-content: center; /* ✅ centra horizontalmente */
-  align-items: center;     /* ✅ centra verticalmente */
-  gap: 35px;
-  flex-wrap: wrap;
-  margin-bottom: 15px;
-  width: 100%;
-  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: left;
+  justify-items: center; /* ✅ centra horizontalmente */   
+  gap: 50px;
 }
 
-.footer-container ul {
-  display: flex;
-  justify-content: center; /* ✅ centra los íconos dentro del <ul> */
-  align-items: center;
-  gap: 25px;
-  margin: 0 auto;
+.footer-col h4 {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.footer-col p {
+  color: #bbb;
+  line-height: 1.6;
+  font-size: 10px;
+  max-width: 320px;
+}
+
+.footer-col ul {
+  list-style: none;
   padding: 0;
 }
 
-footer .iconos {
-  justify-content: center !important;
-  width: 100%;
+.footer-col ul li {
+  margin-bottom: 10px;
 }
 
-footer p {
-  font-size: 14px;
-  color: #999;
+.footer-col ul li a {
+  color: #bbb;
+  text-decoration: none;
+  font-size: 10px;
+  transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+  color: #fff;
+}
+
+footer .iconos-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px; /* espacio entre iconos */
   margin-top: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+footer .iconos-footer li {
+  display: inline-block;
+}
+
+footer .iconos-footer img {
+  width: 22px;
+  height: 22px;
+  filter: invert(1);
+  opacity: 0.85;
+  transition: all 0.3s ease;
+}
+
+footer .iconos-footer img:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+footer .iconos img:hover {
+  opacity: 0.7;
+}
+
+footer .copyright {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 13px;
+  color: #777;
+}
+
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .footer-col h4 {
+    margin-bottom: 10px;
+  }
+
+  footer .iconos-footer {
+    gap: 14px;
+  }
+  footer .iconos-footer img {
+    width: 22px;
+    height: 22px;
+  }
+
 }
 
 /* =======================================================
@@ -1698,7 +1775,7 @@ ul.detalles li {
   .botones {
     display: none !important;
   }
-   
+
 }
 
 /* =======================================================
@@ -1752,22 +1829,20 @@ ul.detalles li {
 
 }
 
-    .logo-compra{
-      position: left;
+    .logo-compra {
+      position: static;
       transform: none;
       margin-right: auto;
       font-size: 45px;
-      color: #fff;
-      padding-left: 135px;
+      color: #fff !important;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease, filter 0.3s ease;
     }
 
-    .header-compra{
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 3000;
-      background-color: black ;
+    .header:hover .logo-compra,
+    .header.scrolled .logo-compra {
+      color: #000 !important;
     }
 
     .checkout-container {
@@ -1777,6 +1852,7 @@ ul.detalles li {
       gap: 40px;
       padding: 50px 8%;
       flex-wrap: wrap;
+      margin-top: 60px;
     }
 
     .checkout-form {
@@ -1879,11 +1955,25 @@ ul.detalles li {
       justify-content: space-between;
     }
 
-    @media (max-width: 900px) {
-      .checkout-container {
-        flex-direction: column;
-        padding: 20px;
-      }
-    }
+/* Ajuste responsivo */
+@media (max-width: 900px) {
+  .logo-compra {
+    font-size: 35px;
+    padding-left: 60px;
+  }
+}
 
+@media (max-width: 600px) {
+  .logo-compra {
+    font-size: 28px;
+    padding-left: 0;
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
 
+  .header-compra {
+    text-align: center;
+    padding: 10px 0;
+  }
+}
