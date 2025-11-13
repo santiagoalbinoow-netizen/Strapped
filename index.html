@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
+<style>
+body {
+  background-color: #040304; /* Opcional: texto visible sobre el fondo */
+}
+</style>
+
 <body>
 
   <header class="header">
@@ -187,6 +193,24 @@
           </div>
         </div>
       </div>
+
+      <!-- 🔎 MODAL DE BÚSQUEDA -->
+      <div id="busqueda-modal" class="busqueda-modal">
+        <div class="busqueda-contenido">
+
+          <div class="container-input">
+            <input placeholder="BUSCAR..." type="text" name="text" class="input" id="inputBusqueda">
+            <!-- Ícono opcional -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="black" class="icono-buscar">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 18.5a7.5 7.5 0 006.15-1.85z" />
+            </svg>
+          </div>
+
+          <button id="cerrarBusqueda" class="cerrar-busqueda">×</button>
+          <div id="resultadosBusqueda" class="resultados-busqueda"></div>
+        </div>
+      </div>
+
     </div>
   </header>
 
@@ -198,6 +222,7 @@
 
     <!-- PRODUCTOS -->
     <section id="catalogo" class="section-productos">
+      <!--<h1 class="productos-titulo">Productos</h1>-->
       <div class="productos-container">
 
         <a href="Tecnologia.html" class="producto">
@@ -206,7 +231,7 @@
           <p>Audífonos, parlantes, cargadores y más.</p>
         </a>
 
-        <a href="relojes.html" class="producto">
+        <a href="Relojes.html" class="producto">
           <img src="Reloj.png" alt="Relojes">
           <h3>Relojes</h3>
           <p>Diseños elegantes y deportivos.</p>
@@ -217,37 +242,62 @@
           <h3>Bolsos y Carrieles</h3>
           <p>Modelos urbanos con el sello STRAPPED.</p>
         </a>
-
       </div>
-
     </section>
 
-    <!-- SOPORTE -->
-    <section id="soporte" class="section-horarios">
-      <div class="horarios-container container">
-        <h2>Atención en Línea</h2>
-        <p>En <strong>STRAPPED</strong> estamos disponibles <strong>24/7</strong> para resolver tus dudas. Contáctanos por <strong>WhatsApp</strong> o redes sociales.</p>
-        <div class="horarios-lista">
-          <div class="horario-item"><h3>WhatsApp</h3><p>Respuesta inmediata</p></div>
-          <div class="horario-item"><h3>Instagram</h3><p>@strappedco.urban</p></div>
-          <div class="horario-item"><h3>Correo</h3><p>contacto@strapped.co</p></div>
+    <section class="ofertas">
+      <h2 class="ofertas-titulo">DESCUBRE NUESTRAS OFERTAS</h2>
+
+      <div class="ofertas-grid">
+
+        <div>
+          <a href="producto.html?id=1" class="producto-oferta">
+            <div class="etiqueta">¡OFERTA!</div>
+            <img src="Img.png" alt="Tinta Gloss Jack">
+            <h3>PRODUCTO 1</h3>
+            <p class="precio-anterior">$ 20.000</p>
+            <p class="precio-oferta">$ 12.000</p>
+          </a>
+          <button class="Agregar-carrito">Agregar al carrito</button>
         </div>
-      </div>
-    </section>
 
-    <br>
-
-    <!-- PAGOS Y ENVÍOS -->
-    <section id="info" class="section-horarios section-envios">
-      <div class="horarios-container container">
-        <h2>Pagos y Envíos</h2>
-        <div class="horarios-lista">
-          <div class="horario-item"><h3>Pagos Seguros</h3><p>Pagos por <strong>Nequi</strong>, <strong>Daviplata</strong> y <strong>PayU</strong>.</p></div>
-          <div class="horario-item"><h3>Envíos Nacionales</h3><p>Envíos a toda Colombia en 2–5 días hábiles.</p></div>
-          <div class="horario-item"><h3>Política de Cambios</h3><p>Solicita cambio dentro de los <strong>7 días</strong> si tu producto llega defectuoso.</p></div>
+        <div>
+          <a href="producto.html?id=1" class="producto-oferta">
+            <div class="etiqueta">¡OFERTA!</div>
+            <img src="Img.png" alt="Tinta Villanos">
+            <h3>PRODUCTO 2</h3>
+            <p class="precio-anterior">$ 15.000</p>
+            <p class="precio-oferta">$ 10.000</p>
+          </a>
+          <button class="Agregar-carrito">Agregar al carrito</button>
         </div>
+
+        <div>
+          <a href="producto.html?id=1" class="producto-oferta">
+            <div class="etiqueta">¡OFERTA!</div>
+            <img src="Img.png" alt="Borlas Intensamente">
+            <h3>PRODUCTO 3</h3>
+            <p class="precio-anterior">$ 10.000</p>
+            <p class="precio-oferta">$ 5.000</p>
+          </a>
+          <button class="Agregar-carrito">Agregar al carrito</button>
+        </div>
+
+        <div>
+          <a href="producto.html?id=1" class="producto-oferta">
+            <div class="etiqueta">¡OFERTA!</div>
+            <img src="Img.png" alt="Splash Envidia">
+            <h3>PRODUCTO 4</h3>
+            <p class="precio-anterior">$ 20.000</p>
+            <p class="precio-oferta">$ 12.000</p>
+          </a>
+          <button class="Agregar-carrito">Agregar al carrito</button>
+        </div>
+
       </div>
     </section>
+
+
 
   </main>
 
@@ -262,9 +312,7 @@
         <h4>INFORMACIÓN</h4>
         <ul>
           <li><a href="about.html">Sobre Nosotros</a></li>
-          <li><a href="politica.html">Política de Privacidad</a></li>
           <li><a href="envios.html">Envíos y Devoluciones</a></li>
-          <li><a href="soporte.html">Soporte</a></li>
         </ul>
       </div>
 
@@ -297,7 +345,7 @@
         console.log("Resultado del pago:", result);
       });
     });
-  </script>   
+  </script>
   
   <script src="carrito.js"></script>  
 
