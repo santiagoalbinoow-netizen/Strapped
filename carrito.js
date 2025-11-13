@@ -555,5 +555,207 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// ---------- Modal de búsqueda: apertura, cierre y bloqueo de scroll ----------
+(function () {
+  // selectores robustos para la lupa (atiende variantes)
+  const lupa = document.querySelector('.iconos img[alt="Buscar"]') || document.querySelector('.iconos img[src*="lupa"]') || document.querySelector('.icono img[alt="icono"]');
+  const modal = document.getElementById('busqueda-modal');
+  const cerrarBtn = document.getElementById('cerrarBusqueda');
+  const input = document.getElementById('inputBusqueda');
+  const resultados = document.getElementById('resultadosBusqueda');
+
+  if (!modal || !input || !resultados) return; // nada que hacer si faltan elementos
+
+  function abrirModal() {
+    modal.classList.add('activo');
+    input.value = '';
+    resultados.innerHTML = '';
+    setTimeout(() => input.focus(), 120);
+  }
+
+  function cerrarModal() {
+    modal.classList.remove('activo');
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+    resultados.innerHTML = '';
+    resultados.classList.remove('activo');
+  }
+
+  // abrir con la lupa (si existe)
+  if (lupa) {
+    lupa.closest('a')?.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
+    // si no está dentro de <a>, escuchar directamente
+    lupa.addEventListener && lupa.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
+  }
+
+  // cerrar por botón
+  if (cerrarBtn) cerrarBtn.addEventListener('click', cerrarModal);
+
+  // cerrar al clickear fuera del contenido
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) cerrarModal();
+  });
+
+  // cerrar con ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarModal();
+  });
+
+  //Limpiar prductos
+
+  //localStorage.removeItem("productos");
+
+  // ---------- Inicialización de productos STRAPPED ----------
+document.addEventListener('DOMContentLoaded', () => {
+  // Si ya existen productos en localStorage, no se vuelven a crear
+  if (!localStorage.getItem('productos')) {
+    const productos = [
+      {
+        nombre: "Audífonos Strapped Air",
+        precio: 160000,
+        imagen: "imagenes/Air2.png",
+        url: "Tecnologia.html"
+      },
+      {
+        nombre: "Cargador iPhone 25W",
+        precio: 80000,
+        imagen: "imagenes/Cargador.png",
+        url: "Tecnologia.html"
+      },
+      {
+        nombre: "Apple Watch",
+        precio: 450000,
+        imagen: "imagenes/Reloj.png",
+        url: "Relojes.html"
+      },
+      {
+        nombre: "Reloj Digital STRAPPED",
+        precio: 200000,
+        imagen: "imagenes/Reloj2.png",
+        url: "Relojes.html"
+      },
+      {
+        nombre: "Bolso de Cuero STRAPPED",
+        precio: 150000,
+        imagen: "imagenes/Bolsos.jpg",
+        url: "Bolsos.html"
+      }
+    ];
+
+    localStorage.setItem('productos', JSON.stringify(productos));
+  }
+});
 
 
+  // ---------- Lógica de búsqueda ----------
+  const productos = JSON.parse(localStorage.getItem('productos')) || [];
+
+  input.addEventListener('input', () => {
+    const termino = input.value.toLowerCase().trim();
+    resultados.innerHTML = '';
+
+    if (!termino) {
+      resultados.classList.remove('activo');
+      return;
+    }
+
+    resultados.classList.add('activo');
+
+    const productos = JSON.parse(localStorage.getItem('productos')) || [];
+    const coincidencias = productos.filter(p =>
+      (p.nombre || '').toLowerCase().includes(termino)
+    );
+
+    if (coincidencias.length === 0) {
+      resultados.innerHTML = '<p style="padding:12px;text-align:center;color:#333;">No se encontraron productos.</p>';
+      return;
+    }
+
+    // 🔹 Mostrar solo los primeros 4 productos
+    const visibles = coincidencias.slice(0, 4);
+
+    visibles.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'resultado-item';
+      item.innerHTML = `
+        <img src="${p.imagen}" alt="${p.nombre}">
+        <h4>${p.nombre}</h4>
+        <p>$${Number(p.precio).toLocaleString()}</p>
+      `;
+      item.addEventListener('click', () => {
+        if (p.url) window.location.href = p.url;
+      });
+      resultados.appendChild(item);
+    });
+
+    // 🔹 Si hay más de 4 resultados, mostrar botón “Ver todos”
+    if (coincidencias.length > 4) {
+      const verTodos = document.createElement('button');
+      verTodos.textContent = 'Ver todos los resultados';
+      verTodos.className = 'btn-ver-todos';
+      verTodos.style.cssText = `
+        grid-column: 1 / -1;
+        padding: 12px 18px;
+        background: #000;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      `;
+      verTodos.addEventListener('mouseenter', () => verTodos.style.background = '#333');
+      verTodos.addEventListener('mouseleave', () => verTodos.style.background = '#000');
+
+      verTodos.addEventListener('click', () => {
+        resultados.innerHTML = '';
+        coincidencias.forEach(p => {
+          const item = document.createElement('div');
+          item.className = 'resultado-item';
+          item.innerHTML = `
+            <img src="${p.imagen}" alt="${p.nombre}">
+            <h4>${p.nombre}</h4>
+            <p>$${Number(p.precio).toLocaleString()}</p>
+          `;
+          item.addEventListener('click', () => {
+            if (p.url) window.location.href = p.url;
+          });
+          resultados.appendChild(item);
+        });
+      });
+
+      resultados.appendChild(verTodos);
+    }
+
+    // construir resultados
+    const frag = document.createDocumentFragment();
+    matches.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'resultado-item';
+      item.innerHTML = `
+        <img src="${p.imagen}" alt="${p.nombre}">
+        <div>
+          <h4 style="margin:0;">${p.nombre}</h4>
+          <p style="margin:4px 0 0 0;">$${Number(p.precio).toLocaleString()}</p>
+        </div>
+      `;
+      item.addEventListener('click', () => {
+        // si tu producto tiene url definida la usamos, si no vamos a index
+        if (p.url) window.location.href = p.url;
+        else window.location.href = 'index.html';
+      });
+      frag.appendChild(item);
+    });
+    resultados.appendChild(frag);
+  });
+})();
+
+// Cerrar buscador al hacer clic fuera del área
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById('busqueda-modal');
+  const inputContainer = document.querySelector('.container-input');
+
+  if (modal.classList.contains('activo') && !inputContainer.contains(e.target) && !e.target.closest('.iconos')) {
+    modal.classList.remove('activo');
+  }
+});
