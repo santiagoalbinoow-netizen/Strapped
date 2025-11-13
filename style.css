@@ -33,7 +33,6 @@ section {
   scroll-margin-top: 120px;
 }
 
-
 /* =======================================================
 
    🔹 CONTENEDORES GENERALES
@@ -59,6 +58,32 @@ main {
 
 /* =======================================================
 
+   🔹 BOTONES GENERALES
+
+======================================================= */
+
+.Agregar-carrito {
+  margin-top: 0 ;
+  border-radius: 20px;
+  font-size: 13px;
+  font-family: "poppins", sans-serif;
+  font-weight: 1000;
+  transition: 0.3s;
+  padding: 0.7rem 2rem; /* ← más ancho (antes era solo 0.7rem) */
+  text-align: center;
+  color: #ffffff;
+  width: 220px; /* ← ajusta este valor */
+  height: 45px;
+  border: 2px solid #7D050F;
+  background-color: #7D050F;
+}
+
+.Agregar-carrito:hover {
+  background: #A6121D;
+}
+
+/* =======================================================
+
    🔹 HEADER Y MENÚ
 
 ======================================================= */
@@ -72,6 +97,7 @@ main {
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(8px);
   transition: background 0.3s ease, color 0.3s ease;
+    border: 0.1px solid black;
 }
 
 .header .botones a {
@@ -298,7 +324,7 @@ body.producto-page .header .iconos img {
   left: 0;
   width: 100%;
   background: #fff;
-  box-shadow: 0 15px 40px rgba(255, 0, 0, 0.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   opacity: 0;
   transform: translateY(10px);
   visibility: hidden;
@@ -812,6 +838,413 @@ body.producto-page .header .iconos img {
    border-color: #000; 
   }
 
+
+/* =======================================================
+   🔍 BUSQUEDA DISEÑO MINIMALISTA (ESTILO UNDERGOLD)
+======================================================= */
+
+.busqueda-modal {
+  position: fixed;
+  top: 65px; /* justo debajo del header */
+  left: 0;
+  right: 0;       /* asegura que cubra todo el ancho */
+  width: 100%;
+  height: 72px;   /* altura compacta */
+  background: #fff;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 12000;
+  padding: 0;     /* sin padding que empuje al input */
+  box-shadow: none;
+  border: 0.1px solid black;
+}
+
+.busqueda-modal.activo {
+  display: flex;
+}
+
+/* Contenido: fila única, ocupa todo el ancho */
+.busqueda-contenido {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0;             /* importantísimo: quitar padding */
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@keyframes fadeInSearch {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🔎 Input de búsqueda */
+.container-input {
+  flex: 1 1 auto;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  display: block;
+}
+
+.input {
+  width: 100%;
+  height: 48px;
+  border: none; /* ❌ eliminamos la línea negra */
+  background: transparent;
+  font-size: 16px;
+  color: #000;
+  outline: none;
+  padding: 0 20px 0 40px;
+  box-sizing: border-box;
+  margin: 10px;
+}
+
+
+/* Icono lupa */
+.icono-buscar {
+  position: absolute;
+  left: 25px;     /* pegado al borde izquierdo del viewport (visual) */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.icono-buscar:hover {
+  opacity: 1;
+}
+
+/* Botón cerrar (X) */
+.cerrar-busqueda {
+  flex: 0 0 auto;
+  margin-right: 8px;
+  margin-left: 8px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  color: #000;
+  cursor: pointer;
+  padding: 6px 12px;
+  box-sizing: border-box;
+}
+
+.cerrar-busqueda:hover {
+  transform: rotate(90deg);
+}
+
+
+/* === Diseño de productos tipo UNDERGOLD === */
+.resultados-busqueda {
+  display: none;
+  position: absolute;
+  top: 100%; /* justo debajo del input */
+  left: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 9999;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 35px;
+  padding: 40px 60px;
+  box-sizing: border-box;
+  padding-bottom: 100px; /* deja espacio para el botón */
+
+}
+
+/* ✅ Mostrar resultados solo cuando haya búsqueda activa */
+.resultados-busqueda.activo {
+  display: grid;
+}
+
+
+.resultados-busqueda::-webkit-scrollbar {
+  display: none;                 /* ocultar scrollbar Chrome */
+}
+
+.resultado-item {
+  flex: 0 0 auto;
+  width: 200px;               /* 🔹 más pequeño */
+  text-align: center;
+  background: #fff;
+  border: none;
+  transition: transform 0.3s ease;
+  padding: 10px;              /* 🔹 menos espacio interno */
+}
+
+.resultado-item img {
+  width: 100%;
+  height: 180px;              /* 🔹 más compacto */
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+
+.resultado-item:hover {
+  transform: translateY(-5px);
+}
+
+.resultado-item h4 {
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: #000;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.resultado-item p {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+
+/* =======================================================
+
+   🔹 OFERTAS
+
+======================================================= */
+
+section.ofertas {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.ofertas {
+  text-align: center;
+  background-color: transparent;
+  width: 100vw;
+  margin: 0;
+  padding: 60px 0;
+  overflow: hidden;
+  font-family: "archivo-black", sans-serif;
+}
+
+.ofertas-titulo {
+  font-size: 26px;
+  color: #ffffff;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+}
+
+.ofertas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  justify-content: stretch;
+  align-items: start;
+  width: 100vw; 
+  margin: 0 ;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 🔸 Tarjetas individuales */
+.ofertas-grid > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.producto-oferta {
+  position: relative;
+  background: transparent;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+
+.etiqueta {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e6dedb;
+  color: #24272B;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+}
+
+.producto-oferta img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.producto-oferta h3 {
+  font-size: 15px;
+  color: #FFFBFE;
+  margin: 8px 0 5px;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.precio-anterior {
+  text-decoration: line-through;
+  color: #636C75;
+  margin: 0;
+  font-size: 14px;
+}
+
+.precio-oferta {
+  color: #FFFBFE;
+  font-weight: 800;
+  font-size: 18px;
+  margin-top: 3px;
+}
+
+@media (max-width: 768px) {
+
+  .ofertas-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 25px;
+    padding: 0 35px 30px 35px; /* margen lateral uniforme */
+    scroll-behavior: smooth;
+  }
+
+  .ofertas-grid > div {
+    flex: 0 0 85%; /* 🔹 un producto completo + parte del siguiente */
+    scroll-snap-align: start;
+  }
+
+  .producto-oferta {
+    position: relative;
+    width: 100%;
+    background: transparent;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 25px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .producto-oferta img {
+    width: 95%; /* 🔹 más grande pero con algo de margen */
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+
+  .etiqueta {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-150%); /* 🔹 centra horizontalmente */
+    background-color: #e6dedb;
+    color: #24272B;
+    font-size: 12px;
+    font-family: "Archivo Black", sans-serif;
+    padding: 5px 10px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  .ofertas-titulo {
+    text-align: center;
+    padding-left: 35px;
+  }
+
+  .ofertas-grid::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .ofertas-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 20px;
+    padding: 0 25px 25px 25px;
+    scroll-behavior: smooth;
+  }
+
+  .ofertas-grid > div {
+    flex: 0 0 68%; /* 🔹 1 producto completo + parte del siguiente */
+    scroll-snap-align: start;
+  }
+
+  .producto-oferta {
+    position: relative;
+    width: 100%;
+    background: transparent;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .producto-oferta img {
+    width: 85%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+
+  .etiqueta {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-150%);
+    background-color: #e6dedb;
+    color: #24272B;
+    font-size: 11px;
+    font-family: "Archivo Black", sans-serif;
+    padding: 4px 9px;
+    border-radius: 7px;
+    letter-spacing: 0.5px;
+  }
+
+  .ofertas-titulo {
+    text-align: center;
+    padding-left: 25px;
+    font-size: 20px;
+  }
+
+  .ofertas-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .Agregar-carrito {
+    font-size: 10px;
+    padding: 0.6rem 1.5rem;
+    border-radius: 20px;
+  }
+}
+
+
+
+
+
 /* =======================================================
 
    🔹 BANNER
@@ -978,19 +1411,28 @@ body.producto-page .header .iconos img {
   position: relative;
   left: 50%;
   margin-left: -50vw;
-  background-color: #5b5c5b;
+  background-color: transparent;
   color: #f5f5f5;
   padding: 80px 50px;
   margin-top: 0px;
   text-align: center;
 }
 
+.section-horarios img{
+  width: 380px;         /* tamaño grande (ajusta si quieres) */
+  height: auto;         /* mantiene proporciones */
+  float: left;          /* coloca la imagen a la izquierda del texto */
+  margin-right: 90px;   /* espacio entre la imagen y el texto */
+  border-radius: 20px;  /* bordes suaves */
+}
+
 .section-horarios h2 {
   font-size: 28px;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
   color: #fff;
   letter-spacing: 1px;
   text-transform: uppercase;
+  text-align: left;
 }
 
 .horarios-container {
@@ -1000,23 +1442,25 @@ body.producto-page .header .iconos img {
 
 .horarios-container p {
   color: #d3d3d3;
-  font-size: 16px;
-  margin-bottom: 40px;
+  font-size: 13px;
+  margin-bottom: 25px;
   line-height: 1.6;
+  text-align: left;
 }
 
 .horarios-lista {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 40px;
+  justify-content: left;
+  gap: 20px;
 }
 
 .horario-item {
   background-color: #3b3b3b;
   border-radius: 12px;
-  padding: 25px 30px;
-  width: 300px;
+  padding: 15px 20px;
+  width: 170px;
+  height: 50px;
   transition: 0.3s;
   box-shadow: 0 0 8px rgba(0,0,0,0.2);
 }
@@ -1028,16 +1472,54 @@ body.producto-page .header .iconos img {
 }
 
 .horario-item h3 {
-  font-size: 18px;
+  font-size: 15px;
   color: white;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
 
-.horario-item p {
-  font-size: 15px;
-  color: #cfcfcf;
+/* =======================================================
+
+   🔹 SECCIONES DE PAGO
+
+======================================================= */
+
+.section-pagos {
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 160px;
 }
+
+.card {
+  box-sizing: border-box;
+  width: 220px;
+  height: 300px;
+  background: rgba(217, 217, 217, 0.58);
+  border: 1px solid white;
+  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6px);
+  border-radius: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-weight: bolder;
+  color: black;
+}
+
+.card:hover {
+  border: 1px solid black;
+  transform: scale(1.05);
+}
+
+.card:active {
+  transform: scale(0.95) rotateZ(1.7deg);
+}
+
 
 /* =======================================================
 
@@ -1048,7 +1530,7 @@ body.producto-page .header .iconos img {
 footer {
   background: #444544;
   color: #eee;
-  padding: 60px 10% 30px;
+  padding: 45px 2% 30px;
   margin-top: auto;
   font-family: "Archivo Black", sans-serif;
 }
@@ -1081,7 +1563,7 @@ footer {
 }
 
 .footer-col ul li {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .footer-col ul li a {
@@ -1128,7 +1610,7 @@ footer .iconos img:hover {
 
 footer .copyright {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 25px;
   font-size: 13px;
   color: #777;
 }
