@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>STRAPPED</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+
 </head>
 
 <style>
@@ -142,9 +145,12 @@ body {
             <li class="login-mobile"><a href="#" id="loginBtn">Iniciar Sesión / Registrarse</a></li>
       </ul>
 
+
       <ul class="iconos">
         <li><a href="#"><img src="Lupa.png" alt="Buscar"></a></li>
-        <li><a href="#" id="openLogin"><img src="User.png" alt="Usuario"></a></li>
+        <li id="panel-usuario" class="panel-usuario">
+          <a href="#" id="openLogin"><img src="User.png" alt="Usuario"></a>
+        </li>
         <li><a href="#" class="bolsa"><img src="Bolsa.png" alt="Carrito"><span id="contador-carrito">0</span></a></li>
       </ul>
 
@@ -178,18 +184,24 @@ body {
 
             <form id="loginForm" class="form active">
               <h2>Iniciar Sesión</h2>
-              <input type="email" placeholder="Correo electrónico" required>
-              <input type="password" placeholder="Contraseña" required>
+              <input type="email" name="email" placeholder="Correo electrónico" required>
+              <input type="password" name="password" placeholder="Contraseña" required>
               <button type="submit" class="btn">Entrar</button>
             </form>
 
             <form id="registerForm" class="form">
               <h2>Crear Cuenta</h2>
-              <input type="text" placeholder="Nombre completo" required>
-              <input type="email" placeholder="Correo electrónico" required>
-              <input type="password" placeholder="Contraseña" required>
+              <input type="text" name="nombre" placeholder="Nombre completo" required>
+              <input type="email" name="email" placeholder="Correo electrónico" required>
+              <input type="password" name="password" placeholder="Contraseña" required>
               <button type="submit" class="btn">Registrarse</button>
             </form>
+
+            <button id="googleLogin" class="btn btn-google">
+              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
+                  style="width:20px;margin-right:8px;">
+              Continuar con Google
+            </button>
           </div>
         </div>
       </div>
@@ -216,13 +228,17 @@ body {
 
   <section id="inicio" class="banner">
     <img src="Banner2.png" alt="Banner principal">
+    
+    <div class="boton-banner">
+      <h1>BLACKFRIDAY 60%</h1>
+        <a href="#productos" class="banner-btn">Shop now</a>
+    </div> 
   </section>
 
   <main class="main-container">
 
     <!-- PRODUCTOS -->
     <section id="catalogo" class="section-productos">
-      <!--<h1 class="productos-titulo">Productos</h1>-->
       <div class="productos-container">
 
         <a href="Tecnologia.html" class="producto">
@@ -252,54 +268,61 @@ body {
 
         <div>
           <a href="producto.html?id=1" class="producto-oferta">
-            <div class="etiqueta">¡OFERTA!</div>
-            <img src="Img.png" alt="Tinta Gloss Jack">
-            <h3>PRODUCTO 1</h3>
-            <p class="precio-anterior">$ 20.000</p>
-            <p class="precio-oferta">$ 12.000</p>
+            <div class="etiqueta">¡OFERTA!</div> 
+            <div class="producto-img">
+              <img src="Producto.png" alt="img-normal">
+              <img src="Productoatras.png" alt="img-hover">
+            </div>
+            <h3>UNDERWATER BOXY FIT OVERSIZE</h3>
+            <p class="precio-oferta">$12.000,00 COP</p>
           </a>
-          <button class="Agregar-carrito">Agregar al carrito</button>
         </div>
 
         <div>
           <a href="producto.html?id=1" class="producto-oferta">
             <div class="etiqueta">¡OFERTA!</div>
-            <img src="Img.png" alt="Tinta Villanos">
-            <h3>PRODUCTO 2</h3>
-            <p class="precio-anterior">$ 15.000</p>
+            <div class="producto-img">
+              <img src="Producto.png" alt="img-normal">
+              <img src="Productoatras.png" alt="img-hover">
+            </div>
+            <h3>Santiago Albino</h3>
             <p class="precio-oferta">$ 10.000</p>
           </a>
-          <button class="Agregar-carrito">Agregar al carrito</button>
         </div>
 
         <div>
           <a href="producto.html?id=1" class="producto-oferta">
             <div class="etiqueta">¡OFERTA!</div>
-            <img src="Img.png" alt="Borlas Intensamente">
+            <div class="producto-img">
+              <img src="Producto.png" alt="img-normal">
+              <img src="Productoatras.png" alt="img-hover">
+            </div>
             <h3>PRODUCTO 3</h3>
-            <p class="precio-anterior">$ 10.000</p>
             <p class="precio-oferta">$ 5.000</p>
           </a>
-          <button class="Agregar-carrito">Agregar al carrito</button>
         </div>
 
         <div>
           <a href="producto.html?id=1" class="producto-oferta">
             <div class="etiqueta">¡OFERTA!</div>
-            <img src="Img.png" alt="Splash Envidia">
+            <div class="producto-img">
+              <img src="Producto.png" alt="img-normal">
+              <img src="Productoatras.png" alt="img-hover">
+            </div>
             <h3>PRODUCTO 4</h3>
-            <p class="precio-anterior">$ 20.000</p>
             <p class="precio-oferta">$ 12.000</p>
           </a>
-          <button class="Agregar-carrito">Agregar al carrito</button>
         </div>
 
       </div>
     </section>
 
-
-
   </main>
+
+  <section id="inicio" class="banner2">
+    <h1>NOSOTROS</h1>
+    <img src="Banner3.png" alt="Banner secundario">
+  </section><br><br><br>
 
   <footer id="contacto">
     <div class="footer-container">
@@ -330,27 +353,59 @@ body {
   <!-- SDK de Wompi -->
   <script src="https://checkout.wompi.co/widget.js"></script>
 
-  <script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
     const botonPagar = document.getElementById("btn-finalizar-compra");
 
+    if (botonPagar){
     botonPagar.addEventListener("click", () => {
-      const checkout = new WidgetCheckout({
-        currency: "COP",
-        amountInCents: 120000, // 💰 valor en centavos (1200.00 = 120000)
-        reference: "pedido_" + Date.now(),
-        publicKey: "pub_test_XXXXXXXXXXXXXXX", // tu llave pública
-        redirectUrl: "https://strapped-six.vercel.app/gracias.html" // tu página de confirmación
-      });
-      checkout.open(function (result) {
-        console.log("Resultado del pago:", result);
-      });
+      //const checkout = new WidgetCheckout({
+        //currency: "COP",
+        //amountInCents: 120000, // 💰 valor en centavos (1200.00 = 120000)
+        //reference: "pedido_" + Date.now(),
+        //publicKey: "pub_test_XXXXXXXXXXXXXXX", // tu llave pública
+        //redirectUrl: "https://strapped-six.vercel.app/gracias.html" // tu página de confirmación
+      //});
+      //checkout.open(function (result) {
+        //console.log("Resultado del pago:", result);
+      //});
+    
     });
+    }
   </script>
-  
-  <script src="carrito.js"></script>  
+
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const goPedidos = document.getElementById("goPedidos");
+
+    if (!goPedidos) return;
+
+    goPedidos.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const enPerfil = window.location.pathname.includes("Perfil.html");
+
+        if (enPerfil) {
+            // Notificar al JS del perfil para cambiar pestaña sin recargar
+            document.dispatchEvent(new CustomEvent("abrirPedidos"));
+        } else {
+            // Ir al perfil con hash
+            window.location.href = "Perfil.html#pedidos";
+        }
+    });
+});
+</script>
+
+
+  <script type="module" src="Firebase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="carrito.js"></script>
+  <script type="module" src="auth.js?v=20251125"></script>
 
 </body>
 </html>
+
 
 
 
