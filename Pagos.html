@@ -13,7 +13,7 @@
     <a href="index.html" class="logo-compra">STRAPPED</a>
 
     <ul class="iconos">
-      <li><a href="#" class="bolsa"><img src="Bolsa.png" alt="Carrito"><span id="contador-carrito">0</span></a></li>
+      <li><a href="#" class="bolsa"><img src="imagenes/bolsa.png" alt="Carrito"><span id="contador-carrito">0</span></a></li>
     </ul>
 
     <!-- Panel del carrito -->
@@ -37,25 +37,26 @@
     <div class="checkout-form">
       <h2>Información de contacto y envío</h2>
       <form id="formPago">
+
         <label>Correo electrónico</label>
-        <input type="email" name="correo" placeholder="ejemplo@gmail.com" required>
+        <input type="email" id="email" required>
 
         <label>Nombre completo</label>
-        <input type="text" name="nombre" placeholder="Nombre y apellido" required>
+        <input type="text" id="nombre" required>
 
-        <label>Cedula</label>
-        <input type="id" name="id" required>
+        <label>Cédula</label>
+        <input type="text" id="cedula" required>
 
         <label>Teléfono</label>
-        <input type="tel" name="telefono" required>
+        <input type="tel" id="telefono" required>
 
         <label>Dirección</label>
-        <input type="text" name="direccion" placeholder="Calle, número, barrio" required>
+        <input type="text" id="direccion" required>
 
         <label>Ciudad</label>
-        <input type="text" name="ciudad" placeholder="Bogotá, Medellín..." required>
+        <input type="text" id="ciudad" required>
 
-        <button type="btn">Proceder al pago</button>
+        <button type="submit">Proceder al pago</button>
       </form>
     </div>
 
@@ -70,57 +71,51 @@
     </div>
   </section>
 
-  <script>
-    // === Cargar productos del carrito ===
-    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const resumen = document.getElementById("resumen-carrito");
-    const totalCompra = document.getElementById("total-compra");
+<script>
+  // === Cargar productos del carrito ===
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  const resumen = document.getElementById("resumen-carrito");
+  const totalCompra = document.getElementById("total-compra"); // elemento correcto
 
-    if (carrito.length === 0) {
-      resumen.innerHTML = "<p>Tu carrito está vacío.</p>";
-      totalCompra.textContent = "$0";
-    } else {
-      let subtotal = 0;
-      resumen.innerHTML = carrito.map(item => {
-        const totalItem = item.precio * item.cantidad;
-        subtotal += totalItem;
-        return `
-          <div class="summary-item">
-            <div class="summary-product">
-              <img src="${item.imagen}" alt="${item.nombre}">
-              <div>
-                <p><strong>${item.nombre}</strong></p>
-                <p class="summary-details">${item.cantidad} x $${item.precio.toLocaleString()}</p>
-              </div>
+  if (carrito.length === 0) {
+    resumen.innerHTML = "<p>Tu carrito está vacío.</p>";
+    totalCompra.textContent = "$0";
+  } else {
+    let subtotal = 0;
+    resumen.innerHTML = carrito.map(item => {
+      const totalItem = item.precio * item.cantidad;
+      subtotal += totalItem;
+      return `
+        <div class="summary-item">
+          <div class="summary-product">
+            <img src="${item.imagen}" alt="${item.nombre}">
+            <div>
+              <p><strong>${item.nombre}</strong></p>
+              <p class="summary-details">${item.cantidad} x $${item.precio.toLocaleString()}</p>
             </div>
-            <p>$${totalItem.toLocaleString()}</p>
           </div>
-        `;
-      }).join('');
-
-      const envio = 10000;
-      const total = subtotal + envio;
-
-      resumen.innerHTML += `
-        <div class="summary-total">
-          <span>Subtotal</span>
-          <span>$${subtotal.toLocaleString()}</span>
-        </div>
-        <div class="summary-total">
-          <span>Envío</span>
-          <span>$${envio.toLocaleString()}</span>
+          <p>$${totalItem.toLocaleString()}</p>
         </div>
       `;
-      totalCompra.textContent = `$${total.toLocaleString()}`;
-    }
+    }).join('');
 
-    // === Simular envío de formulario ===
-    document.getElementById("formPago").addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("Redirigiendo al pago seguro...");
-      window.location.href = "gracias.html"; // luego se reemplaza por integración con Wompi
-    });
-  </script>
+    const envio = 10000;
+    const total = subtotal + envio;
+
+    resumen.innerHTML += `
+      <div class="summary-total">
+        <span>Subtotal</span>
+        <span>$${subtotal.toLocaleString()}</span>
+      </div>
+      <div class="summary-total">
+        <span>Envío</span>
+        <span>$${envio.toLocaleString()}</span>
+      </div>
+    `;
+    totalCompra.textContent = `$${total.toLocaleString()}`;
+  }
+</script>
+
 
   <script>
   // === Mostrar contador del carrito ===
@@ -134,7 +129,188 @@
   });
   </script>
 
-  <script src="carrito.js"></script>
+  
+  <script type="module" src="Firebase.js"></script>
+  <script type="module" src="auth.js"></script>
+
+  <script type="module">
+  import { auth, db } from "./Firebase.js";
+  import {
+    addDoc,
+    collection,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+  // URL de tu Google Apps Script Web App
+  const GOOGLE_SHEETS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxczKe_ckPkzucbt3IVO0oIpYjj8yQA1WhFwpu1j4koHIa-c7IbutQ5nDfGUKU-MBqn/exec';
+
+  // Elementos del DOM (aseguramos que existan)
+  const form = document.getElementById('formPago');
+  const resumenEl = document.getElementById("resumen-carrito");
+  const totalCompraEl = document.getElementById("total-compra");
+
+  // Debug helper
+  function log(...args) { console.log("[PAGOS] ", ...args); }
+
+  if (!form) {
+    console.error("[PAGOS] ERROR: no se encontró #formPago en el DOM. El script de envío no se ejecutará.");
+  }
+
+  async function crearPreferenciaMP(total) {
+  try {
+    const respuesta = await fetch("http://localhost:3000/crear_preferencia", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ monto: total })
+    });
+
+    const data = await respuesta.json();
+    return data.init_point;
+  } catch (error) {
+    console.error("Error creando preferencia MP:", error);
+    return null;
+  }
+}
+
+
+  // Función para guardar en Firestore
+  async function guardarPedidoEnFirebase(dataPedido) {
+    try {
+      const user = auth?.currentUser;
+      if (!user) {
+        log("guardarPedidoEnFirebase: usuario NO logueado, no se guarda en Firestore.");
+        return false;
+      }
+      log("guardarPedidoEnFirebase: uid detectado:", user.uid);
+      const ref = collection(db, "usuarios", user.uid, "pedidos");
+      const docRef = await addDoc(ref, {
+        ...dataPedido,
+        creadoEn: serverTimestamp()
+      });
+      log("Pedido guardado en Firestore. id:", docRef.id);
+      return true;
+    } catch (err) {
+      console.error("guardarPedidoEnFirebase - error guardando en Firestore:", err);
+      return false;
+    }
+  }
+
+  // Envío del formulario
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      try {
+        log("Inicio flujo de submit");
+
+        const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+        log("Carrito:", carrito);
+
+        if (!carrito || carrito.length === 0) {
+          alert("El carrito está vacío. Por favor, agregue productos.");
+          return;
+        }
+
+        // datos cliente
+        const datosCliente = {
+          nombre: (document.getElementById('nombre')?.value || "").trim(),
+          email: (document.getElementById('email')?.value || "").trim(),
+          cedula: (document.getElementById('cedula')?.value || "").trim(),
+          telefono: (document.getElementById('telefono')?.value || "").trim(),
+          direccion: (document.getElementById('direccion')?.value || "").trim(),
+          ciudad: (document.getElementById('ciudad')?.value || "").trim(),
+        };
+
+        log("datosCliente:", datosCliente);
+
+        // calcular total (limpiamos todo no-dígito)
+        const totalText = (totalCompraEl?.textContent || "");
+        log("totalCompra text:", totalText);
+        const totalStr = totalText.replace(/[^\d]/g, "");
+        const totalFinal = parseInt(totalStr, 10) || 0;
+        log("totalFinal (number):", totalFinal);
+
+        // lista productos legible para sheets
+        const listaProductosStr = carrito.map(item =>
+          `${item.nombre} (x${item.cantidad}, $${Number(item.precio).toLocaleString()})`
+        ).join(' | ');
+
+        // objeto para Apps Script
+        const dataParaAppsScript = {
+          timestamp: new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' }),
+          nombre: datosCliente.nombre,
+          email: datosCliente.email,
+          direccion: datosCliente.direccion,
+          ciudad: datosCliente.ciudad,
+          cedula: datosCliente.cedula,
+          telefono: datosCliente.telefono,
+          productos: listaProductosStr,
+          total: totalFinal
+        };
+
+        // objeto para Firebase
+        const dataParaFirebase = {
+          ...datosCliente,
+          productos: carrito,
+          total: totalFinal
+        };
+
+        // 1) Enviar a Google Sheets (fire-and-forget)
+        try {
+          const urlParams = new URLSearchParams(dataParaAppsScript).toString();
+          const finalUrl = `${GOOGLE_SHEETS_WEB_APP_URL}?${urlParams}`;
+          log("Enviando a Google Sheets (no-cors) ->", finalUrl);
+          await fetch(finalUrl, { method: 'GET', mode: 'no-cors' });
+          log("Envío a Google Sheets iniciado (no-cors).");
+        } catch (err) {
+          console.warn("No se pudo enviar a Google Sheets (esto no detiene la compra):", err);
+        }
+
+        // 2) Guardar en Firebase si el usuario está logueado
+        if (auth?.currentUser) {
+          log("Usuario logueado detectado, intentando guardar pedido en Firebase...");
+          const ok = await guardarPedidoEnFirebase(dataParaFirebase);
+          if (!ok) {
+            console.warn("No se pudo guardar el pedido en Firebase. Revisa permisos y reglas.");
+          }
+        } else {
+          log("Usuario NO logueado -> no se guardará en Firebase.");
+        }
+
+        // 3) finalizar flujo (limpiar carrito y redirigir)
+        alert('✅ Tu pedido se ha registrado. Ahora serás redirigido a la pasarela de pago.');
+        localStorage.removeItem('carrito');
+
+        // Redirigir a la pasarela (reemplaza por tu url real)
+        // Si usas Wompi u otra pasarela, aquí podría ir la llamada
+        // === 3) Crear pago en Mercado Pago ===
+        const urlPago = await crearPreferenciaMP(totalFinal);
+
+        if (!urlPago) {
+          alert("❌ Error creando la orden de pago. Intenta nuevamente.");
+          return;
+        }
+
+        // Limpia carrito
+        localStorage.removeItem('carrito');
+
+        window.location.href = urlPago;
+
+
+
+      } catch (errGlobal) {
+        console.error("Error en submit del formPago:", errGlobal);
+        alert('⚠️ Ocurrió un error al procesar tu pedido. Revisa la consola.');
+      }
+    });
+  }
+</script>
+
+
+
+
+<script src="carrito.js"></script>
+
 
 </body>
 </html>
