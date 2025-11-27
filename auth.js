@@ -201,7 +201,7 @@ onAuthStateChanged(auth, async (user) => {
     panel.innerHTML = `
       <div class="usuario-dropdown">
         <button type="button" class="usuario-btn">
-          <img src="user.png" alt="UsuarioLog" class="icono-user">
+          <img src="User.png" alt="UsuarioLog" class="icono-user">
           <div class="textos">
             <span class="hola">¡Hola!</span>
             <span class="correo">${nombreUsuario}</span>
@@ -334,3 +334,4 @@ export async function actualizarPerfil(uid, data) {
   await updateDoc(ref, data);
 
 }
+
