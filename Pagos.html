@@ -158,7 +158,7 @@
 
   async function crearPreferenciaMP(total) {
   try {
-    const respuesta = await fetch("http://localhost:3000/crear_preferencia", {
+    const respuesta = await fetch("https://strapped-fm4j.onrender.com/crear_preferencia")", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ monto: total })
@@ -314,4 +314,5 @@
 
 </body>
 </html>
+
 
