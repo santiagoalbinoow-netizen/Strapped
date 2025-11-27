@@ -201,7 +201,7 @@ onAuthStateChanged(auth, async (user) => {
     panel.innerHTML = `
       <div class="usuario-dropdown">
         <button type="button" class="usuario-btn">
-          <img src="imagenes/user.png" alt="UsuarioLog" class="icono-user">
+          <img src="user.png" alt="UsuarioLog" class="icono-user">
           <div class="textos">
             <span class="hola">¡Hola!</span>
             <span class="correo">${nombreUsuario}</span>
@@ -226,7 +226,7 @@ onAuthStateChanged(auth, async (user) => {
   } else {
     panel.innerHTML = `
       <button type="button" onclick="openLoginModal()">
-          <img src="imagenes/user.png" alt="UsuarioLog" class="icono-user">
+          <img src="User.png" alt="UsuarioLog" class="icono-user">
       </button>
     `;
   }
@@ -332,4 +332,5 @@ export async function obtenerPerfil(uid) {
 export async function actualizarPerfil(uid, data) {
   const ref = doc(db, "usuarios", uid);
   await updateDoc(ref, data);
+
 }
