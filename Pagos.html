@@ -223,12 +223,18 @@
 
         log("datosCliente:", datosCliente);
 
-        // calcular total (limpiamos todo no-dígito)
-        const totalText = (totalCompraEl?.textContent || "");
-        log("totalCompra text:", totalText);
-        const totalStr = totalText.replace(/[^\d]/g, "");
-        const totalFinal = parseInt(totalStr, 10) || 0;
-        log("totalFinal (number):", totalFinal);
+        // --- CALCULO GARANTIZADO DEL TOTAL NUMÉRICO ---
+        let subtotal = carrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+        const envio = 10000; // Asumiendo que 10000 es el valor fijo de envío
+        const totalFinal = subtotal + envio;
+        
+        log("totalFinal NUMÉRICO recalculado:", totalFinal);
+        
+        if (totalFinal <= 0) {
+            alert("El total de la compra debe ser mayor a cero. Por favor, agregue productos.");
+            return; // Detiene el submit si el monto es inválido
+        }
+        // --- FIN CALCULO ---
 
         // lista productos legible para sheets
         const listaProductosStr = carrito.map(item =>
@@ -314,6 +320,7 @@
 
 </body>
 </html>
+
 
 
 
