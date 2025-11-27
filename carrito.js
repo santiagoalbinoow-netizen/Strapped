@@ -1,7 +1,10 @@
 // =========================
-//  🔹 Cargar producto dinámicamente según ?id=
+//  carrito.js (corregido)
 // =========================
 
+// =========================
+//  🔹 Cargar producto dinámicamente según ?id=
+// =========================
 const params = new URLSearchParams(window.location.search);
 const idProducto = parseInt(params.get("id"));
 
@@ -9,8 +12,8 @@ const idProducto = parseInt(params.get("id"));
 const productos = [
   {
     id: 1,
-    nombre: "Audífonos Bluetooth STRAPPED",
-    precio: 120000,
+    nombre: "Audífonos Bluetooth",
+    precio: 120000.00,
     imagenes: ["Air.png", "Air3.png"],
     descripcion: "Audífonos Bluetooth resistentes al agua y de sonido envolvente."
   },
@@ -47,8 +50,6 @@ if (producto && document.querySelector('.producto-main')) {
       .join("");
   }
 }
-
-
 
 /* =========================
    1) Inicialización y helpers
@@ -149,7 +150,8 @@ function renderizarCarrito() {
   checkoutBtn.style.marginTop = '6px';
   checkoutBtn.textContent = 'FINALIZAR COMPRA';
   checkoutBtn.addEventListener('click', () => {
-    window.location.href = 'Pagos.html';
+      // ✅ Acción correcta: solo redirigir a la página de pagos
+      window.location.href = 'Pagos.html';
   });
 
   wrapper.appendChild(totalDiv);
@@ -189,6 +191,85 @@ function agregarAlCarrito(producto) {
   guardarCarrito();
 }
 
+// ===============================
+//  PANEL DEL CARRITO (ABRIR / CERRAR) - REPARADO
+//  Reemplazar el bloque anterior por este
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+  // Intentar encontrar el botón del carrito por varios selectores posibles
+  let btnCarrito = document.getElementById("btn-carrito") || 
+                   document.querySelector(".bolsa") || 
+                   document.querySelector("a.bolsa") ||
+                   document.querySelector(".botones .bolsa") ||
+                   null;
+
+  const panel = document.getElementById("carrito-panel");
+  const overlay = document.getElementById("overlay-carrito");
+  const cerrarCarrito = document.getElementById("cerrar-carrito");
+
+  // Logs para debug (puedes quitar luego)
+  console.log("[carrito] btnCarrito:", !!btnCarrito, "panel:", !!panel, "overlay:", !!overlay, "cerrar:", !!cerrarCarrito);
+
+  // Si no hay panel u overlay, no tiene sentido continuar, pero no retornamos
+  if (!panel) {
+    console.warn("[carrito] No se encontró #carrito-panel en el DOM. Los listeners no se aplicarán.");
+    return;
+  }
+  if (!overlay) {
+    console.warn("[carrito] No se encontró #overlay-carrito en el DOM. El cierre por click fuera no funcionará.");
+  }
+
+  // Funciones para abrir y cerrar panel (reusables)
+  function abrirPanel() {
+    panel.classList.add("activo");
+    if (overlay) overlay.classList.add("activo");
+    panel.style.animation = "slideIn 0.35s ease-out";
+  }
+
+  function cerrarPanel() {
+    panel.classList.remove("activo");
+    if (overlay) overlay.classList.remove("activo");
+  }
+
+  // Si existe un botón del carrito, le ponemos el listener para abrir
+  if (btnCarrito) {
+    // El ícono del carrito puede contener un <a> o una imagen; evitamos comportamiento por defecto
+    btnCarrito.addEventListener("click", (e) => {
+      e.preventDefault();
+      abrirPanel();
+    });
+  } else {
+    // No se encontró el botón del carrito: quizá tu HTML usa otra estructura.
+    // Dejar log para que puedas ajustarlo.
+    console.warn("[carrito] No se encontró un selector para abrir el carrito (buscado #btn-carrito o .bolsa).");
+  }
+
+  // Listener para el botón de cerrar (si existe)
+  if (cerrarCarrito) {
+    cerrarCarrito.addEventListener("click", (e) => {
+      e.preventDefault();
+      cerrarPanel();
+    });
+  } else {
+    console.warn("[carrito] No se encontró #cerrar-carrito en el DOM.");
+  }
+
+  // Cerrar al pulsar overlay (si existe)
+  if (overlay) {
+    overlay.addEventListener("click", (e) => {
+      e.preventDefault();
+      cerrarPanel();
+    });
+  }
+
+  // También cerramos con Escape por robustez
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") cerrarPanel();
+  });
+});
+
+
+
 /* =========================
    5) Lógica del botón "Agregar al carrito" (usa parsePrice seguro)
    ========================= */
@@ -221,7 +302,7 @@ if (botonAgregar) {
     const overlay = document.getElementById('overlay-carrito');
     if (panel) panel.classList.add('activo');
     if (overlay) overlay.classList.add('activo');
-    panel.style.animation = 'slideIn 0.45s cubic-bezier(0.25, 1, 0.3, 1)';
+    if (panel) panel.style.animation = 'slideIn 0.45s cubic-bezier(0.25, 1, 0.3, 1)';
   });
 }
 
@@ -269,7 +350,7 @@ function eliminarDelCarrito(index) {
 /* =========================
    9) Mantengo tu carrusel + modal (no los modifiqué, solo los dejo abajo)
    ========================= */
-   
+
 document.addEventListener('DOMContentLoaded', () => {
   const pista = document.querySelector('.carrusel-pista');
   const imagenes = document.querySelectorAll('.carrusel-img');
@@ -310,254 +391,10 @@ document.addEventListener('DOMContentLoaded', () => {
   actualizarCarrusel();
 });
 
-// Espera a que cargue el DOM
-          document.addEventListener('DOMContentLoaded', function() {
-            // Buscamos el <a> que contiene la img del carrito (seguro existe)
-            const imgCarrito = document.querySelector('.iconos img[alt="Carrito"]');
-            const btnCarrito = imgCarrito ? imgCarrito.closest('a') : null;
-
-            const panelCarrito = document.getElementById('carrito-panel');
-            const cerrarCarrito = document.getElementById('cerrar-carrito');
-            const overlay = document.getElementById('overlay-carrito');
-
-            if (!btnCarrito) {
-              console.error('No se encontró el botón del carrito (a > img[alt="Carrito"])');
-              return;
-            }
-            if (!panelCarrito || !cerrarCarrito || !overlay) {
-              console.error('Faltan elementos del panel del carrito (panel, cerrar o overlay).');
-              return;
-            }
-
-            // Abrir
-            btnCarrito.addEventListener('click', function(e) {
-              e.preventDefault(); // evita navegación si es <a href="#">
-              panelCarrito.classList.add('activo');
-              overlay.classList.add('activo');
-              // opcional: cerrar menu responsive si está abierto
-              const menuCheckbox = document.getElementById('menu');
-
-            });
-
-            // Cerrar con botón
-            cerrarCarrito.addEventListener('click', function() {
-              panelCarrito.classList.remove('activo');
-              overlay.classList.remove('activo');
-            });
-
-            // Cerrar al clicar overlay
-            overlay.addEventListener('click', function() {
-              panelCarrito.classList.remove('activo');
-              overlay.classList.remove('activo');
-            });
-
-            // cerrar con ESC
-            document.addEventListener('keydown', function(e) {
-              if (e.key === 'Escape') {
-                panelCarrito.classList.remove('activo');
-                overlay.classList.remove('activo');
-              }
-            });
-          });
-
-  try {
-  // usa let o var para evitar colisión global si se ejecuta dos veces
-  let modal = document.getElementById("authModal");
-  const openBtn = document.getElementById("openLogin");
-  const mobileLogin = document.getElementById("loginBtn");
-  const closeBtn = document.getElementById("closeModal");
-  const loginToggle = document.getElementById("loginToggle");
-  const registerToggle = document.getElementById("registerToggle");
-  const loginForm = document.getElementById("loginForm");
-  const registerForm = document.getElementById("registerForm");
-
-  if (openBtn) openBtn.addEventListener("click", e => { e.preventDefault(); if (modal) modal.style.display = "flex"; });
-  if (mobileLogin) mobileLogin.addEventListener("click", e => { e.preventDefault(); if (modal) modal.style.display = "flex"; if (menuCheckbox) menuCheckbox.checked = false; });
-  if (closeBtn) closeBtn.addEventListener("click", () => { if (modal) modal.style.display = "none"; });
-  window.addEventListener("click", e => { if (e.target === modal) if (modal) modal.style.display = "none"; });
-
-  if (loginToggle && registerToggle && loginForm && registerForm) {
-    loginToggle.addEventListener("click", () => {
-      loginToggle.classList.add("active");
-      registerToggle.classList.remove("active");
-      loginForm.classList.add("active");
-      registerForm.classList.remove("active");
-    });
-    registerToggle.addEventListener("click", () => {
-      registerToggle.classList.add("active");
-      loginToggle.classList.remove("active");
-      registerForm.classList.add("active");
-      loginForm.classList.remove("active");
-    });
-  }
-} catch (err) {
-  console.warn('[carrito.js] modal error (ignorado):', err);
-}
-
 // =========================
-// 🔹 Cambio de color del header al hacer scroll (usa clase .scrolled)
-//    - Implementación robusta: manipulamos directamente el style del <img>
+// Buscador: modal + lógica
 // =========================
-document.addEventListener('DOMContentLoaded', () => {
-  const header = document.querySelector('.header');
-  const iconoImg = document.querySelector('.icono img'); // selecciona la imagen dentro del .icono
-  if (!header) return;
-
-  function actualizarHeader() {
-    const banner = document.querySelector('.banner') || document.querySelector('.hero');
-    const alturaBanner = banner ? banner.offsetHeight : 300;
-
-    if (window.scrollY > alturaBanner - 50) {
-      // header blanco
-      header.classList.add('scrolled');
-      if (iconoImg) {
-        // quitamos cualquier filtro — mostramos la imagen original (normalmente negra)
-        iconoImg.style.transition = 'filter 0.25s ease';
-        iconoImg.style.filter = 'none';
-        // si tu CSS aplica !important u otro filtro, este style inline lo gana
-      }
-    } else {
-      // header oscuro
-      header.classList.remove('scrolled');
-      if (iconoImg) {
-        // forzamos que se vea blanco arriba (sobre banner oscuro)
-        iconoImg.style.transition = 'filter 0.25s ease';
-        iconoImg.style.filter = 'invert(1)'; // hace visible icono negro -> blanco
-      }
-    }
-  }
-
-  // Ejecutar al cargar y en scroll y resize
-  actualizarHeader();
-  window.addEventListener('scroll', actualizarHeader);
-  window.addEventListener('resize', actualizarHeader);
-});
-
-// =========================
-// 🔹 Panel de botones responsive (versión corregida)
-// =========================
-document.addEventListener('DOMContentLoaded', () => {
-  const iconoBtn = document.querySelector('.icono');
-  const panelBotones = document.getElementById('botones-panel');
-  if (!iconoBtn || !panelBotones) return;
-
-  // Mover panel al body si está dentro del header
-  if (panelBotones.parentNode !== document.body) {
-    document.body.appendChild(panelBotones);
-  }
-
-  // Crear overlay si no existe
-  let overlayMenu = document.querySelector('.overlay-menu');
-  if (!overlayMenu) {
-    overlayMenu = document.createElement('div');
-    overlayMenu.classList.add('overlay-menu');
-    document.body.appendChild(overlayMenu);
-  }
-
-  // Llenar menú si está vacío
-  if (panelBotones.innerHTML.trim() === '') {
-    panelBotones.innerHTML = `
-      <ul class="menu-lista">
-        <li>
-          <a href="#">Tecnología <span class="flecha">›</span></a>
-          <ul class="submenu">
-            <li><a href="#">Audífonos</a></li>
-            <li><a href="#">Parlantes</a></li>
-            <li><a href="#">Cargadores</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">Relojes <span class="flecha">›</span></a>
-          <ul class="submenu">
-            <li><a href="#">Digitales</a></li>
-            <li><a href="#">Análogos</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="#">Bolsos y Carrieles <span class="flecha">›</span></a>
-          <ul class="submenu">
-            <li><a href="#">Cuero</a></li>
-            <li><a href="#">De viaje</a></li>
-          </ul>
-        </li>
-        <li><a href="#">Ofertas</a></li>
-        <li class="login-mobile"><a href="#" id="loginBtnMenu">Iniciar Sesión / Registrarse</a></li>
-      </ul>
-    `;
-  }
-
-  // === Funciones ===
-  function abrirPanel() {
-    panelBotones.classList.add('activo');
-    overlayMenu.classList.add('activo');
-    document.documentElement.style.overflow = 'hidden';
-  }
-
-  function cerrarPanel() {
-    panelBotones.classList.remove('activo');
-    overlayMenu.classList.remove('activo');
-    document.documentElement.style.overflow = '';
-  }
-
-  // === Eventos ===
-
-  // Abrir panel
-  iconoBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    abrirPanel();
-  });
-
-  // Cerrar con overlay o tecla ESC
-  overlayMenu.addEventListener('click', cerrarPanel);
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') cerrarPanel();
-  });
-
-  // Evitar cierre al hacer clic dentro del panel y manejar submenús
-  panelBotones.addEventListener('click', (e) => {
-    e.stopPropagation();
-
-    const link = e.target.closest('a');
-    if (!link) return;
-      // Si es el botón de login móvil, abre modal y cierra el panel
-    if (link.id === 'loginBtnMenu') {
-    e.preventDefault();
-    const modal = document.getElementById('authModal');
-    if (modal) modal.style.display = 'flex';
-    cerrarPanel(); // ✅ solo aquí se cierra el menú
-    return;
-    }
-
-    // Toggle submenús
-    const submenu = link.nextElementSibling;
-    if (submenu && submenu.classList.contains('submenu')) {
-      e.preventDefault();
-      link.parentElement.classList.toggle('activo');
-      return;
-    }
-
-    // Abrir modal de login si aplica
-    if (link.id === 'loginBtnMenu') {
-      e.preventDefault();
-      const modal = document.getElementById('authModal');
-      if (modal) modal.style.display = 'flex';
-      return;
-    }
-
-    // Enlaces normales → dejar que naveguen
-    // No cerramos el panel automáticamente
-  });
-
-  // Cerrar automáticamente si pasa a modo escritorio (>900px)
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 900) cerrarPanel();
-  });
-});
-
-// ---------- Modal de búsqueda: apertura, cierre y bloqueo de scroll ----------
 (function () {
-  // selectores robustos para la lupa (atiende variantes)
   const lupa = document.querySelector('.iconos img[alt="Buscar"]') || document.querySelector('.iconos img[src*="lupa"]') || document.querySelector('.icono img[alt="icono"]');
   const modal = document.getElementById('busqueda-modal');
   const cerrarBtn = document.getElementById('cerrarBusqueda');
@@ -581,74 +418,35 @@ document.addEventListener('DOMContentLoaded', () => {
     resultados.classList.remove('activo');
   }
 
-  // abrir con la lupa (si existe)
   if (lupa) {
     lupa.closest('a')?.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
-    // si no está dentro de <a>, escuchar directamente
     lupa.addEventListener && lupa.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
   }
 
-  // cerrar por botón
   if (cerrarBtn) cerrarBtn.addEventListener('click', cerrarModal);
 
-  // cerrar al clickear fuera del contenido
   modal.addEventListener('click', (e) => {
     if (e.target === modal) cerrarModal();
   });
 
-  // cerrar con ESC
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') cerrarModal();
   });
 
-  //Limpiar prductos
-
-  //localStorage.removeItem("productos");
-
-  // ---------- Inicialización de productos STRAPPED ----------
-document.addEventListener('DOMContentLoaded', () => {
-  // Si ya existen productos en localStorage, no se vuelven a crear
+  // Inicialización de productos si no existen
   if (!localStorage.getItem('productos')) {
-    const productos = [
-      {
-        nombre: "Audífonos Strapped Air",
-        precio: 160000,
-        imagen: "imagenes/Air2.png",
-        url: "Tecnologia.html"
-      },
-      {
-        nombre: "Cargador iPhone 25W",
-        precio: 80000,
-        imagen: "imagenes/Cargador.png",
-        url: "Tecnologia.html"
-      },
-      {
-        nombre: "Apple Watch",
-        precio: 450000,
-        imagen: "imagenes/Reloj.png",
-        url: "Relojes.html"
-      },
-      {
-        nombre: "Reloj Digital STRAPPED",
-        precio: 200000,
-        imagen: "imagenes/Reloj2.png",
-        url: "Relojes.html"
-      },
-      {
-        nombre: "Bolso de Cuero STRAPPED",
-        precio: 150000,
-        imagen: "imagenes/Bolsos.jpg",
-        url: "Bolsos.html"
-      }
+    const productosIniciales = [
+      { nombre: "Audífonos Strapped Air", precio: 160000, imagen: "Air2.png", url: "Tecnologia.html" },
+      { nombre: "Cargador iPhone 25W", precio: 80000, imagen: "Cargador.png", url: "Tecnologia.html" },
+      { nombre: "Apple Watch", precio: 450000, imagen: "Reloj.png", url: "Relojes.html" },
+      { nombre: "Reloj Digital STRAPPED", precio: 200000, imagen: "Reloj2.png", url: "Relojes.html" },
+      { nombre: "Bolso de Cuero STRAPPED", precio: 150000, imagen: "Bolsos.jpg", url: "Bolsos.html" }
     ];
-
-    localStorage.setItem('productos', JSON.stringify(productos));
+    localStorage.setItem('productos', JSON.stringify(productosIniciales));
   }
-});
 
-
-  // ---------- Lógica de búsqueda ----------
-  const productos = JSON.parse(localStorage.getItem('productos')) || [];
+  // ===== lógica de búsqueda =====
+  const todosProductos = JSON.parse(localStorage.getItem('productos')) || [];
 
   input.addEventListener('input', () => {
     const termino = input.value.toLowerCase().trim();
@@ -661,8 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resultados.classList.add('activo');
 
-    const productos = JSON.parse(localStorage.getItem('productos')) || [];
-    const coincidencias = productos.filter(p =>
+    const coincidencias = todosProductos.filter(p =>
       (p.nombre || '').toLowerCase().includes(termino)
     );
 
@@ -671,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // 🔹 Mostrar solo los primeros 4 productos
+    // Mostrar solo los primeros 4 productos
     const visibles = coincidencias.slice(0, 4);
 
     visibles.forEach(p => {
@@ -688,7 +485,6 @@ document.addEventListener('DOMContentLoaded', () => {
       resultados.appendChild(item);
     });
 
-    // 🔹 Si hay más de 4 resultados, mostrar botón “Ver todos”
     if (coincidencias.length > 4) {
       const verTodos = document.createElement('button');
       verTodos.textContent = 'Ver todos los resultados';
@@ -726,36 +522,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       resultados.appendChild(verTodos);
     }
-
-    // construir resultados
-    const frag = document.createDocumentFragment();
-    matches.forEach(p => {
-      const item = document.createElement('div');
-      item.className = 'resultado-item';
-      item.innerHTML = `
-        <img src="${p.imagen}" alt="${p.nombre}">
-        <div>
-          <h4 style="margin:0;">${p.nombre}</h4>
-          <p style="margin:4px 0 0 0;">$${Number(p.precio).toLocaleString()}</p>
-        </div>
-      `;
-      item.addEventListener('click', () => {
-        // si tu producto tiene url definida la usamos, si no vamos a index
-        if (p.url) window.location.href = p.url;
-        else window.location.href = 'index.html';
-      });
-      frag.appendChild(item);
-    });
-    resultados.appendChild(frag);
   });
-})();
 
-// Cerrar buscador al hacer clic fuera del área
-document.addEventListener('click', (e) => {
-  const modal = document.getElementById('busqueda-modal');
-  const inputContainer = document.querySelector('.container-input');
+  // Cerrar buscador al hacer clic fuera del área
+  document.addEventListener('click', (e) => {
+    if (!modal.contains(e.target) && !e.target.closest('.iconos')) {
+      if (modal.classList.contains('activo')) modal.classList.remove('activo');
+    }
+  });
 
-  if (modal.classList.contains('activo') && !inputContainer.contains(e.target) && !e.target.closest('.iconos')) {
-    modal.classList.remove('activo');
-  }
-});
+})(); // fin IIFE buscador
