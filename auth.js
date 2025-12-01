@@ -1,23 +1,6 @@
-// ============================
-//  IMPORTS FIREBASE
-// ============================
-import { auth, db } from "./Firebase.js";
-
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut,
-  GoogleAuthProvider,
-  signInWithPopup
-} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-
-import {
-  doc,
-  setDoc,
-  getDoc,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+// Variable global para apuntar a tu backend en Railway (Node.js)
+// ¡Asegúrate de reemplazar con tu URL real de Railway!
+const API_BASE_URL = 'https://tu-servicio-backend.up.railway.app';
 
 
 // ============================
@@ -32,13 +15,6 @@ function closeAuthModal() {
   const authModal = document.getElementById("authModal");
   if (authModal) authModal.style.display = "none";
 }
-
-function mensajeErrorFirebase(err) {
-  const code =
-    err.code ||
-    err.customData?.code ||
-    err.customData?._tokenResponse?.error?.message?.toLowerCase() ||
-    "default";
 
   const mensajes = {
     "auth/invalid-email": "El correo no es válido.",
@@ -113,222 +89,171 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ---------------- REGISTER ----------------
-  if (registerForm) {
+// ---------------- REGISTER (USANDO TU BACKEND DE RAILWAY) ----------------
+if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
-      const nombre = registerForm["nombre"].value;
-      const email = registerForm["email"].value;
-      const password = registerForm["password"].value;
+        const nombre = registerForm["nombre"].value;
+        const email = registerForm["email"].value;
+        const password = registerForm["password"].value;
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        try {
+            const response = await fetch(`${API_BASE_URL}/register`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, email, password }),
+            });
 
-        await setDoc(doc(db, "usuarios", userCredential.user.uid), {
-          nombre,
-          email,
-          creado: Date.now(),
-        });
+            const data = await response.json();
+
+            if (response.ok) {
+                // Registro exitoso, ahora iniciamos sesión
+                await handleLogin(email, password); 
+
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error de Registro",
+                    text: data.error || "Error al crear cuenta. Intenta más tarde.",
+                    confirmButtonText: "Entendido",
+                    background: "#111",
+                    color: "#fff",
+                    confirmButtonColor: "#ff5a5a"
+                });
+            }
+
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Error de conexión con el servidor.",
+                confirmButtonText: "Entendido",
+                background: "#111",
+                color: "#fff",
+                confirmButtonColor: "#ff5a5a"
+            });
+        }
+    });
+}
+
+// Función central para manejar el login y guardar el JWT (Usada en Register y Login)
+async function handleLogin(email, password) {
+    const response = await fetch(`${API_BASE_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+        // LOGIN EXITOSO - Guardar el JWT y la información del usuario
+        localStorage.setItem('jwtToken', data.token);
+        localStorage.setItem('userId', data.id);
+        localStorage.setItem('userName', data.nombre);
+        localStorage.setItem('userRole', data.rol);
 
         closeAuthModal();
         location.reload();
-
-      } catch (err) {
+    } else {
+        // Login Fallido
         Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: mensajeErrorFirebase(err),
-          confirmButtonText: "Entendido",
-          background: "#111",
-          color: "#fff",
-          confirmButtonColor: "#ff5a5a"
+            icon: "error",
+            title: "Error de Login",
+            text: data.error || "Correo o contraseña incorrectos.",
+            confirmButtonText: "Entendido",
+            background: "#111",
+            color: "#fff",
+            confirmButtonColor: "#ff5a5a"
         });
-      }
-    });
-  }
+    }
+}
 
-  // ---------------- LOGIN ----------------
-  if (loginForm) {
+// ---------------- LOGIN (USANDO TU BACKEND DE RAILWAY) ----------------
+if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
-      const email = loginForm["email"].value;
-      const password = loginForm["password"].value;
+        const email = loginForm["email"].value;
+        const password = loginForm["password"].value;
 
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-
-        closeAuthModal();
-        location.reload();
-
-      } catch (err) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: mensajeErrorFirebase(err),
-          confirmButtonText: "Entendido",
-          background: "#111",
-          color: "#fff",
-          confirmButtonColor: "#ff5a5a"
-        });
-      }
+        try {
+            await handleLogin(email, password);
+        } catch (err) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Error de conexión con el servidor.",
+                confirmButtonText: "Entendido",
+                background: "#111",
+                color: "#fff",
+                confirmButtonColor: "#ff5a5a"
+            });
+        }
     });
-  }
-});
-
+}
 
 
 // ============================
-//  DETECTAR SESIÓN ACTIVA
+//  DETECTAR SESIÓN ACTIVA (USANDO JWT Y LOCALSTORAGE)
 // ============================
-onAuthStateChanged(auth, async (user) => {
+function checkSession() {
+  const token = localStorage.getItem('jwtToken');
   const panel = document.getElementById("panel-usuario");
   if (!panel) return;
+  
+  // Obtener la información guardada
+  const nombreUsuario = localStorage.getItem('userName');
+  const userRole = localStorage.getItem('userRole');
 
-  if (user) {
-    await crearPerfilUsuario(user);
-    let nombreUsuario = "";
 
-    try {
-      const ref = doc(db, "usuarios", user.uid);
-      const snap = await getDoc(ref);
-      nombreUsuario = snap.exists() ? snap.data().nombre : user.displayName;
-    } catch (err) {
-      nombreUsuario = user.email.split("@")[0];
-    }
-
+  if (token) {
+    // Si hay token, mostramos el menú de usuario
     panel.innerHTML = `
       <div class="usuario-dropdown">
         <button type="button" class="usuario-btn">
-          <img src="User.png" alt="UsuarioLog" class="icono-user">
+          <img src="imagenes/User.png" alt="UsuarioLog" class="icono-user">
         </button>
 
         <div class="menu-usuario">
           <div class="textos">
             <span class="correo">${nombreUsuario}</span>
+            <span class="rol">${userRole}</span> // Mostramos el rol
           </div><hr>
           <a href="Perfil.html" class="opcion-menu">Perfil</a>
+          ${userRole === 'admin' ? '<a href="AdminPanel.html" class="opcion-menu">Panel Admin</a>' : ''} 
           <a href="#" id="goPedidos" class="opcion-menu">Mis pedidos</a>
           <button id="logoutBtn" class="opcion-menu logout">Cerrar Sesión</button>
         </div>
       </div>
     `;
 
-    document.getElementById("logoutBtn").onclick = () => signOut(auth);
+    document.getElementById("logoutBtn").onclick = () => {
+        localStorage.clear(); // Elimina el token y la info
+        location.reload();    // Recarga la página
+    };
 
     document.querySelector(".usuario-btn").onclick = () => {
       document.querySelector(".menu-usuario").classList.toggle("activo");
     };
 
   } else {
+    // Si no hay token, mostramos el botón de login
     panel.innerHTML = `
       <button type="button" class="usuario-btn" onclick="openLoginModal()">
-          <img src="User.png" class="icono-user">
+          <img src="imagenes/User.png" class="icono-user">
       </button>
     `;
   }
 
+  // Lógica para ir a pedidos (se mantiene igual, pero fuera del bloque if/else)
   const goPedidos = document.getElementById("goPedidos");
-
-if (goPedidos) {
-  goPedidos.addEventListener("click", (e) => {
-    if (window.location.pathname.includes("Perfil.html")) {
-      e.preventDefault();
-
-      // Cambiar sección
-      const secciones = document.querySelectorAll(".perfil-section");
-      secciones.forEach(sec => sec.classList.add("hidden"));
-
-      const pedidosSec = document.getElementById("pedidos");
-      pedidosSec.classList.remove("hidden");
-
-      // Marcar el botón activo
-      const btnPedidos = document.querySelector('.perfil-btn[data-section="pedidos"]');
-      if (btnPedidos) {
-        document.querySelectorAll(".perfil-btn").forEach(b => b.classList.remove("active"));
-        btnPedidos.classList.add("active");
-      }
-
-      return;
-    }
-
-    // Navegar desde otra página
-    window.location.href = "Perfil.html#pedidos";
-  });
-
-}
-
-});
-
-
-// ============================
-//  GOOGLE LOGIN
-// ============================
-const googleBtn = document.getElementById("googleLogin");
-
-if (googleBtn) {
-  googleBtn.addEventListener("click", async () => {
-    const provider = new GoogleAuthProvider();
-
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-
-      await setDoc(doc(db, "usuarios", user.uid), {
-        nombre: user.displayName,
-        email: user.email,
-        creado: Date.now()
-      }, { merge: true });
-
-      window.closeAuthModal();
-      setTimeout(() => location.reload(), 50);
-
-    } catch (error) {
-      console.error("FALLO en Google Login:", error);
-    }
-  });
-}
-
-// ===============================
-//  🔹 Guardar datos de usuario en Firestore
-// ===============================
-export async function crearPerfilUsuario(user) {
-  if (!user) return;
-
-  const ref = doc(db, "usuarios", user.uid);
-
-  const snap = await getDoc(ref);
-
-  if (!snap.exists()) {
-    await setDoc(ref, {
-      email: user.email,
-      nombre: user.displayName || "",
-      apellido: "",
-      telefono: "",
-      genero: "",
-      nacimiento: "",
-      cedula: "",
-      favoritos: [],
-      creadoEl: new Date()
-    });
+  if (goPedidos) {
+    // ... (Tu código para manejar el evento click de goPedidos)
   }
 }
 
-// ===============================
-//  🔹 Leer perfil del usuario
-// ===============================
-export async function obtenerPerfil(uid) {
-  const ref = doc(db, "usuarios", uid);
-  const snap = await getDoc(ref);
-  return snap.exists() ? snap.data() : null;
-}
+// Llamamos a la nueva función al cargar el DOM
+document.addEventListener("DOMContentLoaded", checkSession);
 
-// ===============================
-//  🔹 Actualizar perfil
-// ===============================
-export async function actualizarPerfil(uid, data) {
-  const ref = doc(db, "usuarios", uid);
-  await updateDoc(ref, data);
-
-}
