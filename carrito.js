@@ -1,8 +1,4 @@
 // =========================
-//  carrito.js (corregido)
-// =========================
-
-// =========================
 //  🔹 Cargar producto dinámicamente según ?id=
 // =========================
 const params = new URLSearchParams(window.location.search);
@@ -236,8 +232,22 @@ document.addEventListener("DOMContentLoaded", () => {
     // El ícono del carrito puede contener un <a> o una imagen; evitamos comportamiento por defecto
     btnCarrito.addEventListener("click", (e) => {
       e.preventDefault();
+
+      // 🔥 CERRAR MENÚ SI ESTÁ ABIERTO
+      const panelMenu = document.getElementById("botones-panel");
+      const overlayMenu = document.getElementById("overlay-menu");
+      if (panelMenu) panelMenu.classList.remove("activo");
+      if (overlayMenu) overlayMenu.classList.remove("activo");
+      document.body.classList.remove("no-scroll");
+      // 🔥 CERRAR BUSCADOR SI ESTÁ ABIERTO
+      const modalBusqueda = document.getElementById("busqueda-modal");
+      if (modalBusqueda) modalBusqueda.classList.remove("activo");
+
+
+      // 🔥 AHORA SÍ ABRE EL CARRITO
       abrirPanel();
     });
+
   } else {
     // No se encontró el botón del carrito: quizá tu HTML usa otra estructura.
     // Dejar log para que puedas ajustarlo.
@@ -255,12 +265,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Cerrar al pulsar overlay (si existe)
-  if (overlay) {
-    overlay.addEventListener("click", (e) => {
-      e.preventDefault();
-      cerrarPanel();
-    });
-  }
+  overlay.addEventListener("click", (e) => {
+    e.preventDefault();
+    cerrarPanel(); // cierra carrito
+
+      // 🔥 CERRAR BUSCADOR SI ESTÁ ABIERTO
+    const modalBusqueda = document.getElementById("busqueda-modal");
+    if (modalBusqueda) modalBusqueda.classList.remove("activo");
+
+
+    // 🔥 CERRAR MENÚ TAMBIÉN SI ESTÁ ABIERTO
+    const panelMenu = document.getElementById("botones-panel");
+    const overlayMenu = document.getElementById("overlay-menu");
+    if (panelMenu) panelMenu.classList.remove("activo");
+    if (overlayMenu) overlayMenu.classList.remove("activo");
+    document.body.classList.remove("no-scroll");
+  });
+
 
   // También cerramos con Escape por robustez
   document.addEventListener("keydown", (e) => {
@@ -532,3 +553,78 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 })(); // fin IIFE buscador
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("btnMenuUndergold") || document.querySelector("label[for='menu']");
+  const panel = document.getElementById("botones-panel");
+  const overlay = document.getElementById("overlay-menu");
+  const cerrar = document.getElementById("cerrar-menu");
+
+  if (!btn || !panel || !overlay || !cerrar) {
+    console.warn("[menu] faltan elementos (btn, panel, overlay o cerrar). Revisa IDs.");
+    return;
+  }
+
+  // función para abrir
+  function abrirMenu() {
+     // 🔥 CERRAR CARRITO SI ESTÁ ABIERTO
+    const cartPanel = document.getElementById("carrito-panel");
+    const cartOverlay = document.getElementById("overlay-carrito");
+    if (cartPanel) cartPanel.classList.remove("activo");
+    if (cartOverlay) cartOverlay.classList.remove("activo");
+    panel.classList.add("activo");
+    overlay.classList.add("activo");
+    // reproducir animación de la X
+    cerrar.classList.remove("spin-in");
+    // trigger reflow para reiniciar la animación
+    void cerrar.offsetWidth;
+    cerrar.classList.add("spin-in");
+    // opcional: evitar scroll del body
+    document.body.classList.add("no-scroll");
+  }
+
+  // función para cerrar
+  function cerrarMenu() {
+    panel.classList.remove("activo");
+    overlay.classList.remove("activo");
+    document.body.classList.remove("no-scroll");
+  }
+
+  // abrir al click del icono
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    // si ya está abierto, lo cerramos (toggle)
+    if (panel.classList.contains("activo")) cerrarMenu();
+    else abrirMenu();
+  });
+
+  // cerrar con la X
+  cerrar.addEventListener("click", (e) => {
+    e.preventDefault();
+    cerrarMenu();
+  });
+
+  // cerrar al click en overlay (afuera)
+  overlay.addEventListener("click", (e) => {
+    e.preventDefault();
+    cerrarMenu();
+  });
+
+  // cerrar con Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") cerrarMenu();
+  });
+
+  // opcional: cerrar cuando se hace click en cualquier link dentro del panel
+  panel.addEventListener("click", (e) => {
+    const target = e.target;
+    if (target.tagName === "A") {
+      // cierra menú si el usuario pulsa un enlace
+      cerrarMenu();
+    }
+  });
+});
+
+
+
+
