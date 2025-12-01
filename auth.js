@@ -1,5 +1,5 @@
 // Variable global para apuntar a tu backend en Railway (Node.js)
-const API_BASE_URL = 'https://strapped-backend.vercel.app/';
+const API_BASE_URL = 'https://strapped-backend.vercel.app';
 // NOTA: Se eliminaron todos los imports de Firebase.
 
 // ============================
@@ -272,4 +272,5 @@ function checkSession() {
 document.addEventListener("DOMContentLoaded", checkSession);
 
 // Se eliminan todas las funciones y lógica de Firestore.
+
 
