@@ -202,14 +202,12 @@ onAuthStateChanged(auth, async (user) => {
       <div class="usuario-dropdown">
         <button type="button" class="usuario-btn">
           <img src="User.png" alt="UsuarioLog" class="icono-user">
-          <div class="textos">
-            <span class="hola">¡Hola!</span>
-            <span class="correo">${nombreUsuario}</span>
-          </div>
         </button>
 
         <div class="menu-usuario">
-          <p class="titulo-menu">Mi Cuenta</p><hr>
+          <div class="textos">
+            <span class="correo">${nombreUsuario}</span>
+          </div><hr>
           <a href="Perfil.html" class="opcion-menu">Perfil</a>
           <a href="#" id="goPedidos" class="opcion-menu">Mis pedidos</a>
           <button id="logoutBtn" class="opcion-menu logout">Cerrar Sesión</button>
@@ -225,8 +223,8 @@ onAuthStateChanged(auth, async (user) => {
 
   } else {
     panel.innerHTML = `
-      <button type="button" onclick="openLoginModal()">
-          <img src="User.png" alt="UsuarioLog" class="icono-user">
+      <button type="button" class="usuario-btn" onclick="openLoginModal()">
+          <img src="User.png" class="icono-user">
       </button>
     `;
   }
@@ -334,4 +332,3 @@ export async function actualizarPerfil(uid, data) {
   await updateDoc(ref, data);
 
 }
-
