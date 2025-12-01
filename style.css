@@ -1954,8 +1954,8 @@ section.ofertas {
 }
 
 .iconos li a img {
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 }
 
@@ -3042,3 +3042,4 @@ ul.detalles li {
         grid-column: 1 / 2;
     }
 }
+
