@@ -20,12 +20,36 @@
   <header class="header">
     <div class="menu container">
 
-      <ul>
-        <li><a href="#" class="icono"><img src="Icono.png" alt="icono"></a></li>
-      </ul>
-
+      <input type="checkbox" id="menu" style="display:none;">
+      <!-- botón (label) con id y clase para que JS lo encuentre fácilmente -->
+      <label for="menu" id="btnMenuUndergold" class="icono" aria-label="Abrir menú">
+        <img src="Icono.png" alt="icono">
+      </label>
+      <!-- PANEL LATERAL RESPONSIVE -->
       <div id="botones-panel" class="botones-panel">
+        <button id="cerrar-menu" class="cerrar-menu">×</button>
+        <ul class="menu-lista">
+            <li>
+              <a href="#catalogo">CATÁLOGO</a>
+            </li>
+            <li>
+              <a href="#soporte">HOMBRES</a>
+            </li>
+            <li>
+              <a href="#info">MUJERES</a>
+            </li>
+            <li>
+              <a href="#contacto">SALE</a>
+            </li>
+            <li class="login-mobile">
+              <a href="#" id="loginBtn">Iniciar Sesión / Registrarse</a>
+            </li>
+        </ul>
       </div>
+
+      <div id="overlay-menu" class="overlay-menu"></div>
+
+
 
       <a href="index.html" class="logo">STRAPPED</a>
 
@@ -140,15 +164,14 @@
                 </div>
               </div>
             </li>
-
-            <li class="login-mobile"><a href="#" id="loginBtn">Iniciar Sesión / Registrarse</a></li>
       </ul>
-
 
       <ul class="iconos">
         <li><a href="#"><img src="Lupa.png" alt="Buscar"></a></li>
         <li id="panel-usuario" class="panel-usuario">
-          <a href="#" id="openLogin"><img src="User.png" alt="Usuario"></a>
+          <button class="usuario-btn" aria-label="Abrir usuario" type="button">
+            <img src="User.png" class="icono-user" alt="Usuario">
+          </button>
         </li>
         <li><a href="#" class="bolsa"><img src="Bolsa.png" alt="Carrito"><span id="contador-carrito">0</span></a></li>
       </ul>
@@ -221,7 +244,6 @@
           <div id="resultadosBusqueda" class="resultados-busqueda"></div>
         </div>
       </div>
-
     </div>
   </header>
 
@@ -384,3 +406,4 @@
     
 </body>
 </html>
+
