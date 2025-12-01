@@ -214,7 +214,7 @@ function checkSession() {
         panel.innerHTML = `
             <div class="usuario-dropdown">
                 <button type="button" class="usuario-btn">
-                    <img src="imagenes/User.png" alt="UsuarioLog" class="icono-user">
+                    <img src="User.png" alt="UsuarioLog" class="icono-user">
                 </button>
 
                 <div class="menu-usuario">
@@ -245,7 +245,7 @@ function checkSession() {
         // Si no hay token, mostramos el botón de login
         panel.innerHTML = `
             <button type="button" class="usuario-btn" onclick="openLoginModal()">
-                <img src="imagenes/User.png" class="icono-user">
+                <img src="User.png" class="icono-user">
             </button>
         `;
     }
@@ -272,5 +272,6 @@ function checkSession() {
 document.addEventListener("DOMContentLoaded", checkSession);
 
 // Se eliminan todas las funciones y lógica de Firestore.
+
 
 
